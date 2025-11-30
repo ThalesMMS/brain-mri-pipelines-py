@@ -472,18 +472,22 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
 
         # Hiperparâmetros (podem ser sobrescritos por hparams)
         defaults = {
-            "lr": 1e-4 if mode == 'classification' else 0.001,
-            "weight_decay": 1e-4 if mode == 'classification' else 0.0,
-            "dropout": 0.3,
-            "label_smoothing": 0.05 if mode == 'classification' else 0.0,
-            "mixup_alpha": 0.2 if mode == 'classification' else 0.0,
-            "freeze_backbone": False,
-            "class_balance": False,
-            "freeze_warmup_epochs": 0,
-            "warmup_lr": None,
-            "balance_penalty": 0.0,
-            "thresholds_eval": [0.5, 0.6, 0.4, 0.7],
-            "seed": 42,
+            "lr": float(os.getenv("DENSENET_LR", 1e-4 if mode == 'classification' else 0.001)),
+            "weight_decay": float(os.getenv("DENSENET_WEIGHT_DECAY", 1e-4 if mode == 'classification' else 0.0)),
+            "dropout": float(os.getenv("DENSENET_DROPOUT", 0.3)),
+            "label_smoothing": float(os.getenv("DENSENET_LABEL_SMOOTH", 0.05 if mode == 'classification' else 0.0)),
+            "mixup_alpha": float(os.getenv("DENSENET_MIXUP", 0.2 if mode == 'classification' else 0.0)),
+            "freeze_backbone": os.getenv("DENSENET_FREEZE", "0") == "1",
+            "class_balance": os.getenv("DENSENET_CLASS_WEIGHTS", "0") == "1",
+            "freeze_warmup_epochs": int(os.getenv("DENSENET_WARMUP_EPOCHS", "0")),
+            "warmup_lr": float(os.getenv("DENSENET_WARMUP_LR", "0")) or None,
+            "balance_penalty": float(os.getenv("DENSENET_BALANCE_PENALTY", 0.0)),
+            "thresholds_eval": [float(x) for x in os.getenv("DENSENET_THRESHOLDS", "0.5,0.6,0.4,0.7").split(',')],
+            "seed": int(os.getenv("DENSENET_SEED", "42")),
+            "batch_size": int(os.getenv("DENSENET_BATCH", "16")),
+            "epochs_env": int(os.getenv("DENSENET_EPOCHS", "0")),
+            "use_focal": os.getenv("DENSENET_USE_FOCAL", "0") == "1",
+            "grad_clip": float(os.getenv("DENSENET_CLIP", "1.0")),
         }
         if hparams:
             for k, v in hparams.items():
@@ -603,6 +607,9 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
         best_val_metric = -float('inf') if mode == 'classification' else float('inf')
         no_improve = 0  # Contador para early stopping
 
+        scaler = torch.cuda.amp.GradScaler() if hasattr(torch.cuda, 'amp') else None
+        use_amp = scaler is not None and device.type != 'cpu'
+
         for epoch in range(epochs):  # Loop de épocas
             model.train()  # Coloca modelo em modo de treino
             running_loss = 0  # Acumulador de loss
@@ -613,34 +620,42 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
             for imgs, lbls in train_loader:  # Itera batches de treino
                 imgs, lbls = imgs.to(device), lbls.to(device)  # Move dados para CPU/GPU
                 optimizer.zero_grad()  # Zera gradientes
-                if mode == 'regression':  # Lógica para regressão
-                    out = model(imgs)
-                    preds_batch = out.squeeze()  # Ajusta forma da saída
-                    loss = criterion(preds_batch, lbls)  # Calcula loss MSE
-                    mae_sum_train += torch.abs(preds_batch - lbls).sum().item()  # Acumula MAE do batch
-                    total_train_reg += lbls.size(0)  # Conta amostras de regressão
-                else:  # Lógica para classificação
-                    if use_mixup:
-                        imgs_mix, targets_a, targets_b, lam = _mixup_data(imgs, lbls.long(), mixup_alpha)
-                        out = model(imgs_mix)
-                        loss = lam * criterion(out, targets_a) + (1 - lam) * criterion(out, targets_b)
-                        preds_batch = out.argmax(dim=1)
-                        correct_train += (
-                            lam * (preds_batch == targets_a).sum().item()
-                            + (1 - lam) * (preds_batch == targets_b).sum().item()
-                        )
-                    else:
+                with torch.cuda.amp.autocast(enabled=use_amp):
+                    if mode == 'regression':  # Lógica para regressão
                         out = model(imgs)
-                        if use_focal:
-                            loss = focal_loss(out, lbls.long(), gamma=focal_gamma)  # Focal loss ajuda com desbalanceamento
+                        preds_batch = out.squeeze()  # Ajusta forma da saída
+                        loss = criterion(preds_batch, lbls)  # Calcula loss MSE
+                        mae_sum_train += torch.abs(preds_batch - lbls).sum().item()  # Acumula MAE do batch
+                        total_train_reg += lbls.size(0)  # Conta amostras de regressão
+                    else:  # Lógica para classificação
+                        if use_mixup:
+                            imgs_mix, targets_a, targets_b, lam = _mixup_data(imgs, lbls.long(), mixup_alpha)
+                            out = model(imgs_mix)
+                            loss = lam * criterion(out, targets_a) + (1 - lam) * criterion(out, targets_b)
+                            preds_batch = out.argmax(dim=1)
+                            correct_train += (
+                                lam * (preds_batch == targets_a).sum().item()
+                                + (1 - lam) * (preds_batch == targets_b).sum().item()
+                            )
                         else:
-                            loss = criterion(out, lbls.long())  # Calcula loss CE
-                        preds_batch = out.argmax(dim=1)  # Classe predita
-                        correct_train += (preds_batch == lbls.long()).sum().item()  # Acertos no batch
-                    total_train_cls += lbls.size(0)  # Conta amostras de classe
+                            out = model(imgs)
+                            if use_focal:
+                                loss = focal_loss(out, lbls.long(), gamma=focal_gamma)  # Focal loss ajuda com desbalanceamento
+                            else:
+                                loss = criterion(out, lbls.long())  # Calcula loss CE
+                            preds_batch = out.argmax(dim=1)  # Classe predita
+                            correct_train += (preds_batch == lbls.long()).sum().item()  # Acertos no batch
+                        total_train_cls += lbls.size(0)  # Conta amostras de classe
 
-                loss.backward()  # Backprop
-                optimizer.step()  # Atualiza pesos
+                if scaler and use_amp:
+                    scaler.scale(loss).backward()
+                    torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=defaults.get("grad_clip", 1.0))
+                    scaler.step(optimizer)
+                    scaler.update()
+                else:
+                    loss.backward()
+                    torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=defaults.get("grad_clip", 1.0))
+                    optimizer.step()
                 if ema: ema.update(model)  # Atualiza EMA
                 running_loss += loss.item() * imgs.size(0)  # Soma loss ponderada pelo batch
                 total_train += imgs.size(0)  # Atualiza total de amostras
