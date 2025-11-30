@@ -80,6 +80,18 @@ def build_densenet(mode: str = 'classification', dropout_rate: float = 0.3) -> n
     return model
 
 
+def build_efficientnet(mode: str = 'classification', dropout_rate: float = 0.3) -> nn.Module:
+    """Cria EfficientNet-B0 com cabeça ajustada e dropout opcional."""
+    weights = models.EfficientNet_B0_Weights.IMAGENET1K_V1
+    model = models.efficientnet_b0(weights=weights)
+    n_feat = model.classifier[1].in_features
+    model.classifier = nn.Sequential(
+        nn.Dropout(dropout_rate),
+        nn.Linear(n_feat, 1 if mode == 'regression' else 2)
+    )
+    return model
+
+
 def mixup_data(x: torch.Tensor, y: torch.Tensor, alpha: float = 0.4):
     """Aplica mixup ao batch."""
     if alpha <= 0:

@@ -1,5 +1,6 @@
 import os  # Configuração de ambiente/threads para libs nativas
 import pickle  # Serialização de objetos Python
+import random  # Controle determinístico de seeds
 import time  # Funções relacionadas a tempo e pausas
 import tkinter as tk  # Interface gráfica
 from tkinter import messagebox  # Diálogos do Tkinter
@@ -26,6 +27,7 @@ try:  # Dependências pesadas opcionais
     from .training_utils import (
         ExponentialMovingAverage,
         build_densenet,
+        build_efficientnet,
         build_transforms,
         focal_loss,
         mixup_data,
@@ -34,7 +36,7 @@ try:  # Dependências pesadas opcionais
     TORCH_AVAILABLE = True
 except ImportError:
     torch = nn = optim = DataLoader = None
-    ExponentialMovingAverage = build_densenet = build_transforms = focal_loss = mixup_data = select_device = None
+    ExponentialMovingAverage = build_densenet = build_efficientnet = build_transforms = focal_loss = mixup_data = select_device = None
     TORCH_AVAILABLE = False
 try:
     import xgboost as xgb  # Biblioteca de gradient boosting XGBoost
@@ -43,14 +45,14 @@ except ImportError:
     xgb = None
     XGBOOST_AVAILABLE = False
 try:
-    from sklearn.metrics import (accuracy_score, confusion_matrix, f1_score, mean_absolute_error, mean_squared_error,
+    from sklearn.metrics import (accuracy_score, balanced_accuracy_score, confusion_matrix, f1_score, mean_absolute_error, mean_squared_error,
                                  precision_score, r2_score, recall_score)  # Métricas de avaliação
     from sklearn.model_selection import GridSearchCV, GroupKFold, train_test_split  # Divisão de dados e validação cruzada
     from sklearn.preprocessing import StandardScaler  # Normalização de características
     from sklearn.svm import SVC  # Suporte a máquinas de vetor para classificação
     SKLEARN_AVAILABLE = True
 except ImportError:
-    accuracy_score = confusion_matrix = f1_score = mean_absolute_error = mean_squared_error = precision_score = r2_score = recall_score = None
+    accuracy_score = balanced_accuracy_score = confusion_matrix = f1_score = mean_absolute_error = mean_squared_error = precision_score = r2_score = recall_score = None
     GridSearchCV = GroupKFold = train_test_split = StandardScaler = SVC = None
     SKLEARN_AVAILABLE = False
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk  # Canvas e barra de ferramentas do Matplotlib integrados ao Tkinter
@@ -175,8 +177,9 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
             messagebox.showwarning("Aviso", "Dados insuficientes para split (mínimo 3 sujeitos).")  # Alerta insuficiência
             return  # Interrompe
 
-        train_sub, test_sub = train_test_split(subjects, test_size=0.2)  # Separa sujeitos em treino/teste
-        train_sub, val_sub = train_test_split(train_sub, test_size=0.2)  # Separa subset de validação
+        split_seed = int(os.getenv("DENSENET_SEED", "42"))
+        train_sub, test_sub = train_test_split(subjects, test_size=0.2, random_state=split_seed)  # Separa sujeitos em treino/teste
+        train_sub, val_sub = train_test_split(train_sub, test_size=0.2, random_state=split_seed)  # Separa subset de validação
 
         def get_split(sid):  # Função auxiliar para mapear sujeito para split
             if sid in val_sub: return 'validation'  # Sujeitos de validação
@@ -429,19 +432,26 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
             'training_time_seconds': float(training_time),  # Duração do treino em segundos
         })  # Salva experimento no histórico
 
-    def train_densenet_classifier(self):  # Wrapper para treinar DenseNet em modo classificação
+    def train_efficientnet_classifier(self):  # Wrapper para treinar EfficientNet em modo classificação
         if not TORCH_AVAILABLE:
-            messagebox.showerror("Dependência ausente", "PyTorch/torchvision são necessários para treinar a DenseNet.\nInstale com 'pip install torch torchvision'.")
+            messagebox.showerror("Dependência ausente", "PyTorch/torchvision são necessários para treinar a EfficientNet.\nInstale com 'pip install torch torchvision'.")
             return
         self._train_pytorch_model(mode='classification')  # Chama treino genérico com modo de classificação
 
-    def train_densenet_regressor(self):  # Wrapper para treinar DenseNet em modo regressão
+    def train_efficientnet_regressor(self):  # Wrapper para treinar EfficientNet em modo regressão
         if not TORCH_AVAILABLE:
-            messagebox.showerror("Dependência ausente", "PyTorch/torchvision são necessários para treinar a DenseNet.\nInstale com 'pip install torch torchvision'.")
+            messagebox.showerror("Dependência ausente", "PyTorch/torchvision são necessários para treinar a EfficientNet.\nInstale com 'pip install torch torchvision'.")
             return
         self._train_pytorch_model(mode='regression')  # Chama treino genérico com modo de regressão
 
-    def _train_pytorch_model(self, mode='classification', hparams=None):  # Treina DenseNet para classificação ou regressão
+    # Aliases para compatibilidade com chamadas antigas
+    def train_densenet_classifier(self):
+        return self.train_efficientnet_classifier()
+
+    def train_densenet_regressor(self):
+        return self.train_efficientnet_regressor()
+
+    def _train_pytorch_model(self, mode='classification', hparams=None):  # Treina EfficientNet para classificação ou regressão
         headless = not hasattr(self, 'root') or self.root is None
         if not SKLEARN_AVAILABLE:
             try:
@@ -471,12 +481,12 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
         print(f"Dispositivo selecionado: {device} | Torch threads: {torch.get_num_threads()}")  # Log para debugging
 
         # Hiperparâmetros (podem ser sobrescritos por hparams)
-                defaults = {
-            "lr": float(os.getenv("DENSENET_LR", 1e-4 if mode == 'classification' else 0.001)),
+        defaults = {
+            "lr": float(os.getenv("DENSENET_LR", 5e-5 if mode == 'classification' else 0.001)),
             "weight_decay": float(os.getenv("DENSENET_WEIGHT_DECAY", 1e-4 if mode == 'classification' else 0.0)),
-            "dropout": float(os.getenv("DENSENET_DROPOUT", 0.3)),
+            "dropout": float(os.getenv("DENSENET_DROPOUT", 0.25)),
             "label_smoothing": float(os.getenv("DENSENET_LABEL_SMOOTH", 0.05 if mode == 'classification' else 0.0)),
-            "mixup_alpha": float(os.getenv("DENSENET_MIXUP", 0.2 if mode == 'classification' else 0.0)),
+            "mixup_alpha": float(os.getenv("DENSENET_MIXUP", 0.0)),
             "freeze_backbone": os.getenv("DENSENET_FREEZE", "0") == "1",
             "class_balance": os.getenv("DENSENET_CLASS_WEIGHTS", "0") == "1",
             "freeze_warmup_epochs": int(os.getenv("DENSENET_WARMUP_EPOCHS", "0")),
@@ -490,17 +500,26 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
                 if k in defaults:
                     defaults[k] = v
 
+        # Fixar seeds para reprodutibilidade
+        seed = defaults.get("seed", 42)
+        try:
+            seed = int(seed)
+        except Exception:
+            seed = 42
+        os.environ["PYTHONHASHSEED"] = str(seed)
+        random.seed(seed)
+        np.random.seed(seed)
+        torch.manual_seed(seed)
+        if torch.cuda.is_available():
+            torch.cuda.manual_seed_all(seed)
+
         lr = defaults["lr"]
         weight_decay = defaults["weight_decay"]
         dropout_rate = defaults["dropout"]
         label_smoothing = defaults["label_smoothing"]
-        mixup_alpha = defaults["mixup_alpha"]
+        mixup_alpha = float(defaults["mixup_alpha"])
         freeze_backbone = bool(defaults["freeze_backbone"])
         use_class_balance = bool(defaults["class_balance"])
-
-        # Hiperparâmetros de regularização/augmentação
-        use_mixup = mode == 'classification'
-        mixup_alpha = 0.4
 
         age_scaler = None  # Normalizador para alvo de regressão
         if mode == 'regression':  # Fluxo específico para regressão de idade
@@ -524,7 +543,7 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
 
         lbl_col = 'age_normalized' if mode == 'regression' else 'Final_Group'  # Define coluna alvo conforme modo
 
-        # Expande cada linha para todas as orientações disponíveis (axl/cor/sag) para DenseNet
+        # Expande cada linha para todas as orientações disponíveis (axl/cor/sag) para EfficientNet
         train_df = self._expand_with_orientations(df[df['split']=='train'])
         val_df = self._expand_with_orientations(df[df['split']=='validation'])
         test_df = self._expand_with_orientations(df[df['split']=='test'])
@@ -555,7 +574,7 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
         val_loader = DataLoader(val_ds, batch_size=batch_size)  # Loader de validação
         test_loader = DataLoader(test_ds, batch_size=batch_size)  # Loader de teste
 
-        model = build_densenet(mode=mode, dropout_rate=dropout_rate).to(device)  # Move modelo para CPU/GPU
+        model = build_efficientnet(mode=mode, dropout_rate=dropout_rate).to(device)  # Move modelo para CPU/GPU
         if freeze_backbone and hasattr(model, "features"):
             for p in model.features.parameters():
                 p.requires_grad = False
@@ -596,11 +615,13 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
 
         history = []  # Histórico de losses
         history_train_loss, history_val_loss = [], []  # Loss de treino/validação
-        history_train_acc, history_val_acc = [], []  # Acurácia de treino/validação (classificação)
+        history_train_acc, history_val_acc, history_val_acc_raw = [], [], []  # Métricas de treino/validação (classificação)
         history_train_mae, history_val_mae = [], []  # MAE de treino/validação (regressão)
         val_metric_value = None  # Métrica principal em validação
         best_state, best_epoch = None, 0  # Controle early stopping
-        best_val_metric = -float('inf') if mode == 'classification' else float('inf')
+        best_bal_acc = -float('inf') if mode == 'classification' else None
+        best_val_acc_raw = -float('inf') if mode == 'classification' else None
+        best_val_metric = float('inf') if mode == 'regression' else None
         no_improve = 0  # Contador para early stopping
 
         scaler = torch.cuda.amp.GradScaler() if hasattr(torch.cuda, 'amp') else None
@@ -660,6 +681,7 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
             running_val = 0  # Acumulador de loss de validação
             preds_list, targs_list = [], []  # Listas para métricas de regressão
             correct_val, total_val = 0, 0  # Acertos/total na validação (classificação)
+            val_preds_cls, val_targs_cls = [], []  # Armazenam predições e alvos para balanced accuracy
             if ema: ema.apply_shadow(model)  # Avalia com pesos suavizados
             with torch.no_grad():  # Sem gradientes
                 for imgs, lbls in val_loader:  # Itera batches de validação
@@ -679,6 +701,8 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
                         preds = out.argmax(dim=1)  # Predições de classe
                         correct_val += (preds == lbls.long()).sum().item()  # Acertos no batch
                         total_val += lbls.size(0)  # Conta amostras
+                        val_preds_cls.append(preds.cpu().numpy())
+                        val_targs_cls.append(lbls.cpu().numpy())
             if ema: ema.restore(model)  # Restaura pesos originais
 
             train_loss = running_loss / max(total_train, 1)  # Loss médio de treino
@@ -698,19 +722,28 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
             else:  # Métricas para classificação
                 train_acc = correct_train / max(total_train_cls, 1) if total_train_cls else 0.0  # Acurácia treino
                 history_train_acc.append(train_acc)  # Guarda acurácia treino
-                if total_val:  # Se há validação
-                    val_metric_value = correct_val / total_val  # Acurácia validação
-                    history_val_acc.append(val_metric_value)  # Guarda acurácia val
+                if val_preds_cls:  # Balanced accuracy penaliza colapso para uma classe
+                    y_true_val = np.concatenate(val_targs_cls)
+                    y_pred_val = np.concatenate(val_preds_cls)
+                    val_metric_value = balanced_accuracy_score(y_true_val, y_pred_val)
+                    val_acc_raw = correct_val / total_val if total_val else 0.0
+                    history_val_acc.append(val_metric_value)  # Guarda balanced accuracy de validação
+                    history_val_acc_raw.append(val_acc_raw)  # Guarda accuracy simples de validação
+                else:
+                    val_metric_value = 0.0
+                    history_val_acc.append(val_metric_value)
+                    history_val_acc_raw.append(0.0)
 
             print(f"Epoch {epoch+1}: Train Loss {train_loss:.4f}, Val Loss {val_loss:.4f}")  # Log de progresso
             history.append((train_loss, val_loss))  # Armazena histórico simples
 
-            # Early stopping baseado em val accuracy (class) ou val loss (reg)
+            # Early stopping baseado em balanced accuracy (class) ou val loss (reg)
             improved = False
             if mode == 'classification' and val_metric_value is not None:
-                if val_metric_value > best_val_metric:
+                if val_metric_value > best_bal_acc:
                     improved = True
-                    best_val_metric = val_metric_value
+                    best_bal_acc = val_metric_value
+                    best_val_acc_raw = history_val_acc_raw[-1] if history_val_acc_raw else 0.0
             elif mode == 'regression' and val_loss < best_val_metric:
                 improved = True
                 best_val_metric = val_loss
@@ -791,13 +824,13 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
 
             fig.tight_layout()  # Ajusta layout
 
-            curves_name = f"densenet_{mode}_learning_curves.png"  # Nome do arquivo de curvas
+            curves_name = f"efficientnet_{mode}_learning_curves.png"  # Nome do arquivo de curvas
             fig.savefig(self.output_dir / curves_name, dpi=300, bbox_inches='tight')  # Salva curvas
             if not headless:
                 try: self._show_plot_window("Resultados", fig)
                 except Exception: pass
 
-        torch.save(model.state_dict(), self.output_dir / f"densenet_{mode}.pth")  # Salva pesos do modelo (melhor estado)
+        torch.save(model.state_dict(), self.output_dir / f"efficientnet_{mode}.pth")  # Salva pesos do modelo (melhor estado)
 
         if mode == 'regression' and age_scaler is not None:  # Pós-processamento específico de regressão
             model.eval()  # Modo avaliação
@@ -879,7 +912,7 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
             ax.grid(True, alpha=0.3, linestyle='--')  # Grade tracejada
 
             fig_scatter.tight_layout()  # Ajusta layout
-            fig_scatter.savefig(self.output_dir / f"densenet_regression_scatter.png", dpi=300, bbox_inches='tight')  # Salva gráfico
+            fig_scatter.savefig(self.output_dir / f"efficientnet_regression_scatter.png", dpi=300, bbox_inches='tight')  # Salva gráfico
             if not headless:
                 try: self._show_plot_window("Gráfico de Dispersão - Teste", fig_scatter)
                 except Exception: pass
@@ -922,7 +955,7 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
                 ax = fig_cm.add_subplot(1, 1, 1)  # Eixo único
                 self.plot_confusion_matrix(ax, test_cm, ['0', '1'], "Teste")  # Plota matriz
                 fig_cm.tight_layout()  # Ajusta layout
-                fig_cm.savefig(self.output_dir / f"confusion_densenet_{mode}.png", dpi=300, bbox_inches='tight')  # Salva imagem
+                fig_cm.savefig(self.output_dir / f"confusion_efficientnet_{mode}.png", dpi=300, bbox_inches='tight')  # Salva imagem
                 if not headless:
                     try: self._show_plot_window("Matriz de Confusão - Teste", fig_cm)
                     except Exception: pass
@@ -933,7 +966,9 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
         }
         if mode == 'classification':
             learning_curves['train_acc'] = history_train_acc  # Acurácia treino
-            learning_curves['val_acc'] = history_val_acc  # Acurácia val
+            learning_curves['val_acc'] = history_val_acc  # Alias: balanced accuracy val
+            learning_curves['val_acc_balanced'] = history_val_acc  # Balanced accuracy val
+            learning_curves['val_acc_raw'] = history_val_acc_raw  # Accuracy simples val
         else:
             learning_curves['train_mae'] = history_train_mae_denorm  # MAE treino desnormalizado
             learning_curves['val_mae'] = history_val_mae_denorm  # MAE val desnormalizado
@@ -941,7 +976,7 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
         training_time = time.time() - start_time  # Tempo total do processo
 
         exp_payload = {  # Payload para histórico do experimento
-            'model': f'DenseNet_{mode}',
+            'model': f'EfficientNet_{mode}',
             'epochs': epochs,
             'batch_size': batch_size,
             'learning_rate': lr,
@@ -956,12 +991,15 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
             }
         }
         if mode == 'classification':
-            if val_metric_value is not None:
-                exp_payload['val_accuracy'] = float(val_metric_value)  # Acurácia de teste (usada como final)
-                if history_train_acc:
-                    exp_payload['train_accuracy'] = float(history_train_acc[-1])  # Acurácia final de treino
-            if best_val_metric != -float('inf'):
-                exp_payload['best_val_accuracy'] = float(best_val_metric)
+            if history_train_acc:
+                exp_payload['train_accuracy'] = float(history_train_acc[-1])  # Acurácia final de treino
+            if history_val_acc_raw:
+                exp_payload['val_accuracy_raw'] = float(history_val_acc_raw[-1])  # Accuracy simples (última época)
+            if history_val_acc:
+                exp_payload['val_balanced_accuracy'] = float(history_val_acc[-1])  # Balanced accuracy (última época)
+            if best_bal_acc is not None and best_bal_acc != -float('inf'):
+                exp_payload['best_val_balanced_accuracy'] = float(best_bal_acc)
+                exp_payload['best_val_accuracy'] = float(best_val_acc_raw if best_val_acc_raw is not None else 0.0)
                 exp_payload['best_epoch'] = best_epoch
         if mode == 'regression' and val_metric_value is not None:
             exp_payload['type'] = 'regression'  # Marca tipo do experimento
@@ -1021,7 +1059,7 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
                         df_emb['target'] = dataset_obj.df.loc[:len(df_emb)-1, 'age'].values
                     else:
                         df_emb['target'] = tgt_arr
-                    out_path = self.output_dir / f"densenet_embeddings_{mode}_{split_name}.csv"
+                    out_path = self.output_dir / f"efficientnet_embeddings_{mode}_{split_name}.csv"
                     df_emb.to_csv(out_path, index=False)
 
                 _export_embeddings('train', train_ds)
@@ -1036,17 +1074,17 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
             fmt = "{:.2%}" if mode == 'classification' else "{:.4f}"  # Formatação por modo
             metric_msg += f": {fmt.format(val_metric_value)}"  # Anexa valor final
         if mode == 'classification':
-            metric_msg += f"\nBest Val Acc: {best_val_metric:.2%} @ epoch {best_epoch}"
+            metric_msg += f"\nBest Val Balanced Acc: {best_bal_acc:.2%} @ epoch {best_epoch}"
         try:
             if not headless:
-                messagebox.showinfo("DenseNet", f"Treino concluído. {metric_msg}")
+                messagebox.showinfo("EfficientNet", f"Treino concluído. {metric_msg}")
             else:
-                print(f"[DenseNet] {metric_msg}")
+                print(f"[EfficientNet] {metric_msg}")
         except Exception:
-            print(f"[DenseNet] {metric_msg}")
+            print(f"[EfficientNet] {metric_msg}")
 
-    def refine_densenet_with_rl(self, episodes=8, horizon=4, micro_epochs=1,
-                                train_subset=120, val_subset=80):  # Refinamento via RL
+    def refine_efficientnet_with_rl(self, episodes=8, horizon=4, micro_epochs=1,
+                                    train_subset=120, val_subset=80):  # Refinamento via RL
         if not (SKLEARN_AVAILABLE and TORCH_AVAILABLE and PANDAS_AVAILABLE):
             messagebox.showerror("Dependência ausente",
                                  "PyTorch, scikit-learn e pandas são necessários para o refinamento com RL.")
@@ -1057,9 +1095,9 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
             messagebox.showwarning("Aviso", "Crie o dataset (Criar Dataset) antes de rodar o RL.")
             return
 
-        base_ckpt = self.output_dir / "densenet_classification.pth"
+        base_ckpt = self.output_dir / "efficientnet_classification.pth"
         if not base_ckpt.exists():
-            messagebox.showwarning("Aviso", "Treine a DenseNet de classificação antes de refinar com RL.")
+            messagebox.showwarning("Aviso", "Treine a EfficientNet de classificação antes de refinar com RL.")
             return
 
         df = pd.read_csv(df_path)
@@ -1199,9 +1237,9 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
         val_cm = confusion_matrix(y_val, y_val_pred) if y_val.size else None
         test_cm = confusion_matrix(y_test, y_test_pred) if y_test.size else None
 
-        best_model_path = self.output_dir / "densenet_classification_rl_best.pth"
+        best_model_path = self.output_dir / "efficientnet_classification_rl_best.pth"
         torch.save(best_state, best_model_path)
-        policy_path = self.output_dir / "rl_policy_densenet.pth"
+        policy_path = self.output_dir / "rl_policy_efficientnet.pth"
         torch.save(agent.policy.state_dict(), policy_path)
 
         history_writer = TrainHistoryWriter(self.output_dir)
@@ -1217,7 +1255,7 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
         history_file = history_writer.save(rl_history)
 
         exp_payload = {
-            'model': 'DenseNet_classification_RL',
+            'model': 'EfficientNet_classification_RL',
             'episodes': episodes,
             'horizon': horizon,
             'micro_epochs': micro_epochs,
@@ -1268,7 +1306,7 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
             ax2.legend()
             ax2.grid(True, alpha=0.3)
             fig_rl.tight_layout()
-            curves_path = self.output_dir / "densenet_classification_rl_learning_curves.png"
+            curves_path = self.output_dir / "efficientnet_classification_rl_learning_curves.png"
             fig_rl.savefig(curves_path, dpi=300, bbox_inches='tight')
             try:
                 self._show_plot_window("Curvas RL", fig_rl)
@@ -1280,15 +1318,21 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
             f"Val (full) Acc: {val_metrics.get('acc', 0):.2%}\n"
             f"Teste Acc: {test_metrics.get('acc', 0):.2%}\n"
             f"Histórico: {history_file.name}\n"
-            f"Curvas: densenet_classification_rl_learning_curves.png"
+            f"Curvas: efficientnet_classification_rl_learning_curves.png"
         )
 
         # Treino final robusto usando hiperparâmetros encontrados pelo RL no dataset completo
         if best_hparams:
             try:
-                print("Treinando DenseNet final com hiperparâmetros do RL (split completo)...")
+                print("Treinando EfficientNet final com hiperparâmetros do RL (split completo)...")
                 self._train_pytorch_model(mode='classification', hparams=best_hparams)
             except Exception as e:
                 print(f"Falha ao treinar modelo final com hparams do RL: {e}")
 
-        messagebox.showinfo("DenseNet + RL", msg)
+        messagebox.showinfo("EfficientNet + RL", msg)
+
+    # Alias para compatibilidade
+    def refine_densenet_with_rl(self, episodes=8, horizon=4, micro_epochs=1,
+                                train_subset=120, val_subset=80):
+        return self.refine_efficientnet_with_rl(episodes=episodes, horizon=horizon, micro_epochs=micro_epochs,
+                                                train_subset=train_subset, val_subset=val_subset)

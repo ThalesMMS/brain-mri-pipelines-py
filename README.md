@@ -9,7 +9,7 @@ This repository contains the implementation of image processing and machine lear
 - **Image preprocessing and segmentation** of brain MRI scans
 - **Feature extraction** from segmented regions
 - **Traditional ML classifiers** (SVM) and regressors (XGBoost)
-- **Deep learning models** (DenseNet) with strong regularization/augmentations
+- **Deep learning models** (EfficientNet-B0 baseline) with strong regularization/augmentations
 - **Comprehensive GUI** for interactive analysis
 
 ## Authors
@@ -35,9 +35,9 @@ This repository contains the implementation of image processing and machine lear
 ## Key Features
 
 ### Machine Learning Models
-- **Classification**: SVM (shallow), DenseNet (deep)
-- **Regression**: XGBoost for age estimation, DenseNet for deep regression
-- **Optimization**: Single DenseNet classifier with mixup, dropout, label smoothing, weight decay, and strong augmentations to mitigate overfitting on a small dataset
+- **Classification**: SVM (shallow), EfficientNet-B0 (deep)
+- **Regression**: XGBoost for age estimation, EfficientNet-B0 for deep regression
+- **Optimization**: EfficientNet-B0 baseline with dropout, label smoothing, weight decay, and strong augmentations; mixup optional (off by default) to mitigate overfitting on a small dataset
 
 ### Advanced Capabilities
 - **Automated segmentation** with Otsu thresholding
@@ -47,9 +47,17 @@ This repository contains the implementation of image processing and machine lear
 - **Cross-validation** with patient-specific data splitting
 
 ### Recent Enhancements
-- **Robust DenseNet training**: Mixup, dropout, label smoothing, weight decay, augmentations fortes, early stopping, CosineAnnealing LR
+- **EfficientNet-B0 baseline**: Dropout 0.25, lr 5e-5 (classificação), label smoothing leve, augmentações fortes, early stopping por balanced accuracy, CosineAnnealing LR
 - **Model checkpointing**: Best model saving and EMA weights
 - **Performance tracking**: Incremental training history and learning curves
+
+### Default EfficientNet settings
+- Input 224x224; pretrained EfficientNet-B0 backbone
+- Dropout: 0.25; Label smoothing: 0.05 (classificação)
+- Learning rate: 5e-5 (classificação), 1e-3 (regressão); Weight decay: 1e-4 (classificação)
+- Mixup: desligado por padrão; habilite via `DENSENET_MIXUP` (mantido por compatibilidade)
+- Early stopping: balanced accuracy de validação; seeds e splits fixos (`random_state=42`)
+- Métrica: balanced accuracy como métrica principal de validação/early-stopping (accuracy simples também logada para referência)
 
 ## Repository Structure
 
@@ -99,13 +107,13 @@ python main.py
 ### Basic Workflow
 1. **Launch the GUI**: Run `python main.py`
 2. **Create Dataset**: Use the "Criar Dataset" button to process MRI data
-3. **Train Models**: Select and train desired models (SVM, DenseNet, XGBoost)
+3. **Train Models**: Select and train desired models (SVM, EfficientNet, XGBoost)
 4. **Analyze Results**: View performance metrics and learning curves
 
-### Advanced: RL-based DenseNet Optimization
+### Advanced: RL-based EfficientNet Optimization
 1. Generate the dataset using "Criar Dataset"
-2. Train the base DenseNet classification model
-3. Click **"Refinar DenseNet (RL)"** to optimize with PPO:
+2. Train the base EfficientNet classification model
+3. Click **"Refinar EfficientNet (RL)"** to optimize with PPO:
    - Optimizes: Learning rate, weight decay, dropout, mixup, label smoothing
    - Outputs: Best model, training policy, optimization history
 4. Monitor progress through learning curves and metrics
@@ -114,12 +122,12 @@ python main.py
 
 ### Classification
 - **SVM**: Traditional ML with handcrafted features
-- **DenseNet**: Deep learning with end-to-end training
+- **EfficientNet-B0**: Deep learning with end-to-end training
 - **Metrics**: Accuracy, sensitivity, specificity, confusion matrix
 
 ### Regression
 - **XGBoost**: Age estimation from extracted features
-- **DenseNet**: Deep regression for temporal coherence analysis
+- **EfficientNet-B0**: Deep regression for temporal coherence analysis
 
 ## Technical Implementation
 

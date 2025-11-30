@@ -82,8 +82,8 @@ class UIMixin:  # Métodos relacionados à interface gráfica
         self._create_button(frame, "Criar Dataset", self.create_exam_level_dataset)  # Botão para gerar dataset
         self._create_button(frame, "Treinar SVM", self.open_feature_selection_dialog)  # Botão para treinar SVM
         self._create_button(frame, "Treinar XGBoost (Reg)", self.open_feature_selection_dialog_xgboost)  # Botão para treino XGBoost
-        self._create_button(frame, "DenseNet Classif.", self.train_densenet_classifier)  # Botão para classificador DenseNet
-        self._create_button(frame, "DenseNet Regressor", self.train_densenet_regressor)  # Botão para regressão DenseNet
+        self._create_button(frame, "EfficientNet Classif.", self.train_efficientnet_classifier)  # Botão para classificador EfficientNet
+        self._create_button(frame, "EfficientNet Regressor", self.train_efficientnet_regressor)  # Botão para regressão EfficientNet
         self._create_button(frame, "Ver Histórico", self.view_experiment_history)  # Botão para histórico de experimentos
 
     def _change_font(self, delta):  # Ajusta fontes recursivamente nos widgets
