@@ -1,0 +1,8 @@
+.DS_Store
+/__pycache__
+/brain_mri/__pycache__
+/brain_mri/experiments/__pycache__
+/brain_mri/ml/__pycache__
+/brain_mri/ui/__pycache__
+/brain_mri/utils/__pycache__
+/.code

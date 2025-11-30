@@ -1,0 +1,721 @@
+{
+  "episodes": [
+    {
+      "episode": 1,
+      "reward_sum": 0.8619103303977422,
+      "last_val_acc": 0.44642857142857145,
+      "last_val_loss": 0.80783725636346,
+      "best_val_acc": 0.5714285714285714,
+      "steps": [
+        {
+          "action": "freeze_backbone",
+          "train_loss": 0.6827011505762736,
+          "val_loss": 0.8545798403876168,
+          "train_acc": 0.5926418304443359,
+          "val_acc": 0.4642857142857143,
+          "gap": 0.12835611615862164,
+          "reward": 0.6001076562064035,
+          "hparams": {
+            "lr": 0.0001,
+            "weight_decay": 0.0001,
+            "dropout": 0.2,
+            "label_smoothing": 0.05,
+            "mixup_alpha": 0.2,
+            "freeze_backbone": 1.0,
+            "class_balance": 1.0
+          }
+        },
+        {
+          "action": "wd_up",
+          "train_loss": 0.7443504532178243,
+          "val_loss": 0.7388233627591815,
+          "train_acc": 0.5790051221847534,
+          "val_acc": 0.5178571428571429,
+          "gap": 0.06114797932761051,
+          "reward": 0.22299743890762336,
+          "hparams": {
+            "lr": 0.0001,
+            "weight_decay": 0.00015000000000000001,
+            "dropout": 0.2,
+            "label_smoothing": 0.05,
+            "mixup_alpha": 0.2,
+            "freeze_backbone": 1.0,
+            "class_balance": 1.0
+          }
+        },
+        {
+          "action": "unfreeze_backbone",
+          "train_loss": 0.7429794867833456,
+          "val_loss": 0.7544748697962079,
+          "train_acc": 0.5415958066781362,
+          "val_acc": 0.5714285714285714,
+          "gap": 0.0,
+          "reward": 0.25200627786772584,
+          "hparams": {
+            "lr": 0.0001,
+            "weight_decay": 0.00015000000000000001,
+            "dropout": 0.2,
+            "label_smoothing": 0.05,
+            "mixup_alpha": 0.2,
+            "freeze_backbone": 0.0,
+            "class_balance": 1.0
+          }
+        },
+        {
+          "action": "toggle_dropout",
+          "train_loss": 0.6324841181437174,
+          "val_loss": 0.80783725636346,
+          "train_acc": 0.6121581792831421,
+          "val_acc": 0.44642857142857145,
+          "gap": 0.16572960785457064,
+          "reward": -0.2132010425840105,
+          "hparams": {
+            "lr": 0.0001,
+            "weight_decay": 0.00015000000000000001,
+            "dropout": 0.0,
+            "label_smoothing": 0.05,
+            "mixup_alpha": 0.2,
+            "freeze_backbone": 0.0,
+            "class_balance": 1.0
+          }
+        }
+      ],
+      "update": {
+        "loss": 0.346471905708313,
+        "actor_loss": -0.005672156810760498,
+        "critic_loss": 0.750292181968689,
+        "entropy": 2.300204038619995
+      }
+    },
+    {
+      "episode": 2,
+      "reward_sum": 1.033043470836821,
+      "last_val_acc": 0.6607142857142857,
+      "last_val_loss": 0.6278315101351056,
+      "best_val_acc": 0.6607142857142857,
+      "steps": [
+        {
+          "action": "toggle_dropout",
+          "train_loss": 0.8141836524009705,
+          "val_loss": 0.7297183104923793,
+          "train_acc": 0.25,
+          "val_acc": 0.625,
+          "gap": 0.0,
+          "reward": 0.825,
+          "hparams": {
+            "lr": 0.0001,
+            "weight_decay": 0.00015000000000000001,
+            "dropout": 0.3,
+            "label_smoothing": 0.05,
+            "mixup_alpha": 0.2,
+            "freeze_backbone": 0.0,
+            "class_balance": 1.0
+          }
+        },
+        {
+          "action": "toggle_mixup",
+          "train_loss": 0.7248452305793762,
+          "val_loss": 0.7683312211717878,
+          "train_acc": 0.5,
+          "val_acc": 0.5714285714285714,
+          "gap": 0.0,
+          "reward": -0.057432719639369446,
+          "hparams": {
+            "lr": 0.0001,
+            "weight_decay": 0.00015000000000000001,
+            "dropout": 0.3,
+            "label_smoothing": 0.05,
+            "mixup_alpha": 0.0,
+            "freeze_backbone": 0.0,
+            "class_balance": 1.0
+          }
+        },
+        {
+          "action": "wd_down",
+          "train_loss": 0.629706343015035,
+          "val_loss": 0.7551631927490234,
+          "train_acc": 0.4583333333333333,
+          "val_acc": 0.6071428571428571,
+          "gap": 0.0,
+          "reward": 0.0357142857142857,
+          "hparams": {
+            "lr": 0.0001,
+            "weight_decay": 0.00010000000000000002,
+            "dropout": 0.3,
+            "label_smoothing": 0.05,
+            "mixup_alpha": 0.0,
+            "freeze_backbone": 0.0,
+            "class_balance": 1.0
+          }
+        },
+        {
+          "action": "toggle_label_smoothing",
+          "train_loss": 0.6299771666526794,
+          "val_loss": 0.6278315101351056,
+          "train_acc": 0.7083333333333334,
+          "val_acc": 0.6607142857142857,
+          "gap": 0.04761904761904767,
+          "reward": 0.22976190476190478,
+          "hparams": {
+            "lr": 0.0001,
+            "weight_decay": 0.00010000000000000002,
+            "dropout": 0.3,
+            "label_smoothing": 0.0,
+            "mixup_alpha": 0.0,
+            "freeze_backbone": 0.0,
+            "class_balance": 1.0
+          }
+        }
+      ],
+      "update": {
+        "loss": 0.3929271697998047,
+        "actor_loss": 0.051985472440719604,
+        "critic_loss": 0.7278828620910645,
+        "entropy": 2.2999725341796875
+      }
+    },
+    {
+      "episode": 3,
+      "reward_sum": 0.3881232761201404,
+      "last_val_acc": 0.6071428571428571,
+      "last_val_loss": 0.7845075896808079,
+      "best_val_acc": 0.6607142857142857,
+      "steps": [
+        {
+          "action": "toggle_label_smoothing",
+          "train_loss": 0.7403011123339335,
+          "val_loss": 0.8575571945735386,
+          "train_acc": 0.6666666666666666,
+          "val_acc": 0.44642857142857145,
+          "gap": 0.22023809523809518,
+          "reward": 0.33630952380952384,
+          "hparams": {
+            "lr": 0.0001,
+            "weight_decay": 0.00010000000000000002,
+            "dropout": 0.3,
+            "label_smoothing": 0.1,
+            "mixup_alpha": 0.0,
+            "freeze_backbone": 0.0,
+            "class_balance": 1.0
+          }
+        },
+        {
+          "action": "toggle_label_smoothing",
+          "train_loss": 0.6885450879732767,
+          "val_loss": 0.6776451127869743,
+          "train_acc": 0.625,
+          "val_acc": 0.5178571428571429,
+          "gap": 0.1071428571428571,
+          "reward": 0.017857142857142905,
+          "hparams": {
+            "lr": 0.0001,
+            "weight_decay": 0.00010000000000000002,
+            "dropout": 0.3,
+            "label_smoothing": 0.0,
+            "mixup_alpha": 0.0,
+            "freeze_backbone": 0.0,
+            "class_balance": 1.0
+          }
+        },
+        {
+          "action": "unfreeze_backbone",
+          "train_loss": 0.665657252073288,
+          "val_loss": 0.7335104601723808,
+          "train_acc": 0.5833333333333334,
+          "val_acc": 0.5535714285714286,
+          "gap": 0.029761904761904767,
+          "reward": 0.015246798594792665,
+          "hparams": {
+            "lr": 0.0001,
+            "weight_decay": 0.00010000000000000002,
+            "dropout": 0.3,
+            "label_smoothing": 0.0,
+            "mixup_alpha": 0.0,
+            "freeze_backbone": 0.0,
+            "class_balance": 1.0
+          }
+        },
+        {
+          "action": "toggle_label_smoothing",
+          "train_loss": 0.6208176016807556,
+          "val_loss": 0.7845075896808079,
+          "train_acc": 0.6666666666666666,
+          "val_acc": 0.6071428571428571,
+          "gap": 0.059523809523809534,
+          "reward": 0.01870981085868101,
+          "hparams": {
+            "lr": 0.0001,
+            "weight_decay": 0.00010000000000000002,
+            "dropout": 0.3,
+            "label_smoothing": 0.1,
+            "mixup_alpha": 0.0,
+            "freeze_backbone": 0.0,
+            "class_balance": 1.0
+          }
+        }
+      ],
+      "update": {
+        "loss": 0.3559007942676544,
+        "actor_loss": 0.011642709374427795,
+        "critic_loss": 0.7345159649848938,
+        "entropy": 2.2999911308288574
+      }
+    },
+    {
+      "episode": 4,
+      "reward_sum": 0.4491883116109031,
+      "last_val_acc": 0.5178571428571429,
+      "last_val_loss": 0.7643644043377468,
+      "best_val_acc": 0.6607142857142857,
+      "steps": [
+        {
+          "action": "toggle_label_smoothing",
+          "train_loss": 0.7186743219693502,
+          "val_loss": 0.7424922670636859,
+          "train_acc": 0.5833333333333334,
+          "val_acc": 0.5,
+          "gap": 0.08333333333333337,
+          "reward": 0.4583333333333333,
+          "hparams": {
+            "lr": 0.0001,
+            "weight_decay": 0.00010000000000000002,
+            "dropout": 0.3,
+            "label_smoothing": 0.0,
+            "mixup_alpha": 0.0,
+            "freeze_backbone": 0.0,
+            "class_balance": 1.0
+          }
+        },
+        {
+          "action": "unfreeze_backbone",
+          "train_loss": 0.7464574178059896,
+          "val_loss": 0.712048990385873,
+          "train_acc": 0.375,
+          "val_acc": 0.5178571428571429,
+          "gap": 0.0,
+          "reward": 0.017857142857142905,
+          "hparams": {
+            "lr": 0.0001,
+            "weight_decay": 0.00010000000000000002,
+            "dropout": 0.3,
+            "label_smoothing": 0.0,
+            "mixup_alpha": 0.0,
+            "freeze_backbone": 0.0,
+            "class_balance": 1.0
+          }
+        },
+        {
+          "action": "toggle_label_smoothing",
+          "train_loss": 0.7735508879025778,
+          "val_loss": 0.7737373028482709,
+          "train_acc": 0.5416666666666666,
+          "val_acc": 0.5,
+          "gap": 0.04166666666666663,
+          "reward": -0.04485930743671601,
+          "hparams": {
+            "lr": 0.0001,
+            "weight_decay": 0.00010000000000000002,
+            "dropout": 0.3,
+            "label_smoothing": 0.1,
+            "mixup_alpha": 0.0,
+            "freeze_backbone": 0.0,
+            "class_balance": 1.0
+          }
+        },
+        {
+          "action": "toggle_mixup",
+          "train_loss": 0.7325193683306376,
+          "val_loss": 0.7643644043377468,
+          "train_acc": 0.4740077455838521,
+          "val_acc": 0.5178571428571429,
+          "gap": 0.0,
+          "reward": 0.017857142857142905,
+          "hparams": {
+            "lr": 0.0001,
+            "weight_decay": 0.00010000000000000002,
+            "dropout": 0.3,
+            "label_smoothing": 0.1,
+            "mixup_alpha": 0.2,
+            "freeze_backbone": 0.0,
+            "class_balance": 1.0
+          }
+        }
+      ],
+      "update": {
+        "loss": 0.3389173150062561,
+        "actor_loss": -0.001429036259651184,
+        "critic_loss": 0.726691722869873,
+        "entropy": 2.299952268600464
+      }
+    },
+    {
+      "episode": 5,
+      "reward_sum": -0.112228707756315,
+      "last_val_acc": 0.39285714285714285,
+      "last_val_loss": 0.9369649120739528,
+      "best_val_acc": 0.6607142857142857,
+      "steps": [
+        {
+          "action": "toggle_label_smoothing",
+          "train_loss": 0.5712745984395345,
+          "val_loss": 1.0248662063053675,
+          "train_acc": 0.7264673709869385,
+          "val_acc": 0.39285714285714285,
+          "gap": 0.3336102281297956,
+          "reward": 0.22605202879224504,
+          "hparams": {
+            "lr": 0.0001,
+            "weight_decay": 0.00010000000000000002,
+            "dropout": 0.3,
+            "label_smoothing": 0.0,
+            "mixup_alpha": 0.2,
+            "freeze_backbone": 0.0,
+            "class_balance": 1.0
+          }
+        },
+        {
+          "action": "toggle_label_smoothing",
+          "train_loss": 0.9319339195887247,
+          "val_loss": 1.1639725480760847,
+          "train_acc": 0.3359420895576477,
+          "val_acc": 0.39285714285714285,
+          "gap": 0.0,
+          "reward": -0.013910634177071723,
+          "hparams": {
+            "lr": 0.0001,
+            "weight_decay": 0.00010000000000000002,
+            "dropout": 0.3,
+            "label_smoothing": 0.1,
+            "mixup_alpha": 0.2,
+            "freeze_backbone": 0.0,
+            "class_balance": 1.0
+          }
+        },
+        {
+          "action": "toggle_class_balance",
+          "train_loss": 0.6401886542638143,
+          "val_loss": 0.922186587538038,
+          "train_acc": 0.7069591482480367,
+          "val_acc": 0.39285714285714285,
+          "gap": 0.3141020053908939,
+          "reward": -0.15705100269544695,
+          "hparams": {
+            "lr": 0.0001,
+            "weight_decay": 0.00010000000000000002,
+            "dropout": 0.3,
+            "label_smoothing": 0.1,
+            "mixup_alpha": 0.2,
+            "freeze_backbone": 0.0,
+            "class_balance": 0.0
+          }
+        },
+        {
+          "action": "wd_down",
+          "train_loss": 0.6519291202227274,
+          "val_loss": 0.9369649120739528,
+          "train_acc": 0.7245396773020426,
+          "val_acc": 0.39285714285714285,
+          "gap": 0.33168253444489976,
+          "reward": -0.16731909967604136,
+          "hparams": {
+            "lr": 0.0001,
+            "weight_decay": 5.0000000000000016e-05,
+            "dropout": 0.3,
+            "label_smoothing": 0.1,
+            "mixup_alpha": 0.2,
+            "freeze_backbone": 0.0,
+            "class_balance": 0.0
+          }
+        }
+      ],
+      "update": {
+        "loss": 0.3740994334220886,
+        "actor_loss": 0.03277575969696045,
+        "critic_loss": 0.7286399602890015,
+        "entropy": 2.2996320724487305
+      }
+    },
+    {
+      "episode": 6,
+      "reward_sum": 0.04920243010634469,
+      "last_val_acc": 0.39285714285714285,
+      "last_val_loss": 0.8375482644353595,
+      "best_val_acc": 0.6607142857142857,
+      "steps": [
+        {
+          "action": "unfreeze_backbone",
+          "train_loss": 0.7518521547317505,
+          "val_loss": 0.8123884711946759,
+          "train_acc": 0.5002571145693461,
+          "val_acc": 0.375,
+          "gap": 0.12525711456934607,
+          "reward": 0.31237144271532696,
+          "hparams": {
+            "lr": 0.0001,
+            "weight_decay": 5.0000000000000016e-05,
+            "dropout": 0.3,
+            "label_smoothing": 0.1,
+            "mixup_alpha": 0.2,
+            "freeze_backbone": 0.0,
+            "class_balance": 0.0
+          }
+        },
+        {
+          "action": "unfreeze_backbone",
+          "train_loss": 0.7272244294484457,
+          "val_loss": 0.8450949021748134,
+          "train_acc": 0.6666122078895569,
+          "val_acc": 0.35714285714285715,
+          "gap": 0.30946935074669973,
+          "reward": -0.17586246132850647,
+          "hparams": {
+            "lr": 0.0001,
+            "weight_decay": 5.0000000000000016e-05,
+            "dropout": 0.3,
+            "label_smoothing": 0.1,
+            "mixup_alpha": 0.2,
+            "freeze_backbone": 0.0,
+            "class_balance": 0.0
+          }
+        },
+        {
+          "action": "lr_up",
+          "train_loss": 0.7408160964647929,
+          "val_loss": 0.8924866403852191,
+          "train_acc": 0.503218024969101,
+          "val_acc": 0.375,
+          "gap": 0.12821802496910095,
+          "reward": -0.050991043448448195,
+          "hparams": {
+            "lr": 0.00013000000000000002,
+            "weight_decay": 5.0000000000000016e-05,
+            "dropout": 0.3,
+            "label_smoothing": 0.1,
+            "mixup_alpha": 0.2,
+            "freeze_backbone": 0.0,
+            "class_balance": 0.0
+          }
+        },
+        {
+          "action": "wd_down",
+          "train_loss": 0.7026185194651285,
+          "val_loss": 0.8375482644353595,
+          "train_acc": 0.5012024442354838,
+          "val_acc": 0.39285714285714285,
+          "gap": 0.10834530137834092,
+          "reward": -0.03631550783202761,
+          "hparams": {
+            "lr": 0.00013000000000000002,
+            "weight_decay": 1.3552527156068805e-20,
+            "dropout": 0.3,
+            "label_smoothing": 0.1,
+            "mixup_alpha": 0.2,
+            "freeze_backbone": 0.0,
+            "class_balance": 0.0
+          }
+        }
+      ],
+      "update": {
+        "loss": 0.34480804204940796,
+        "actor_loss": 0.0032230988144874573,
+        "critic_loss": 0.7291664481163025,
+        "entropy": 2.2998268604278564
+      }
+    },
+    {
+      "episode": 7,
+      "reward_sum": 0.403007045246306,
+      "last_val_acc": 0.5892857142857143,
+      "last_val_loss": 0.7213455864361354,
+      "best_val_acc": 0.6607142857142857,
+      "steps": [
+        {
+          "action": "toggle_mixup",
+          "train_loss": 0.7025726040204366,
+          "val_loss": 0.7142875364848545,
+          "train_acc": 0.625,
+          "val_acc": 0.5357142857142857,
+          "gap": 0.0892857142857143,
+          "reward": 0.49107142857142855,
+          "hparams": {
+            "lr": 0.00013000000000000002,
+            "weight_decay": 1.3552527156068805e-20,
+            "dropout": 0.3,
+            "label_smoothing": 0.1,
+            "mixup_alpha": 0.0,
+            "freeze_backbone": 0.0,
+            "class_balance": 0.0
+          }
+        },
+        {
+          "action": "wd_up",
+          "train_loss": 0.5917531251907349,
+          "val_loss": 0.7165122713361468,
+          "train_acc": 0.7916666666666666,
+          "val_acc": 0.5892857142857143,
+          "gap": 0.20238095238095233,
+          "reward": -0.04784152110417679,
+          "hparams": {
+            "lr": 0.00013000000000000002,
+            "weight_decay": 5.0000000000000016e-05,
+            "dropout": 0.3,
+            "label_smoothing": 0.1,
+            "mixup_alpha": 0.0,
+            "freeze_backbone": 0.0,
+            "class_balance": 0.0
+          }
+        },
+        {
+          "action": "toggle_class_balance",
+          "train_loss": 0.7544040679931641,
+          "val_loss": 0.7318361316408429,
+          "train_acc": 0.5416666666666666,
+          "val_acc": 0.5892857142857143,
+          "gap": 0.0,
+          "reward": -0.0015323860304696125,
+          "hparams": {
+            "lr": 0.00013000000000000002,
+            "weight_decay": 5.0000000000000016e-05,
+            "dropout": 0.3,
+            "label_smoothing": 0.1,
+            "mixup_alpha": 0.0,
+            "freeze_backbone": 0.0,
+            "class_balance": 1.0
+          }
+        },
+        {
+          "action": "wd_down",
+          "train_loss": 0.6735288500785828,
+          "val_loss": 0.7213455864361354,
+          "train_acc": 0.6666666666666666,
+          "val_acc": 0.5892857142857143,
+          "gap": 0.07738095238095233,
+          "reward": -0.038690476190476164,
+          "hparams": {
+            "lr": 0.00013000000000000002,
+            "weight_decay": 1.3552527156068805e-20,
+            "dropout": 0.3,
+            "label_smoothing": 0.1,
+            "mixup_alpha": 0.0,
+            "freeze_backbone": 0.0,
+            "class_balance": 1.0
+          }
+        }
+      ],
+      "update": {
+        "loss": 0.35721614956855774,
+        "actor_loss": 0.02826034277677536,
+        "critic_loss": 0.7039114236831665,
+        "entropy": 2.299992084503174
+      }
+    },
+    {
+      "episode": 8,
+      "reward_sum": -0.20166798233985897,
+      "last_val_acc": 0.39285714285714285,
+      "last_val_loss": 1.5751955168587821,
+      "best_val_acc": 0.6607142857142857,
+      "steps": [
+        {
+          "action": "toggle_dropout",
+          "train_loss": 0.6138404409090678,
+          "val_loss": 1.0304833224841528,
+          "train_acc": 0.6666666666666666,
+          "val_acc": 0.375,
+          "gap": 0.29166666666666663,
+          "reward": 0.22916666666666669,
+          "hparams": {
+            "lr": 0.00013000000000000002,
+            "weight_decay": 1.3552527156068805e-20,
+            "dropout": 0.0,
+            "label_smoothing": 0.1,
+            "mixup_alpha": 0.0,
+            "freeze_backbone": 0.0,
+            "class_balance": 1.0
+          }
+        },
+        {
+          "action": "lr_up",
+          "train_loss": 0.6256815195083618,
+          "val_loss": 1.3282830544880457,
+          "train_acc": 0.6666666666666666,
+          "val_acc": 0.39285714285714285,
+          "gap": 0.2738095238095238,
+          "reward": -0.14882759224800834,
+          "hparams": {
+            "lr": 0.00016900000000000002,
+            "weight_decay": 1.3552527156068805e-20,
+            "dropout": 0.0,
+            "label_smoothing": 0.1,
+            "mixup_alpha": 0.0,
+            "freeze_backbone": 0.0,
+            "class_balance": 1.0
+          }
+        },
+        {
+          "action": "lr_down",
+          "train_loss": 0.6484179198741913,
+          "val_loss": 1.6185917173113142,
+          "train_acc": 0.6666666666666666,
+          "val_acc": 0.39285714285714285,
+          "gap": 0.2738095238095238,
+          "reward": -0.16593562818708874,
+          "hparams": {
+            "lr": 0.0001183,
+            "weight_decay": 1.3552527156068805e-20,
+            "dropout": 0.0,
+            "label_smoothing": 0.1,
+            "mixup_alpha": 0.0,
+            "freeze_backbone": 0.0,
+            "class_balance": 1.0
+          }
+        },
+        {
+          "action": "wd_up",
+          "train_loss": 0.6333004633585612,
+          "val_loss": 1.5751955168587821,
+          "train_acc": 0.625,
+          "val_acc": 0.39285714285714285,
+          "gap": 0.23214285714285715,
+          "reward": -0.11607142857142858,
+          "hparams": {
+            "lr": 0.0001183,
+            "weight_decay": 5.0000000000000016e-05,
+            "dropout": 0.0,
+            "label_smoothing": 0.1,
+            "mixup_alpha": 0.0,
+            "freeze_backbone": 0.0,
+            "class_balance": 1.0
+          }
+        }
+      ],
+      "update": {
+        "loss": 0.31569257378578186,
+        "actor_loss": -0.03647950291633606,
+        "critic_loss": 0.7503427267074585,
+        "entropy": 2.2999284267425537
+      }
+    }
+  ],
+  "actions": [
+    "lr_up",
+    "lr_down",
+    "wd_up",
+    "wd_down",
+    "toggle_dropout",
+    "toggle_label_smoothing",
+    "toggle_mixup",
+    "freeze_backbone",
+    "unfreeze_backbone",
+    "toggle_class_balance"
+  ],
+  "meta": {
+    "episodes": 8,
+    "horizon": 4,
+    "micro_epochs": 1,
+    "train_subset": 120,
+    "val_subset": 56,
+    "best_val_acc": 0.6607142857142857,
+    "base_checkpoint": "densenet_classification.pth"
+  }
+}
