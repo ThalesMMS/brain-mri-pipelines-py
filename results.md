@@ -35,3 +35,20 @@ Após reconstrução de `original_path`, avaliação do bestval salvo (último r
 1) Re-rodar exatamente o preset do Run5 (mixup 0.2, ls 0.05, dropout 0.5, class_balance off, balance_penalty=0) e salvar bestval como `densenet_classification_best_run5.pth`, avaliando thresholds 0.45–0.55.
 2) Para balanced acc, usar WeightedRandomSampler (Run9) com threshold 0.5 (balanced acc ~0.586), sabendo que o F1 fica menor.
 3) Manter `original_path` reconstruído no split para evitar erros de leitura.
+
+## Novos experimentos (rodada final)
+
+| Run | Strategy | Key hparams | Epochs (early stop) | Val best acc | Test acc | Prec | Rec | F1 | Balanced acc | Confusion (TN, FP, FN, TP) | Notes |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 5-replay | baseline replay (mixup/ls, dropout 0.5) | mixup=0.2, ls=0.05, dropout=0.5, lr=1e-4, wd=1e-4, balance_penalty=0, class_balance=off | 11 (best @4) | 0.737 | 0.447 | 0.167 | 0.059 | 0.087 | 0.26 | (16, 5, 16, 1) | Re-run degradou, sem ganho |
+| 9 (prev) | sampler, dropout=0.3, bal_pen=0.05 | mixup=0.2, ls=0.05, sampler, dropout=0.3, lr=1e-4, wd=1e-4, class_balance=off | <=20 | 0.518 | 0.571 | 0.682 | 0.366 | 0.476 | 0.586 | (29, 7, 26, 15) | Balanced acc > baseline, F1 baixo |
+| 10 | sampler, dropout=0.3, thresholds 0.45–0.5 | mixup=0.2, ls=0.05, sampler, dropout=0.3, lr=1e-4, wd=1e-4, class_balance=off, bal_pen=0 | <=20 | 0.816 | 0.526 | 0.481 | 0.765 | 0.591 | 0.549 | (7, 14, 4, 13) | Melhor sampler desta rodada, mas F1<baseline |
+
+## Checkpoint bestval atual (após rebuild de `original_path`) – thresholds 0.4–0.7
+
+| Threshold | Acc | Prec | Rec | F1 | Balanced acc | CM (TN, FP, FN, TP) |
+| --- | --- | --- | --- | --- | --- | --- |
+| 0.4 | 0.447 | 0.447 | 1.000 | 0.618 | 0.50 | (0, 21, 0, 17) |
+| 0.5 | 0.500 | 0.417 | 0.294 | 0.345 | 0.48 | (14, 7, 12, 5) |
+| 0.6 | 0.553 | 0.000 | 0.000 | 0.000 | 0.50 | (21, 0, 17, 0) |
+| 0.7 | 0.553 | 0.000 | 0.000 | 0.000 | 0.50 | (21, 0, 17, 0) |
