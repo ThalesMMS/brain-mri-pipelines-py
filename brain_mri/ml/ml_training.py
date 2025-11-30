@@ -471,7 +471,7 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
         print(f"Dispositivo selecionado: {device} | Torch threads: {torch.get_num_threads()}")  # Log para debugging
 
         # Hiperparâmetros (podem ser sobrescritos por hparams)
-        defaults = {
+                defaults = {
             "lr": float(os.getenv("DENSENET_LR", 1e-4 if mode == 'classification' else 0.001)),
             "weight_decay": float(os.getenv("DENSENET_WEIGHT_DECAY", 1e-4 if mode == 'classification' else 0.0)),
             "dropout": float(os.getenv("DENSENET_DROPOUT", 0.3)),
@@ -484,10 +484,6 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
             "balance_penalty": float(os.getenv("DENSENET_BALANCE_PENALTY", 0.0)),
             "thresholds_eval": [float(x) for x in os.getenv("DENSENET_THRESHOLDS", "0.5,0.6,0.4,0.7").split(',')],
             "seed": int(os.getenv("DENSENET_SEED", "42")),
-            "batch_size": int(os.getenv("DENSENET_BATCH", "16")),
-            "epochs_env": int(os.getenv("DENSENET_EPOCHS", "0")),
-            "use_focal": os.getenv("DENSENET_USE_FOCAL", "0") == "1",
-            "grad_clip": float(os.getenv("DENSENET_CLIP", "1.0")),
         }
         if hparams:
             for k, v in hparams.items():

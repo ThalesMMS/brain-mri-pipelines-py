@@ -1,4 +1,4 @@
-# DenseNet Classification Experiments (headless notebook)
+# DenseNet Classification Experiments
 
 ## Experimentos recentes (pós-penalização / sampler)
 
