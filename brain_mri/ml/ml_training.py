@@ -60,6 +60,44 @@ from .datasets import MRIDataset  # Dataset PyTorch específico
 
 
 class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de modelos
+    def _list_orientation_paths(self, mri_id: str):
+        """Lista caminhos disponíveis para o mesmo exame nas orientações axl/cor/sag."""
+        base = self.dataset_dir.parent
+        paths = []
+        for orient in ["axl", "cor", "sag"]:
+            for ext in (".nii.gz", ".nii"):
+                cand = base / orient / f"{mri_id}_{orient}{ext}"
+                if cand.exists():
+                    try:
+                        rel = cand.relative_to(base)
+                        paths.append(str(rel))
+                    except ValueError:
+                        paths.append(str(cand))
+        return paths
+
+    def _expand_with_orientations(self, df_subset):
+        """Duplica linhas para cada orientação disponível; mantém metadados originais."""
+        if df_subset is None or df_subset.empty:
+            return df_subset
+        rows = []
+        for _, row in df_subset.iterrows():
+            mri_id = row.get("MRI_ID")
+            if not isinstance(mri_id, str):
+                continue
+            orient_paths = self._list_orientation_paths(mri_id)
+            # Se não houver nenhuma outra orientação, mantém a linha original
+            if not orient_paths:
+                if row.get("original_path"):
+                    rows.append(row.copy())
+                continue
+            # Uma linha por exame, guardando lista de caminhos para empilhamento downstream
+            r = row.copy()
+            r["orientation_paths"] = orient_paths
+            # Define original_path como axial se existir, senão primeiro disponível
+            axial = [p for p in orient_paths if "_axl" in p]
+            r["original_path"] = axial[0] if axial else orient_paths[0]
+            rows.append(r)
+        return type(df_subset)(rows)
     def create_exam_level_dataset(self):  # Constrói dataset unindo descritores e dados demográficos com split
         """Junta CSV demográfico com descritores e faz split."""  # Docstring do processo de criação do dataset
         if not PANDAS_AVAILABLE:
@@ -404,14 +442,24 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
         self._train_pytorch_model(mode='regression')  # Chama treino genérico com modo de regressão
 
     def _train_pytorch_model(self, mode='classification', hparams=None):  # Treina DenseNet para classificação ou regressão
+        headless = not hasattr(self, 'root') or self.root is None
         if not SKLEARN_AVAILABLE:
-            messagebox.showerror("Dependência ausente", "O módulo 'scikit-learn' é necessário para normalização e métricas.\nInstale com 'pip install scikit-learn'.")
+            try:
+                messagebox.showerror("Dependência ausente", "O módulo 'scikit-learn' é necessário para normalização e métricas.\nInstale com 'pip install scikit-learn'.")
+            except Exception:
+                print("[WARN] scikit-learn ausente")
             return
         if not TORCH_AVAILABLE:
-            messagebox.showerror("Dependência ausente", "PyTorch/torchvision são necessários para este treino.\nInstale com 'pip install torch torchvision'.")
+            try:
+                messagebox.showerror("Dependência ausente", "PyTorch/torchvision são necessários para este treino.\nInstale com 'pip install torch torchvision'.")
+            except Exception:
+                print("[WARN] PyTorch/torchvision ausentes")
             return
         if not PANDAS_AVAILABLE:
-            messagebox.showerror("Dependência ausente", "O módulo 'pandas' é necessário para preparar os datasets de treino.\nInstale com 'pip install pandas'.")
+            try:
+                messagebox.showerror("Dependência ausente", "O módulo 'pandas' é necessário para preparar os datasets de treino.\nInstale com 'pip install pandas'.")
+            except Exception:
+                print("[WARN] pandas ausente")
             return
         start_time = time.time()  # Marca início do treinamento
 
@@ -428,9 +476,14 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
             "weight_decay": 1e-4 if mode == 'classification' else 0.0,
             "dropout": 0.3,
             "label_smoothing": 0.05 if mode == 'classification' else 0.0,
-            "mixup_alpha": 0.4 if mode == 'classification' else 0.0,
+            "mixup_alpha": 0.2 if mode == 'classification' else 0.0,
             "freeze_backbone": False,
             "class_balance": False,
+            "freeze_warmup_epochs": 0,
+            "warmup_lr": None,
+            "balance_penalty": 0.0,
+            "thresholds_eval": [0.5, 0.6, 0.4, 0.7],
+            "seed": 42,
         }
         if hparams:
             for k, v in hparams.items():
@@ -471,15 +524,25 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
 
         lbl_col = 'age_normalized' if mode == 'regression' else 'Final_Group'  # Define coluna alvo conforme modo
 
-        train_ds = MRIDataset(df[df['split']=='train'], train_tf, self.dataset_dir.parent, 'original_path', lbl_col)  # Dataset de treino
-        val_ds = MRIDataset(df[df['split']=='validation'], val_tf, self.dataset_dir.parent, 'original_path', lbl_col)  # Dataset de validação
-        test_ds = MRIDataset(df[df['split']=='test'], val_tf, self.dataset_dir.parent, 'original_path', lbl_col)  # Dataset de teste
+        # Expande cada linha para todas as orientações disponíveis (axl/cor/sag) para DenseNet
+        train_df = self._expand_with_orientations(df[df['split']=='train'])
+        val_df = self._expand_with_orientations(df[df['split']=='validation'])
+        test_df = self._expand_with_orientations(df[df['split']=='test'])
+
+        train_ds = MRIDataset(train_df, train_tf, self.dataset_dir.parent, 'original_path', lbl_col)  # Dataset de treino
+        val_ds = MRIDataset(val_df, val_tf, self.dataset_dir.parent, 'original_path', lbl_col)  # Dataset de validação
+        test_ds = MRIDataset(test_df, val_tf, self.dataset_dir.parent, 'original_path', lbl_col)  # Dataset de teste
 
         if len(val_ds) == 0:  # Validação obrigatória
             messagebox.showwarning("Aviso", "Split de validação vazio.")  # Alerta ausência de validação
             return  # Sai
 
         epochs = 40 if mode == 'classification' else 20  # Número de épocas (mais longo para class)
+        if hparams and 'max_epochs' in hparams:
+            try:
+                epochs = int(hparams['max_epochs'])
+            except Exception:
+                pass
         batch_size = 16  # Tamanho do batch
         early_stop_patience = 7 if mode == 'classification' else None  # Early stopping para class
         use_mixup = mode == 'classification' and mixup_alpha > 0
@@ -515,9 +578,12 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
         )  # Função de perda conforme modo
         ema = ExponentialMovingAverage(model, decay=ema_decay) if use_ema else None  # EMA opcional
 
-        popup = tk.Toplevel(self.root)  # Janela popup para status de treinamento
-        lbl = tk.Label(popup, text=f"Treinando... aguarde ({epochs} épocas)"); lbl.pack(padx=20, pady=20)  # Mensagem de progresso
-        self.root.update()  # Atualiza UI
+        popup = None
+        if not headless and hasattr(self, 'root'):
+            popup = tk.Toplevel(self.root)
+            lbl = tk.Label(popup, text=f"Treinando... aguarde ({epochs} épocas)"); lbl.pack(padx=20, pady=20)
+            try: self.root.update()
+            except Exception: pass
 
         def _mixup_data(x, y, alpha=0.4):
             if alpha <= 0:
@@ -650,7 +716,9 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
 
             scheduler.step()  # Atualiza LR
 
-        popup.destroy()  # Fecha popup de progresso
+        if popup is not None:
+            try: popup.destroy()
+            except Exception: pass
 
         # Se early stopping foi ativado, restaura melhor estado
         if best_state is not None:
@@ -714,7 +782,9 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
 
             curves_name = f"densenet_{mode}_learning_curves.png"  # Nome do arquivo de curvas
             fig.savefig(self.output_dir / curves_name, dpi=300, bbox_inches='tight')  # Salva curvas
-            self._show_plot_window("Resultados", fig)  # Exibe janela com curvas
+            if not headless:
+                try: self._show_plot_window("Resultados", fig)
+                except Exception: pass
 
         torch.save(model.state_dict(), self.output_dir / f"densenet_{mode}.pth")  # Salva pesos do modelo (melhor estado)
 
@@ -799,7 +869,9 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
 
             fig_scatter.tight_layout()  # Ajusta layout
             fig_scatter.savefig(self.output_dir / f"densenet_regression_scatter.png", dpi=300, bbox_inches='tight')  # Salva gráfico
-            self._show_plot_window("Gráfico de Dispersão - Teste", fig_scatter)  # Exibe gráfico
+            if not headless:
+                try: self._show_plot_window("Gráfico de Dispersão - Teste", fig_scatter)
+                except Exception: pass
 
             val_metric_value = test_mae_orig  # Métrica final para regressão
 
@@ -840,7 +912,9 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
                 self.plot_confusion_matrix(ax, test_cm, ['0', '1'], "Teste")  # Plota matriz
                 fig_cm.tight_layout()  # Ajusta layout
                 fig_cm.savefig(self.output_dir / f"confusion_densenet_{mode}.png", dpi=300, bbox_inches='tight')  # Salva imagem
-                self._show_plot_window("Matriz de Confusão - Teste", fig_cm)  # Exibe janela
+                if not headless:
+                    try: self._show_plot_window("Matriz de Confusão - Teste", fig_cm)
+                    except Exception: pass
 
         learning_curves = {  # Dicionário com curvas de aprendizagem
             'train_loss': history_train_loss,
@@ -952,7 +1026,13 @@ class MLTrainingMixin:  # Métodos de criação de dataset e treinamento de mode
             metric_msg += f": {fmt.format(val_metric_value)}"  # Anexa valor final
         if mode == 'classification':
             metric_msg += f"\nBest Val Acc: {best_val_metric:.2%} @ epoch {best_epoch}"
-        messagebox.showinfo("DenseNet", f"Treino concluído. {metric_msg}")  # Mostra diálogo final
+        try:
+            if not headless:
+                messagebox.showinfo("DenseNet", f"Treino concluído. {metric_msg}")
+            else:
+                print(f"[DenseNet] {metric_msg}")
+        except Exception:
+            print(f"[DenseNet] {metric_msg}")
 
     def refine_densenet_with_rl(self, episodes=8, horizon=4, micro_epochs=1,
                                 train_subset=120, val_subset=80):  # Refinamento via RL

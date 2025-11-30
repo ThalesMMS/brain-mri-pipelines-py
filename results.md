@@ -52,3 +52,14 @@ Após reconstrução de `original_path`, avaliação do bestval salvo (último r
 | 0.5 | 0.500 | 0.417 | 0.294 | 0.345 | 0.48 | (14, 7, 12, 5) |
 | 0.6 | 0.553 | 0.000 | 0.000 | 0.000 | 0.50 | (21, 0, 17, 0) |
 | 0.7 | 0.553 | 0.000 | 0.000 | 0.000 | 0.50 | (21, 0, 17, 0) |
+
+## Novo teste (axl+cor+sag empilhados, grayscale) - run stack5ep
+| Run | Strategy | Key hparams | Epochs | Val best acc | Test acc | Prec | Rec | F1 | Balanced acc | Confusion (TN, FP, FN, TP) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| stack5ep | 3 vistas empilhadas (axl/cor/sag), grayscale, headless | mixup=0.2, ls=0.05, dropout=0.3, class_balance=off, balance_penalty=0, epochs=5 | 5 | 0.711 | 0.447 | 0.417 | 0.588 | 0.488 | ~0.49 | (7,14,7,10) |
+
+## Novo teste stack_long (axl/cor/sag empilhadas)
+
+| Run | Strategy | Acc@0.5 | Prec | Rec | F1 | Balanced acc | CM (TN, FP, FN, TP) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| stack_long | 3 vistas empilhadas (axl/cor/sag), mixup=0.2, ls=0.05, dropout=0.35, class_balance=off, epochs=18 | 0.447 | 0.447 | 1.000 | 0.618 | 0.500 | [[0, 21], [0, 17]] |

@@ -45,6 +45,25 @@ class ImageUtils:  # Define utilitários estáticos para lidar com imagens
             return Image.fromarray((data * 255).astype(np.uint8)).convert('RGB')  # Converte array normalizado em imagem RGB de 8 bits
         raise ValueError(f"Formato não suportado: {path}")  # Erro explícito para extensões desconhecidas
 
+    @staticmethod
+    def load_image_grayscale(path: Path) -> Image.Image:
+        """Carrega imagem e retorna em escala de cinza (1 canal)."""
+        if Image is None:
+            raise ImportError("O módulo Pillow não está instalado. Instale com 'pip install pillow'.")
+        if path.suffix.lower() in {'.png', '.jpg', '.jpeg'}:
+            return Image.open(path).convert('L')
+        if path.suffix.lower() in {'.gz', '.nii'}:
+            if not NIB_AVAILABLE:
+                raise ImportError("O módulo nibabel não está instalado. Instale com 'pip install nibabel'.")
+            nii = nib.load(str(path))
+            data = np.squeeze(nii.get_fdata())
+            if data.ndim == 3:
+                data = data[:, :, 0]
+            denom = data.max() - data.min()
+            data = (data - data.min()) / (denom + 1e-8)
+            return Image.fromarray((data * 255).astype(np.uint8)).convert('L')
+        raise ValueError(f"Formato não suportado: {path}")
+
     @staticmethod  # Indica método estático para normalizar arrays
     def normalize_array(img):  # Normaliza array de intensidades para faixa 0-1
         img = img.astype(np.float32)  # Converte para float32 para cálculos estáveis
