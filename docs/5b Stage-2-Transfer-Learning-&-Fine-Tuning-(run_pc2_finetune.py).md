@@ -9,14 +9,14 @@ This document describes **Stage 2** of the three-stage research pipeline, which 
 
 **Relationship to other stages:**
 
-* For embedding quality assessment (Stage 1), see [Stage 1: Embedding Analysis](#6.1)
-* For RL-based hyperparameter optimization (Stage 3), see [Stage 3: RL Hyperparameter Refinement](#6.3)
-* For backbone architecture details, see [Deep Learning Backbones](#5.1)
-* For the multi-stream architecture, see [Multi-Stream Multimodal Network](#3.1)
+* For embedding quality assessment (Stage 1), see [Stage 1: Embedding Analysis](6a%20Graphical-User-Interface-%28main.py%29.md)
+* For RL-based hyperparameter optimization (Stage 3), see [Stage 3: RL Hyperparameter Refinement](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* For backbone architecture details, see [Deep Learning Backbones](5a%20Stage-1-Embedding-Analysis-%28run_pc1_embeddings.py%29.md)
+* For the multi-stream architecture, see [Multi-Stream Multimodal Network](3a%20Multi-Stream-Multimodal-Network.md)
 
 The script `brain_mri/scripts/run_pc2_finetune.py` orchestrates this stage, implementing an explicit warmup phase with frozen backbone weights followed by full end-to-end fine-tuning.
 
-**Sources:** [README.md L122-L149](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L149)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L149)
 
 ---
 
@@ -83,7 +83,7 @@ end
 * Uses lower learning rate for careful feature adaptation
 * Allows domain-specific feature refinement
 
-**Sources:** [README.md L134-L140](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L134-L140)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L134-L140)
 
 ---
 
@@ -145,7 +145,7 @@ subgraph subGraph0 ["Backbone Options"]
 end
 ```
 
-**Sources:** [README.md L134-L140](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L134-L140)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L134-L140)
 
 ---
 
@@ -217,7 +217,7 @@ This ensures:
 | **Validation Accuracy** | Initial rapid increase, then plateau |
 | **Risk of Overfitting** | Lower (fewer trainable parameters) |
 
-**Sources:** [README.md L134-L140](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L134-L140)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L134-L140)
 
 ---
 
@@ -284,9 +284,9 @@ The system saves model checkpoints based on validation performance:
 * **Location**: `output/models/` directory
 * **Naming**: Includes backbone type, seed, timestamp
 
-**Sources:** [README.md L134-L140](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L134-L140)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L134-L140)
 
- [README.md L162-L169](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L169)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L169)
 
 ---
 
@@ -430,7 +430,7 @@ end
 
 **Sources:** [README.md L23-L24](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L23-L24)
 
- [README.md L42-L50](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L42-L50)
+ README.md
 
 ---
 
@@ -480,7 +480,7 @@ end
 * Balanced accuracy would be 50% (random chance)
 * Forces model to learn discriminative features for both classes
 
-**Sources:** [README.md L162-L169](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L169)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L169)
 
 ---
 
@@ -587,7 +587,7 @@ end
 
 **Key Point**: Stage 2 provides a strong initialization that has already adapted to the OASIS-2 domain. Stage 3 then applies RL-based hyperparameter search to squeeze out additional performance gains without retraining from scratch.
 
-**Sources:** [README.md L142-L149](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L142-L149)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L142-L149)
 
 ---
 
@@ -619,7 +619,7 @@ python run_deep_models_cli.py \    --seed 42 \    --epochs 40 \ �
 python brain_mri/scripts/run_pc2_finetune.py \    --backbone efficientnet \    --seed 42 \    --epochs 6 \    --warmup-epochs 2
 ```
 
-**Sources:** [README.md L110-L140](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L110-L140)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L110-L140)
 
 ---
 
@@ -658,7 +658,7 @@ All hyperparameters are logged to `experiment_config.json`:
 * Facilitates hyperparameter sensitivity analysis
 * Supports statistical comparison across runs
 
-**Sources:** [README.md L134-L140](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L134-L140)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L134-L140)
 
 ---
 
@@ -697,7 +697,7 @@ For a typical configuration:
 * Hyperparameter settings
 * Data split (subject distribution affects difficulty)
 
-**Sources:** [README.md L134-L140](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L134-L140)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L134-L140)
 
 ---
 
@@ -714,54 +714,54 @@ Stage 2 implements a principled transfer learning approach that:
 
 The two-phase methodology balances training efficiency (short warmup) with model quality (careful fine-tuning), producing robust models suitable for downstream RL optimization in Stage 3.
 
-**Sources:** [README.md L122-L149](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L149)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L149)
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 
-* [Stage 2: Transfer Learning & Fine-Tuning (run_pc2_finetune.py)](#6.2-stage-2-transfer-learning-fine-tuning-run_pc2_finetunepy)
-* [Purpose and Scope](#6.2-purpose-and-scope)
-* [Two-Phase Training Methodology](#6.2-two-phase-training-methodology)
-* [Script Invocation and Configuration](#6.2-script-invocation-and-configuration)
-* [Basic Usage](#6.2-basic-usage)
-* [Command-Line Arguments](#6.2-command-line-arguments)
-* [Backbone Selection](#6.2-backbone-selection)
-* [Phase 1: Frozen Backbone Warmup](#6.2-phase-1-frozen-backbone-warmup)
-* [Rationale](#6.2-rationale)
-* [Implementation Details](#6.2-implementation-details)
-* [Parameter Freezing Mechanism](#6.2-parameter-freezing-mechanism)
-* [Training Characteristics](#6.2-training-characteristics)
-* [Phase 2: Full End-to-End Fine-Tuning](#6.2-phase-2-full-end-to-end-fine-tuning)
-* [Backbone Unfreezing](#6.2-backbone-unfreezing)
-* [Discriminative Learning Rates](#6.2-discriminative-learning-rates)
-* [Training Dynamics](#6.2-training-dynamics)
-* [Checkpoint Selection](#6.2-checkpoint-selection)
-* [Multi-Stream Architecture Integration](#6.2-multi-stream-architecture-integration)
-* [Supported Configurations](#6.2-supported-configurations)
-* [Data Flow Through Multi-Stream Model](#6.2-data-flow-through-multi-stream-model)
-* [Subject-Level Splitting and Data Loading](#6.2-subject-level-splitting-and-data-loading)
-* [Leakage Prevention](#6.2-leakage-prevention)
-* [Loss Functions and Class Imbalance Handling](#6.2-loss-functions-and-class-imbalance-handling)
-* [Multi-Mechanism Approach](#6.2-multi-mechanism-approach)
-* [Loss Function Selection](#6.2-loss-function-selection)
-* [Output Artifacts](#6.2-output-artifacts)
-* [File Structure](#6.2-file-structure)
-* [Checkpoint Contents](#6.2-checkpoint-contents)
-* [Integration with Stage 3 (RL Refinement)](#6.2-integration-with-stage-3-rl-refinement)
-* [Model Handoff](#6.2-model-handoff)
-* [Comparison with Standard Deep Learning CLI](#6.2-comparison-with-standard-deep-learning-cli)
-* [run_deep_models_cli.py vs run_pc2_finetune.py](#6.2-run_deep_models_clipy-vs-run_pc2_finetunepy)
-* [Example Invocations](#6.2-example-invocations)
-* [Reproducibility Considerations](#6.2-reproducibility-considerations)
-* [Seed Management](#6.2-seed-management)
-* [Determinism Caveats](#6.2-determinism-caveats)
-* [Experiment Tracking](#6.2-experiment-tracking)
-* [Typical Training Timeline](#6.2-typical-training-timeline)
-* [Expected Duration](#6.2-expected-duration)
-* [Performance Trajectory](#6.2-performance-trajectory)
-* [Summary](#6.2-summary)
+* [Stage 2: Transfer Learning & Fine-Tuning (run_pc2_finetune.py)](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Purpose and Scope](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Two-Phase Training Methodology](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Script Invocation and Configuration](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Basic Usage](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Command-Line Arguments](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Backbone Selection](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Phase 1: Frozen Backbone Warmup](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Rationale](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Implementation Details](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Parameter Freezing Mechanism](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Training Characteristics](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Phase 2: Full End-to-End Fine-Tuning](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Backbone Unfreezing](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Discriminative Learning Rates](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Training Dynamics](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Checkpoint Selection](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Multi-Stream Architecture Integration](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Supported Configurations](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Data Flow Through Multi-Stream Model](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Subject-Level Splitting and Data Loading](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Leakage Prevention](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Loss Functions and Class Imbalance Handling](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Multi-Mechanism Approach](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Loss Function Selection](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Output Artifacts](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [File Structure](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Checkpoint Contents](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Integration with Stage 3 (RL Refinement)](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Model Handoff](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Comparison with Standard Deep Learning CLI](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [run_deep_models_cli.py vs run_pc2_finetune.py](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Example Invocations](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Reproducibility Considerations](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Seed Management](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Determinism Caveats](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Experiment Tracking](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Typical Training Timeline](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Expected Duration](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Performance Trajectory](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* [Summary](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
 
 Ask Devin about brain-mri-pipelines-py

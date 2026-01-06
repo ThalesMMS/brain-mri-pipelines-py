@@ -11,11 +11,11 @@ This page provides an overview of the development environment setup, configurati
 
 For specific details about:
 
-* Git configuration files and version control practices, see [Git Configuration](#8.1)
-* Output directory structure and artifact storage, see [Output Directory Structure](#8.2)
+* Git configuration files and version control practices, see [Git Configuration](8a%20Longitudinal-Scans-%28Same-Subject,-Multiple-Timepoints%29.md)
+* Output directory structure and artifact storage, see [Output Directory Structure](8b%20Dataset-Coverage.md)
 * License terms and usage permissions, see [License & Usage Terms](#8.3)
 
-For general installation and environment setup for end-users, see [Installation & Dependencies](#2.1).
+For general installation and environment setup for end-users, see [Installation & Dependencies](2a%20Installation-&-Dependencies.md).
 
 ## Development Environment Overview
 
@@ -171,7 +171,7 @@ These artifacts are:
 * **Reproducible** from the source code and training scripts
 * **Environment-specific** (tied to specific hardware, random seeds, and data splits)
 
-For detailed information about what the output directory contains and how it's organized, see [Output Directory Structure](#8.2).
+For detailed information about what the output directory contains and how it's organized, see [Output Directory Structure](8b%20Dataset-Coverage.md).
 
 **Sources:** [.gitignore L7-L9](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/.gitignore#L7-L9)
 
@@ -368,7 +368,7 @@ To ensure reproducibility:
 4. **Share trained models** through external storage (not Git)
 5. **Reference data sources** without committing large datasets
 
-The three-stage research pipeline ([Stage 1: Embedding Analysis](#6.1), [Stage 2: Transfer Learning](#6.2), [Stage 3: RL Refinement](#6.3)) generates substantial output artifacts that should never be committed to the repository.
+The three-stage research pipeline ([Stage 1: Embedding Analysis](6a%20Graphical-User-Interface-%28main.py%29.md), [Stage 2: Transfer Learning](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md), [Stage 3: RL Refinement](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)) generates substantial output artifacts that should never be committed to the repository.
 
 ## Integration with System Architecture
 
@@ -421,7 +421,7 @@ end
 
 **Sources:** [.gitignore L7-L9](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/.gitignore#L7-L9)
 
-All system entry points ([GUI](#7.1), [Baselines CLI](#7.2), [Deep Models CLI](#7.3), [Research Pipeline](#6)) write output to the `/output/` directory, which is excluded from version control by design. This separation ensures that the Git repository contains only source code and configuration, while experiment artifacts are managed locally.
+All system entry points ([GUI](7a%20Git-Configuration.md), [Baselines CLI](7b%20Output-Directory-Structure.md), [Deep Models CLI](7c%20License-&-Usage-Terms.md), [Research Pipeline](6%20User-Interfaces.md)) write output to the `/output/` directory, which is excluded from version control by design. This separation ensures that the Git repository contains only source code and configuration, while experiment artifacts are managed locally.
 
 ## Summary
 
@@ -433,8 +433,8 @@ The development configuration implements three key principles:
 
 For detailed information about specific aspects of the development configuration:
 
-* Git configuration details: [Git Configuration](#8.1)
-* Output directory organization: [Output Directory Structure](#8.2)
+* Git configuration details: [Git Configuration](8a%20Longitudinal-Scans-%28Same-Subject,-Multiple-Timepoints%29.md)
+* Output directory organization: [Output Directory Structure](8b%20Dataset-Coverage.md)
 * Complete license text: [License & Usage Terms](#8.3)
 
 **Sources:** [.gitignore L1-L9](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/.gitignore#L1-L9)
@@ -443,37 +443,37 @@ For detailed information about specific aspects of the development configuration
 
  [LICENSE L1-L22](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/LICENSE#L1-L22)
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 
-* [Development & Configuration](#8-development-configuration)
-* [Purpose and Scope](#8-purpose-and-scope)
-* [Development Environment Overview](#8-development-environment-overview)
-* [Configuration Files Structure](#8-configuration-files-structure)
-* [Configuration Files Diagram](#8-configuration-files-diagram)
-* [Version Control Configuration](#8-version-control-configuration)
-* [Text File Normalization](#8-text-file-normalization)
-* [Linguist Configuration](#8-linguist-configuration)
-* [Excluded Files and Directories](#8-excluded-files-and-directories)
-* [Ignored File Categories](#8-ignored-file-categories)
-* [Output Directory Exclusion Strategy](#8-output-directory-exclusion-strategy)
-* [Development Workflow Integration](#8-development-workflow-integration)
-* [Git Workflow with Configuration](#8-git-workflow-with-configuration)
-* [Practical Implications](#8-practical-implications)
-* [Licensing Framework](#8-licensing-framework)
-* [License Attribution](#8-license-attribution)
-* [MIT License Permissions](#8-mit-license-permissions)
-* [License Requirements](#8-license-requirements)
-* [Warranty Disclaimer](#8-warranty-disclaimer)
-* [Development Best Practices](#8-development-best-practices)
-* [Repository Hygiene](#8-repository-hygiene)
-* [File Organization](#8-file-organization)
-* [Reproducibility Guidelines](#8-reproducibility-guidelines)
-* [Integration with System Architecture](#8-integration-with-system-architecture)
-* [Configuration Support for System Components](#8-configuration-support-for-system-components)
-* [Summary](#8-summary)
+* [Development & Configuration](8%20Example-Data-Files.md)
+* [Purpose and Scope](8%20Example-Data-Files.md)
+* [Development Environment Overview](8%20Example-Data-Files.md)
+* [Configuration Files Structure](8%20Example-Data-Files.md)
+* [Configuration Files Diagram](8%20Example-Data-Files.md)
+* [Version Control Configuration](8%20Example-Data-Files.md)
+* [Text File Normalization](8%20Example-Data-Files.md)
+* [Linguist Configuration](8%20Example-Data-Files.md)
+* [Excluded Files and Directories](8%20Example-Data-Files.md)
+* [Ignored File Categories](8%20Example-Data-Files.md)
+* [Output Directory Exclusion Strategy](8%20Example-Data-Files.md)
+* [Development Workflow Integration](8%20Example-Data-Files.md)
+* [Git Workflow with Configuration](8%20Example-Data-Files.md)
+* [Practical Implications](8%20Example-Data-Files.md)
+* [Licensing Framework](8%20Example-Data-Files.md)
+* [License Attribution](8%20Example-Data-Files.md)
+* [MIT License Permissions](8%20Example-Data-Files.md)
+* [License Requirements](8%20Example-Data-Files.md)
+* [Warranty Disclaimer](8%20Example-Data-Files.md)
+* [Development Best Practices](8%20Example-Data-Files.md)
+* [Repository Hygiene](8%20Example-Data-Files.md)
+* [File Organization](8%20Example-Data-Files.md)
+* [Reproducibility Guidelines](8%20Example-Data-Files.md)
+* [Integration with System Architecture](8%20Example-Data-Files.md)
+* [Configuration Support for System Components](8%20Example-Data-Files.md)
+* [Summary](8%20Example-Data-Files.md)
 
 Ask Devin about brain-mri-pipelines-py

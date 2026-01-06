@@ -9,7 +9,7 @@
 
 This page provides concrete examples of actual NIfTI files from the OASIS-2 dataset used in the brain-mri-pipelines-py system. It demonstrates the file naming conventions, directory structure, and how to interpret the information encoded in filenames. This serves as a reference for understanding the raw data inputs to the pipeline.
 
-For detailed information about the NIfTI file format specification, see [NIfTI File Format](#4.2). For the overall directory organization principles, see [Directory Organization & File Naming](#4.3). For examples showing why subject-level splitting matters, see [Longitudinal Scans](#9.1).
+For detailed information about the NIfTI file format specification, see [NIfTI File Format](4b%20NIfTI-File-Format.md). For the overall directory organization principles, see [Directory Organization & File Naming](4c%20Directory-Organization-%26-File-Naming.md). For examples showing why subject-level splitting matters, see [Longitudinal Scans](8a%20Longitudinal-Scans-%28Same-Subject,-Multiple-Timepoints%29.md).
 
 ---
 
@@ -354,9 +354,9 @@ When working with these files, verify:
 
 **Sources:** Data validation requirements from pipeline architecture
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

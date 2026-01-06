@@ -7,7 +7,7 @@
 
 This page documents the critical mechanism that prevents data leakage in the brain-mri-pipelines-py system by ensuring that all MRI scans from a single patient remain strictly within one partition (Train, Validation, or Test). This is a fundamental safeguard for obtaining valid, generalizable performance metrics.
 
-For information about the overall data processing pipeline, see [Data Processing Pipeline](#3.2). For details on how the splits are used during training, see [Data Loading & Augmentation](#4.5).
+For information about the overall data processing pipeline, see [Data Processing Pipeline](3b%20Data-Processing-Pipeline.md). For details on how the splits are used during training, see [Data Loading & Augmentation](4e%20Data-Loading-&-Augmentation.md).
 
 ---
 
@@ -122,7 +122,7 @@ MRI -.-> MRI_ID
 PLANE -.-> PLANE_ID
 ```
 
-**Sources:** [README.md L40-L50](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L40-L50)
+**Sources:** README.md
 
 ### ID Hierarchy
 
@@ -142,7 +142,7 @@ SAG_2["OAS2_0001_MR2_sag.nii.gz"]
 
 **Key Insight:** The `Subject_ID` (e.g., `OAS2_0001`) is the grouping key. All files containing this prefix must remain in the same partition.
 
-**Sources:** [README.md L40-L50](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L40-L50)
+**Sources:** README.md
 
  [axl/OAS2_0001_MR1_axl.nii.gz L1](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/axl/OAS2_0001_MR1_axl.nii.gz#L1-L1)
 
@@ -178,7 +178,7 @@ SPLIT -.-> VAL_S
 SPLIT -.-> TEST_S
 ```
 
-**Sources:** [README.md L101](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L101-L101)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L101-L101)
 
  [README.md L23](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L23-L23)
 
@@ -192,7 +192,7 @@ The splitting process operates at the **Subject_ID level**, not the MRI_ID level
 
 **Critical:** The split happens on `all_subjects` (line 13-15 in pseudocode), ensuring all MRIs from `OAS2_0001` go to the same partition.
 
-**Sources:** [README.md L101](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L101-L101)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L101-L101)
 
  [README.md L23](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L23-L23)
 
@@ -223,7 +223,7 @@ MRI_ID,Subject_ID,split,label,age,CDROAS2_0001_MR1,OAS2_0001,train,1,74.0,0.5OAS
 
 **Key Property:** Notice that `OAS2_0001_MR1` and `OAS2_0001_MR2` both have `split=train`. This CSV is the **source of truth** for all downstream training loops.
 
-**Sources:** [README.md L101](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L101-L101)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L101-L101)
 
 ### Generation Entry Points
 
@@ -256,9 +256,9 @@ subgraph subGraph0 ["User Entry Points"]
 end
 ```
 
-**Sources:** [README.md L83-L105](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L83-L105)
+**Sources:** README.md
 
- [README.md L177-L196](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L177-L196)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L177-L196)
 
 ---
 
@@ -289,7 +289,7 @@ DATASET -.-> FILTER_VAL
 DATASET -.-> FILTER_TEST
 ```
 
-**Sources:** [README.md L101](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L101-L101)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L101-L101)
 
 ### Multi-View Data Loading
 
@@ -313,7 +313,7 @@ The system loads all three planes for a given `MRI_ID`, and since `MRI_ID` is as
 
 **Sources:** [README.md L10-L15](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L10-L15)
 
- [README.md L177-L196](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L177-L196)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L177-L196)
 
 ---
 
@@ -336,7 +336,7 @@ The system should implement (or users should manually verify) the following inva
 # Conceptual verification (not actual code from repo)import pandas as pd# Load split CSVdf = pd.read_csv('output/dataset_split.csv')# Check 1: No subject appears in multiple splitssubject_splits = df.groupby('Subject_ID')['split'].nunique()assert (subject_splits == 1).all(), "Subject appears in multiple splits!"# Check 2: All MRIs from same subject in same splitfor subject_id in df['Subject_ID'].unique():    subject_df = df[df['Subject_ID'] == subject_id]    assert subject_df['split'].nunique() == 1, f"Subject {subject_id} split inconsistency"# Check 3: Print split statisticsprint(df.groupby(['split', 'label']).size())
 ```
 
-**Sources:** [README.md L101](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L101-L101)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L101-L101)
 
  [README.md L23](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L23-L23)
 
@@ -361,7 +361,7 @@ The system should implement (or users should manually verify) the following inva
 | Mixing planes inconsistently | Axial in train, coronal in val for same MRI | Keep all planes of same MRI_ID together |
 | Ignoring follow-up scans | Only using baseline (MR1) | Include all timepoints but group by subject |
 
-**Sources:** [README.md L160-L169](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L160-L169)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L160-L169)
 
  [README.md L23](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L23-L23)
 
@@ -374,9 +374,9 @@ This page focuses on **temporal data leakage** (subject-level splitting). The sy
 * `svm_with_mmse_cdr`: Includes MMSE/CDR scores (strong dementia proxies) → Leakage
 * `svm_without_mmse_cdr`: Excludes MMSE/CDR scores → Clean imaging-only analysis
 
-For details on this orthogonal leakage concern, see [Classical Machine Learning Baselines](#5.3) and [Model Comparison Framework](#5.6).
+For details on this orthogonal leakage concern, see [Classical Machine Learning Baselines](5c%20Classical-Machine-Learning-Baselines.md) and [Model Comparison Framework](5d%20Results-Generation-%28generate_article_tables%29.md).
 
-**Sources:** [README.md L160-L169](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L160-L169)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L160-L169)
 
 ---
 
@@ -394,15 +394,15 @@ This mechanism is critical for obtaining valid, generalizable performance metric
 
 **Sources:** [README.md L23](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L23-L23)
 
- [README.md L40-L50](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L40-L50)
+ README.md
 
- [README.md L101](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L101-L101)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L101-L101)
 
- [README.md L160-L169](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L160-L169)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L160-L169)
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

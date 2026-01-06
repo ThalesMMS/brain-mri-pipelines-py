@@ -5,7 +5,7 @@
 
 This document describes the clinical metadata component of the brain MRI pipelines system, specifically the `oasis_longitudinal_demographic.csv` file and how tabular clinical features integrate with imaging data for multimodal Alzheimer's disease classification.
 
-**Scope**: This page covers the structure of clinical metadata, individual feature descriptions, the target leakage issue with MMSE/CDR scores, and the integration mechanism for multimodal fusion. For information about imaging data organization, see [Directory Organization & File Naming](#4.3). For details on how clinical features are combined with visual embeddings in the model architecture, see [Multi-Stream Multimodal Network](#3.1).
+**Scope**: This page covers the structure of clinical metadata, individual feature descriptions, the target leakage issue with MMSE/CDR scores, and the integration mechanism for multimodal fusion. For information about imaging data organization, see [Directory Organization & File Naming](4c%20Directory-Organization-&-File-Naming.md). For details on how clinical features are combined with visual embeddings in the model architecture, see [Multi-Stream Multimodal Network](3a%20Multi-Stream-Multimodal-Network.md).
 
 ---
 
@@ -57,7 +57,7 @@ The system uses the `CDR` field to define binary Alzheimer's disease labels:
 
  [README.md L12](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L12-L12)
 
- [README.md L168](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L168-L168)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L168-L168)
 
 ---
 
@@ -116,7 +116,7 @@ end
 
 **Sources**: [README.md L12](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L12-L12)
 
- [README.md L117](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L117-L117)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L117-L117)
 
 ---
 
@@ -182,9 +182,9 @@ The system implements both scenarios in classical baseline training to demonstra
 
 **Warning from codebase**: "MMSE and CDR scores are strong proxies for dementia. While the codebase supports using them, we recommend the `svm_without_mmse_cdr` scenario for methodologically cleaner imaging-based analysis."
 
-**Sources**: [README.md L168](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L168-L168)
+**Sources**: Project overview and setup
 
- [README.md L107](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L107-L107)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L107-L107)
 
 ---
 
@@ -261,7 +261,7 @@ The system relies on the standardized naming convention `OAS2_XXXX_MRY_plane.nii
 
 This pattern enables extraction of `MRI_ID = OAS2_XXXX_MRY`, which serves as the foreign key to lookup the corresponding row in the CSV file.
 
-**Sources**: [README.md L44-L48](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L44-L48)
+**Sources**: README.md
 
 ---
 
@@ -333,11 +333,11 @@ The multimodal fusion is implemented in `brain_mri/ml/multistream_models.py` whe
 
 The system supports both **imaging-only** mode (visual embeddings alone) and **multimodal** mode (visual + clinical). This design enables ablation studies to measure the contribution of clinical metadata to classification performance.
 
-**Sources**: [README.md L117](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L117-L117)
+**Sources**: Project overview and setup
 
  [README.md L12](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L12-L12)
 
- [README.md L185-L186](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L185-L186)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L185-L186)
 
 ---
 
@@ -439,11 +439,11 @@ The system handles missing values through:
 
 **Sources**: [README.md L12](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L12-L12)
 
- [README.md L168](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L168-L168)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L168-L168)
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

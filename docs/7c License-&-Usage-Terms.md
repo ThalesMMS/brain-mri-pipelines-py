@@ -3,7 +3,7 @@
 > **Relevant source files**
 > * [LICENSE](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/LICENSE)
 
-This page documents the licensing terms, copyright information, and usage permissions for the brain-mri-pipelines-py repository. The codebase is distributed under the MIT License, which grants broad permissions for use, modification, and distribution. For information about project configuration and development practices, see [8.1](#8.1) (Git Configuration) and [8.2](#8.2) (Output Directory Structure).
+This page documents the licensing terms, copyright information, and usage permissions for the brain-mri-pipelines-py repository. The codebase is distributed under the MIT License, which grants broad permissions for use, modification, and distribution. For information about project configuration and development practices, see [8.1](8a%20Longitudinal-Scans-%28Same-Subject,-Multiple-Timepoints%29.md) (Git Configuration) and [8.2](8b%20Dataset-Coverage.md) (Output Directory Structure).
 
 **Sources:** [LICENSE L1-L22](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/LICENSE#L1-L22)
 
@@ -359,9 +359,9 @@ This placement ensures the license is visible in all standard repository interac
 
 **Sources:** [LICENSE L1-L22](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/LICENSE#L1-L22)
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

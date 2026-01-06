@@ -7,9 +7,9 @@
 
 This page documents `run_deep_models_cli.py`, the command-line interface for training deep learning models in headless mode. This CLI provides a production-ready, reproducible way to train multi-stream deep neural networks for Alzheimer's disease detection using various backbone architectures and configuration options.
 
-For interactive training with visual feedback, see [Graphical User Interface (main.py)](#7.1). For training classical machine learning baselines, see [Baselines CLI (run_baselines_cli.py)](#7.2). For the three-stage research pipeline scripts with specialized functionality (embedding analysis, explicit warmup phases, RL refinement), see [Three-Stage Research Pipeline](#6).
+For interactive training with visual feedback, see [Graphical User Interface (main.py)](7a%20Git-Configuration.md). For training classical machine learning baselines, see [Baselines CLI (run_baselines_cli.py)](7b%20Output-Directory-Structure.md). For the three-stage research pipeline scripts with specialized functionality (embedding analysis, explicit warmup phases, RL refinement), see [Three-Stage Research Pipeline](6%20User-Interfaces.md).
 
-**Sources:** [README.md L1-L218](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L1-L218)
+**Sources:** README.md
 
 ---
 
@@ -29,7 +29,7 @@ The `run_deep_models_cli.py` script serves as the primary entry point for traini
 | **Configurable Training** | Customize epochs, batch size, learning rate, weight decay, and other hyperparameters |
 | **Artifact Management** | Automatically saves models, training logs, and performance metrics to `output/` |
 
-**Sources:** [README.md L110-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L110-L118)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L110-L118)
 
 ---
 
@@ -101,7 +101,7 @@ subgraph subGraph0 ["Configuration Phase"]
 end
 ```
 
-**Sources:** [README.md L110-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L110-L118)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L110-L118)
 
 ---
 
@@ -166,7 +166,7 @@ end
 | `--output-dir` | str | `"output"` | Root directory for saving artifacts |
 | `--verbose` | flag | `False` | Enable detailed console output |
 
-**Sources:** [README.md L110-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L110-L118)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L110-L118)
 
 ---
 
@@ -195,7 +195,7 @@ Train a multi-stream model processing all three anatomical planes:
 python run_deep_models_cli.py \    --seed 42 \    --epochs 40 \    --backbones efficientnet \    --planes axl,cor,sag
 ```
 
-This configuration creates three independent feature extraction streams (one per anatomical plane) that are concatenated before classification. See [Multi-Stream Multimodal Network](#3.1) for architectural details.
+This configuration creates three independent feature extraction streams (one per anatomical plane) that are concatenated before classification. See [Multi-Stream Multimodal Network](3a%20Multi-Stream-Multimodal-Network.md) for architectural details.
 
 ### Multimodal Fusion
 
@@ -221,7 +221,7 @@ This trains three separate models sequentially, each using a different backbone 
 * **DenseNet121**: ImageNet pretrained, dense skip connections
 * **MedicalNet ResNet**: Med3D pretrained on medical imaging data
 
-For detailed backbone comparisons, see [Deep Learning Backbones](#5.1).
+For detailed backbone comparisons, see [Deep Learning Backbones](5a%20Stage-1-Embedding-Analysis-%28run_pc1_embeddings.py%29.md).
 
 ### Full Configuration Example
 
@@ -231,7 +231,7 @@ A comprehensive training run with all major options:
 python run_deep_models_cli.py \    --seed 42 \    --epochs 50 \    --batch-size 32 \    --learning-rate 5e-5 \    --weight-decay 1e-5 \    --backbones medicalnet \    --planes axl,cor,sag \    --multimodal \    --num-workers 8 \    --verbose
 ```
 
-**Sources:** [README.md L110-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L110-L118)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L110-L118)
 
 ---
 
@@ -295,7 +295,7 @@ end
 
 **Sources:** [README.md L10-L15](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L10-L15)
 
- [README.md L171-L173](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
 
 ---
 
@@ -358,7 +358,7 @@ The training process follows this sequence per epoch:
 3. **Checkpoint Management** (`save_checkpoint()`): * Compare current validation balanced accuracy to best seen so far * Save model state if new best performance achieved * Persist optimizer state for potential resumption
 4. **Experiment Tracking** (`ExperimentTracker`): * Log metrics to JSON file in `output/experiments/` * Generate training/validation loss curves * Generate accuracy progression plots * Save configuration metadata
 
-**Sources:** [README.md L164-L167](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L167)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L167)
 
 ---
 
@@ -440,7 +440,7 @@ end
 
 ## Data Loading and Augmentation
 
-The CLI leverages the data loading pipeline described in [Data Loading & Augmentation](#4.5), with specific configurations for production training:
+The CLI leverages the data loading pipeline described in [Data Loading & Augmentation](4e%20Loss-Functions-&-Class-Imbalance.md), with specific configurations for production training:
 
 ```mermaid
 flowchart TD
@@ -496,7 +496,7 @@ The OASIS-2 dataset exhibits class imbalance (more non-demented than demented su
 
 See [Loss Functions & Class Imbalance](#5.5) for implementation details.
 
-**Sources:** [README.md L164-L167](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L167)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L167)
 
 ---
 
@@ -528,7 +528,7 @@ Understanding when to use each interface:
 * **Use Stage 2 script** if you specifically need the warmup/fine-tuning phase separation for ablation studies
 * **Use Stage 3 script** if you want to apply RL-based hyperparameter refinement on top of a trained model
 
-**Sources:** [README.md L83-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L83-L118)
+**Sources:** README.md
 
 ---
 
@@ -575,7 +575,7 @@ python -m brain_mri.scripts.generate_article_tables --write
 
 See [Results Generation (generate_article_tables)](#6.4) for details.
 
-**Sources:** [README.md L152-L156](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L152-L156)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L152-L156)
 
 ---
 
@@ -614,7 +614,7 @@ The `--num-workers` argument controls DataLoader parallelism. Optimal values:
 
 Too many workers can cause CPU bottlenecks or excessive memory usage. Monitor CPU utilization to find the optimal setting for your hardware.
 
-**Sources:** [README.md L110-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L110-L118)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L110-L118)
 
 ---
 
@@ -631,47 +631,47 @@ The `run_deep_models_cli.py` script provides a robust, configurable command-line
 
 This CLI is the recommended entry point for production training workflows, enabling systematic model comparison and reproducible research without graphical interface dependencies.
 
-For specialized training scenarios, see the three-stage research pipeline scripts ([Stage 1](#6.1), [Stage 2](#6.2), [Stage 3](#6.3)) which build upon this foundation with additional capabilities.
+For specialized training scenarios, see the three-stage research pipeline scripts ([Stage 1](6a%20Graphical-User-Interface-%28main.py%29.md), [Stage 2](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md), [Stage 3](#6.3)) which build upon this foundation with additional capabilities.
 
-**Sources:** [README.md L1-L218](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L1-L218)
+**Sources:** README.md
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 
-* [Deep Models CLI (run_deep_models_cli.py)](#7.3-deep-models-cli-run_deep_models_clipy)
-* [Purpose and Scope](#7.3-purpose-and-scope)
-* [Overview](#7.3-overview)
-* [Key Capabilities](#7.3-key-capabilities)
-* [Execution Flow](#7.3-execution-flow)
-* [Command-Line Arguments](#7.3-command-line-arguments)
-* [Core Arguments](#7.3-core-arguments)
-* [Argument Reference Table](#7.3-argument-reference-table)
-* [Usage Examples](#7.3-usage-examples)
-* [Basic Training](#7.3-basic-training)
-* [Multi-Stream Training](#7.3-multi-stream-training)
-* [Multimodal Fusion](#7.3-multimodal-fusion)
-* [Backbone Comparison](#7.3-backbone-comparison)
-* [Full Configuration Example](#7.3-full-configuration-example)
-* [Model Configuration Mapping](#7.3-model-configuration-mapping)
-* [Training Workflow Integration](#7.3-training-workflow-integration)
-* [Training Loop Sequence](#7.3-training-loop-sequence)
-* [Output Artifacts](#7.3-output-artifacts)
-* [Artifact Descriptions](#7.3-artifact-descriptions)
-* [Data Loading and Augmentation](#7.3-data-loading-and-augmentation)
-* [Class Imbalance Handling](#7.3-class-imbalance-handling)
-* [Comparison with Other Interfaces](#7.3-comparison-with-other-interfaces)
-* [When to Use This CLI](#7.3-when-to-use-this-cli)
-* [Advanced Configuration](#7.3-advanced-configuration)
-* [Custom Output Directory](#7.3-custom-output-directory)
-* [Verbose Logging](#7.3-verbose-logging)
-* [Integration with Experiment Tracking](#7.3-integration-with-experiment-tracking)
-* [Technical Notes](#7.3-technical-notes)
-* [Reproducibility Guarantees](#7.3-reproducibility-guarantees)
-* [Memory Considerations](#7.3-memory-considerations)
-* [Performance Optimization](#7.3-performance-optimization)
-* [Summary](#7.3-summary)
+* [Deep Models CLI (run_deep_models_cli.py)](7c%20License-&-Usage-Terms.md)
+* [Purpose and Scope](7c%20License-&-Usage-Terms.md)
+* [Overview](7c%20License-&-Usage-Terms.md)
+* [Key Capabilities](7c%20License-&-Usage-Terms.md)
+* [Execution Flow](7c%20License-&-Usage-Terms.md)
+* [Command-Line Arguments](7c%20License-&-Usage-Terms.md)
+* [Core Arguments](7c%20License-&-Usage-Terms.md)
+* [Argument Reference Table](7c%20License-&-Usage-Terms.md)
+* [Usage Examples](7c%20License-&-Usage-Terms.md)
+* [Basic Training](7c%20License-&-Usage-Terms.md)
+* [Multi-Stream Training](7c%20License-&-Usage-Terms.md)
+* [Multimodal Fusion](7c%20License-&-Usage-Terms.md)
+* [Backbone Comparison](7c%20License-&-Usage-Terms.md)
+* [Full Configuration Example](7c%20License-&-Usage-Terms.md)
+* [Model Configuration Mapping](7c%20License-&-Usage-Terms.md)
+* [Training Workflow Integration](7c%20License-&-Usage-Terms.md)
+* [Training Loop Sequence](7c%20License-&-Usage-Terms.md)
+* [Output Artifacts](7c%20License-&-Usage-Terms.md)
+* [Artifact Descriptions](7c%20License-&-Usage-Terms.md)
+* [Data Loading and Augmentation](7c%20License-&-Usage-Terms.md)
+* [Class Imbalance Handling](7c%20License-&-Usage-Terms.md)
+* [Comparison with Other Interfaces](7c%20License-&-Usage-Terms.md)
+* [When to Use This CLI](7c%20License-&-Usage-Terms.md)
+* [Advanced Configuration](7c%20License-&-Usage-Terms.md)
+* [Custom Output Directory](7c%20License-&-Usage-Terms.md)
+* [Verbose Logging](7c%20License-&-Usage-Terms.md)
+* [Integration with Experiment Tracking](7c%20License-&-Usage-Terms.md)
+* [Technical Notes](7c%20License-&-Usage-Terms.md)
+* [Reproducibility Guarantees](7c%20License-&-Usage-Terms.md)
+* [Memory Considerations](7c%20License-&-Usage-Terms.md)
+* [Performance Optimization](7c%20License-&-Usage-Terms.md)
+* [Summary](7c%20License-&-Usage-Terms.md)
 
 Ask Devin about brain-mri-pipelines-py

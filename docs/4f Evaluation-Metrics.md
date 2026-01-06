@@ -7,9 +7,9 @@
 
 This document details the evaluation metrics used throughout the brain-mri-pipelines-py framework for assessing model performance on Alzheimer's disease classification tasks. The primary focus is on **Balanced Accuracy** as the central metric for model evaluation, selected specifically to address class imbalance inherent in medical imaging datasets. This page also covers secondary metrics, anti-collapse mechanisms that ensure meaningful evaluation, and statistical significance testing for model comparison.
 
-For information about loss functions used during training, see [Loss Functions & Class Imbalance](#5.5). For details on training configuration and hyperparameters, see [Training Configuration](#5.4).
+For information about loss functions used during training, see [Loss Functions & Class Imbalance](#5.5). For details on training configuration and hyperparameters, see [Training Configuration](5d%20Training-Configuration.md).
 
-**Sources:** [README.md L162-L169](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L169)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L169)
 
 ---
 
@@ -47,7 +47,7 @@ For binary AD classification:
 
 Balanced Accuracy ensures that a model achieving 95% accuracy by predicting only the majority class would receive a low score (~50%), while a model correctly identifying both classes would be appropriately rewarded.
 
-**Sources:** [README.md L164](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L164)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L164)
 
  High-Level Diagram 4 (Data Processing Pipeline), High-Level Diagram 5 (Model Comparison Framework)
 
@@ -245,7 +245,7 @@ end
 | **Focal Loss** | Modulated cross-entropy focusing on hard-to-classify examples | Prevents easy majority-class examples from dominating gradient |
 | **Balanced Accuracy Monitoring** | Primary validation metric | Immediately reveals if model predicts only one class (score ≈ 50%) |
 
-**Sources:** [README.md L166-L167](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L166-L167)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L166-L167)
 
  High-Level Diagram 4 (Anti-Collapse mechanisms)
 
@@ -328,7 +328,7 @@ The statistical testing pipeline is executed through:
 * **Script:** `brain_mri/scripts/generate_article_tables.py`
 * **Functionality:** Aggregates results from `output/` directory, performs Wilcoxon tests, generates LaTeX tables
 
-**Sources:** [README.md L153-L156](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L153-L156)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L153-L156)
 
  High-Level Diagram 5 (Model Comparison Framework with statistical significance testing)
 
@@ -501,7 +501,7 @@ The README explicitly warns about using MMSE (Mini-Mental State Examination) and
 
 Models trained with these scores will achieve artificially high Balanced Accuracy but represent **target leakage** rather than genuine imaging-based prediction capability.
 
-**Sources:** [README.md L168-L169](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L168-L169)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L168-L169)
 
  High-Level Diagram 5 (Model Comparison Framework showing SVM_LEAK vs SVM_CLEAN)
 
@@ -519,13 +519,13 @@ Models trained with these scores will achieve artificially high Balanced Accurac
 | **Confusion Matrix** | Detailed error analysis | Complete error breakdown | Not a single number |
 | **ROC-AUC** | Threshold-independent comparison | Robust to threshold choice | Requires probability outputs |
 
-**Sources:** [README.md L162-L169](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L169)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L169)
 
  High-Level Diagrams 4 & 5
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

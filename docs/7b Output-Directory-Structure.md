@@ -8,7 +8,7 @@
 
 This document describes the organization of the `output/` directory, which serves as the central repository for all generated artifacts in the brain-mri-pipelines-py system. This includes trained model checkpoints, training logs, performance metrics, visualization plots, and publication-ready result tables.
 
-For information about the input data organization (MRI files and clinical metadata), see [Data Layer](#4). For details on experiment tracking mechanisms that write to this directory, see [Core Package Structure](#3.3).
+For information about the input data organization (MRI files and clinical metadata), see [Data Layer](4%20Data-Layer.md). For details on experiment tracking mechanisms that write to this directory, see [Core Package Structure](3c%20Core-Package-Structure-%28brain_mri-%29.md).
 
 **Sources:** [README.md L37-L38](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L37-L38)
 
@@ -197,7 +197,7 @@ dataset_split_seed{seed}.csv
 * `dataset_split_seed123.csv`
 * `dataset_split_seed7.csv`
 
-Each CSV contains columns mapping `Subject_ID` and `MRI_ID` to their assigned partition (`train`, `val`, `test`), ensuring subject-level split consistency (see [Subject-Level Splitting](#3.4)).
+Each CSV contains columns mapping `Subject_ID` and `MRI_ID` to their assigned partition (`train`, `val`, `test`), ensuring subject-level split consistency (see [Subject-Level Splitting](3d%20Subject-Level-Splitting-&-Leakage-Prevention.md)).
 
 **Sources:** Inferred from system design patterns
 
@@ -236,7 +236,7 @@ BUILD -.-> SPLIT_OUT
 * `output/models/xgboost_age_seed{seed}.pkl` - XGBoost regression model for age estimation
 * `output/results/baseline_metrics_seed{seed}.csv` - Performance metrics for all baseline models
 
-**Sources:** [README.md L101-L109](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L101-L109)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L101-L109)
 
 ### Deep Learning Training Scripts
 
@@ -281,7 +281,7 @@ EVAL -.-> CM
 * `output/plots/training_curves_{config}_seed{seed}.png` - Loss and accuracy curves over epochs
 * `output/plots/confusion_matrix_{config}_seed{seed}.png` - Confusion matrix on test set
 
-**Sources:** [README.md L110-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L110-L118)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L110-L118)
 
 ### Three-Stage Research Pipeline
 
@@ -311,7 +311,7 @@ EVAL -.-> PLOTS
 * `output/results/pc1_embedding_comparison_seed{seed}.csv` - Performance comparison metrics
 * `output/plots/embedding_tsne_{backbone}_seed{seed}.png` - t-SNE visualization of embedding space
 
-**Sources:** [README.md L126-L132](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L126-L132)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L126-L132)
 
 #### Stage 2: Fine-Tuning (run_pc2_finetune.py)
 
@@ -332,7 +332,7 @@ METRICS["output/results/ pc2_finetune_metrics_seed{seed}.csv"]
 * `output/models/pc2_{backbone}_finetuned_seed{seed}.pth` - Final fine-tuned model
 * `output/results/pc2_finetune_metrics_seed{seed}.csv` - Training metrics for both phases
 
-**Sources:** [README.md L134-L140](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L134-L140)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L134-L140)
 
 #### Stage 3: RL Refinement (run_pc3_rl_refinement.py)
 
@@ -357,7 +357,7 @@ LOAD -.-> RL_TRAIN
 * `output/results/pc3_rl_rewards_seed{seed}.csv` - Episode-wise reward history
 * `output/results/pc3_hyperparameter_history_seed{seed}.csv` - Learning rate and weight decay adjustments over time
 
-**Sources:** [README.md L142-L148](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L142-L148)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L142-L148)
 
 ### Publication Results Generation
 
@@ -389,7 +389,7 @@ GENERATE -.-> LATEX_STAGES
 * `output/results/table_statistical_tests.tex` - Wilcoxon signed-rank test results
 * `output/results/table_pipeline_stages.tex` - Progressive improvement across PC1→PC2→PC3 stages
 
-**Sources:** [README.md L150-L156](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L150-L156)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L150-L156)
 
 ---
 
@@ -423,7 +423,7 @@ Each experiment run creates a timestamped subdirectory within `output/logs/` con
 * `tensorboard/` - TensorBoard event files
 * `metrics_per_epoch.csv` - CSV file with metrics logged at each epoch
 
-**Sources:** Inferred from [Core Package Structure](#3.3) reference in system diagrams
+**Sources:** Inferred from [Core Package Structure](3c%20Core-Package-Structure-%28brain_mri-%29.md) reference in system diagrams
 
 ---
 
@@ -583,40 +583,40 @@ This structured approach ensures that experimental results remain organized, dis
 
  [.gitignore L7-L8](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/.gitignore#L7-L8)
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 
-* [Output Directory Structure](#8.2-output-directory-structure)
-* [Purpose and Scope](#8.2-purpose-and-scope)
-* [Overview](#8.2-overview)
-* [Directory Structure](#8.2-directory-structure)
-* [File Naming Conventions](#8.2-file-naming-conventions)
-* [Model Checkpoints](#8.2-model-checkpoints)
-* [Training Logs](#8.2-training-logs)
-* [Visualization Plots](#8.2-visualization-plots)
-* [Dataset Splits](#8.2-dataset-splits)
-* [Component-Specific Output](#8.2-component-specific-output)
-* [Classical Baseline Scripts](#8.2-classical-baseline-scripts)
-* [Deep Learning Training Scripts](#8.2-deep-learning-training-scripts)
-* [Three-Stage Research Pipeline](#8.2-three-stage-research-pipeline)
-* [Publication Results Generation](#8.2-publication-results-generation)
-* [Experiment Tracking Integration](#8.2-experiment-tracking-integration)
-* [Storage Management](#8.2-storage-management)
-* [Size Considerations](#8.2-size-considerations)
-* [Version Control Exclusion](#8.2-version-control-exclusion)
-* [Cleanup Strategies](#8.2-cleanup-strategies)
-* [Locating Specific Experiments](#8.2-locating-specific-experiments)
-* [By Timestamp](#8.2-by-timestamp)
-* [By Seed](#8.2-by-seed)
-* [By Backbone](#8.2-by-backbone)
-* [By Pipeline Stage](#8.2-by-pipeline-stage)
-* [Integration with External Tools](#8.2-integration-with-external-tools)
-* [TensorBoard Visualization](#8.2-tensorboard-visualization)
-* [Loading Trained Models](#8.2-loading-trained-models)
-* [Result Analysis](#8.2-result-analysis)
-* [Summary](#8.2-summary)
+* [Output Directory Structure](8b%20Dataset-Coverage.md)
+* [Purpose and Scope](8b%20Dataset-Coverage.md)
+* [Overview](8b%20Dataset-Coverage.md)
+* [Directory Structure](8b%20Dataset-Coverage.md)
+* [File Naming Conventions](8b%20Dataset-Coverage.md)
+* [Model Checkpoints](8b%20Dataset-Coverage.md)
+* [Training Logs](8b%20Dataset-Coverage.md)
+* [Visualization Plots](8b%20Dataset-Coverage.md)
+* [Dataset Splits](8b%20Dataset-Coverage.md)
+* [Component-Specific Output](8b%20Dataset-Coverage.md)
+* [Classical Baseline Scripts](8b%20Dataset-Coverage.md)
+* [Deep Learning Training Scripts](8b%20Dataset-Coverage.md)
+* [Three-Stage Research Pipeline](8b%20Dataset-Coverage.md)
+* [Publication Results Generation](8b%20Dataset-Coverage.md)
+* [Experiment Tracking Integration](8b%20Dataset-Coverage.md)
+* [Storage Management](8b%20Dataset-Coverage.md)
+* [Size Considerations](8b%20Dataset-Coverage.md)
+* [Version Control Exclusion](8b%20Dataset-Coverage.md)
+* [Cleanup Strategies](8b%20Dataset-Coverage.md)
+* [Locating Specific Experiments](8b%20Dataset-Coverage.md)
+* [By Timestamp](8b%20Dataset-Coverage.md)
+* [By Seed](8b%20Dataset-Coverage.md)
+* [By Backbone](8b%20Dataset-Coverage.md)
+* [By Pipeline Stage](8b%20Dataset-Coverage.md)
+* [Integration with External Tools](8b%20Dataset-Coverage.md)
+* [TensorBoard Visualization](8b%20Dataset-Coverage.md)
+* [Loading Trained Models](8b%20Dataset-Coverage.md)
+* [Result Analysis](8b%20Dataset-Coverage.md)
+* [Summary](8b%20Dataset-Coverage.md)
 
 Ask Devin about brain-mri-pipelines-py

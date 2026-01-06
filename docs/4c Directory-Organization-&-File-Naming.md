@@ -8,7 +8,7 @@
 
 This page documents the directory structure and file naming conventions used for organizing MRI scan data in the OASIS-2 dataset. These conventions are critical for the system's ability to parse subject identifiers, associate scans with clinical metadata, and enforce subject-level splitting to prevent data leakage.
 
-For information about the clinical metadata CSV structure, see [Clinical Metadata](#4.4). For details on how subject-level splitting prevents leakage, see [Subject-Level Splitting & Leakage Prevention](#3.4).
+For information about the clinical metadata CSV structure, see [Clinical Metadata](4d%20Clinical-Metadata.md). For details on how subject-level splitting prevents leakage, see [Subject-Level Splitting & Leakage Prevention](3d%20Subject-Level-Splitting-&-Leakage-Prevention.md).
 
 ---
 
@@ -124,7 +124,7 @@ PREFIX -.-> SUBJ_ID
 PREFIX -.-> MRI_ID
 ```
 
-Sources: [README.md L40-L49](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L40-L49)
+Sources: README.md
 
 ### Component Definitions
 
@@ -154,7 +154,7 @@ The system extracts two critical identifiers from filenames:
 * Links to `MRI ID` column in clinical CSV
 * Represents a single time point in longitudinal data
 
-Sources: [README.md L44-L48](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L44-L48)
+Sources: README.md
 
 ---
 
@@ -188,7 +188,7 @@ sag/OAS2_0001_MR1_sag.nii.gz    # Sagittal plane
 
 These three files represent the **same scan session** (`OAS2_0001_MR1`) viewed from different anatomical planes. Multi-stream models process all three simultaneously.
 
-Sources: [README.md L40-L49](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L40-L49)
+Sources: README.md
 
  [axl/OAS2_0001_MR1_axl.nii.gz L1](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/axl/OAS2_0001_MR1_axl.nii.gz#L1-L1)
 
@@ -248,7 +248,7 @@ SPLIT -.-> MRI_PARSE
 SPLIT -.-> PLANE_PARSE
 ```
 
-Sources: [README.md L44-L48](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L44-L48)
+Sources: README.md
 
 ### Parsing Algorithm Pseudocode
 
@@ -271,7 +271,7 @@ function parse_filename(filepath):
     return subject_id, mri_id, plane
 ```
 
-Sources: [README.md L44-L48](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L44-L48)
+Sources: README.md
 
 ---
 
@@ -339,7 +339,7 @@ end
 
 Sources: [README.md L23](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L23-L23)
 
- [README.md L44-L48](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L44-L48)
+ README.md
 
 ---
 
@@ -383,7 +383,7 @@ end
 
 Sources: [README.md L36](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L36-L36)
 
- [README.md L44-L48](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L44-L48)
+ README.md
 
 ---
 
@@ -408,7 +408,7 @@ The system should validate filenames to ensure they conform to the expected patt
 3. **Inconsistent planes**: Subject has axial scans but missing coronal/sagittal
 4. **Duplicate scans**: Multiple files with identical `MRI_ID` and `plane`
 
-Sources: [README.md L40-L49](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L40-L49)
+Sources: README.md
 
 ---
 
@@ -427,11 +427,11 @@ Sources: [README.md L40-L49](https://github.com/ThalesMMS/brain-mri-pipelines-py
 | **Primary Use of MRI_ID** | Join with clinical CSV metadata |
 | **Plane Identifiers** | `axl` (axial), `cor` (coronal), `sag` (sagittal) |
 
-Sources: [README.md L29-L49](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L29-L49)
+Sources: README.md
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

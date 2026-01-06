@@ -5,7 +5,7 @@
 
 This page provides step-by-step instructions for running your first experiments with the brain-mri-pipelines-py system. It demonstrates both interactive (GUI) and headless (CLI) workflows for training models and analyzing results.
 
-**Prerequisites**: This guide assumes you have already completed [Installation & Dependencies](#2.1) and [Data Preparation](#2.2). For detailed information about the three-stage research pipeline, see [Three-Stage Research Pipeline](#6). For comprehensive training configuration options, see [Training Configuration](#5.4).
+**Prerequisites**: This guide assumes you have already completed [Installation & Dependencies](2a%20Installation-&-Dependencies.md) and [Data Preparation](2b%20Data-Preparation.md). For detailed information about the three-stage research pipeline, see [Three-Stage Research Pipeline](6%20User-Interfaces.md). For comprehensive training configuration options, see [Training Configuration](5d%20Training-Configuration.md).
 
 ---
 
@@ -23,7 +23,7 @@ Before proceeding, verify that your environment is correctly configured:
 
 If any verification fails, return to the relevant setup page before continuing.
 
-**Sources**: [README.md L54-L76](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L54-L76)
+**Sources**: README.md
 
 ---
 
@@ -90,7 +90,7 @@ end
 
 **Diagram Title**: System Entry Points and Output Flow
 
-**Sources**: [README.md L81-L157](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L81-L157)
+**Sources**: README.md
 
 ---
 
@@ -164,7 +164,7 @@ Training initiated from the GUI generates:
 
 The GUI displays real-time training progress and validation metrics in the interface.
 
-**Sources**: [README.md L83-L96](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L83-L96)
+**Sources**: README.md
 
 ---
 
@@ -256,7 +256,7 @@ The most important artifact from this command is `output/split_data.csv`, which 
 | `label` | AD diagnosis | `0` (non-AD) or `1` (AD) |
 | `age`, `education`, etc. | Clinical features | Numeric values |
 
-**Important**: All subsequent experiments must use this split file to ensure consistency. See [Subject-Level Splitting & Leakage Prevention](#3.4) for details.
+**Important**: All subsequent experiments must use this split file to ensure consistency. See [Subject-Level Splitting & Leakage Prevention](3d%20Subject-Level-Splitting-&-Leakage-Prevention.md) for details.
 
 ### Baseline Performance Interpretation
 
@@ -269,9 +269,9 @@ The script outputs two SVM scenarios:
 
 The second scenario demonstrates how cognitive test scores (MMSE/CDR) can artificially inflate performance, as they are strong proxies for dementia diagnosis.
 
-**Sources**: [README.md L101-L108](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L101-L108)
+**Sources**: Project overview and setup
 
- [README.md L163-L169](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L163-L169)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L163-L169)
 
 ---
 
@@ -382,7 +382,7 @@ Approximate training times (single RTX 3090 GPU):
 | Three backbones, three planes | 40 | 4-6 hours |
 | With multimodal fusion | 40 | +10% overhead |
 
-**Sources**: [README.md L110-L119](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L110-L119)
+**Sources**: Project overview and setup
 
 ---
 
@@ -400,7 +400,7 @@ This script extracts embeddings from the pretrained backbone and evaluates them 
 
 **Output**: `output/logs/pc1_embedding_comparison.csv`
 
-**See**: [Stage 1: Embedding Analysis](#6.1) for methodology details.
+**See**: [Stage 1: Embedding Analysis](6a%20Graphical-User-Interface-%28main.py%29.md) for methodology details.
 
 ### Stage 2: Transfer Learning with Warmup
 
@@ -415,7 +415,7 @@ Key parameter: `--warmup-epochs` specifies how many epochs to train with frozen 
 * `output/models/pc2_warmup_*.pth` (after warmup phase)
 * `output/models/pc2_finetuned_*.pth` (final model)
 
-**See**: [Stage 2: Transfer Learning & Fine-Tuning](#6.2) for the two-phase approach.
+**See**: [Stage 2: Transfer Learning & Fine-Tuning](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md) for the two-phase approach.
 
 ### Stage 3: RL Hyperparameter Refinement
 
@@ -437,9 +437,9 @@ The PPO agent in [brain_mri/ml/rl_refinement.py L1-L500](https://github.com/Thal
 * `output/models/pc3_rl_refined_*.pth`
 * `output/logs/pc3_rl_trajectory.csv` (hyperparameter adjustments over time)
 
-**See**: [Stage 3: RL Hyperparameter Refinement](#6.3) for PPO implementation details.
+**See**: [Stage 3: RL Hyperparameter Refinement](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md) for PPO implementation details.
 
-**Sources**: [README.md L122-L156](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L156)
+**Sources**: Project overview and setup
 
 ---
 
@@ -474,7 +474,7 @@ output/
 | `models/best_*.pth` | Best checkpoint | **After** training for evaluation |
 | `plots/balanced_acc_curves.png` | Learning curves | **After** training to diagnose issues |
 
-**Sources**: [README.md L177-L196](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L177-L196)
+**Sources**: Project overview and setup
 
 ---
 
@@ -494,19 +494,19 @@ If all three files exist, your environment is correctly configured. You can now 
 
 After completing your first successful run:
 
-1. **Explore Architecture Options**: See [Deep Learning Backbones](#5.1) for backbone selection guidance
-2. **Configure Training**: See [Training Configuration](#5.4) for hyperparameter tuning strategies
-3. **Run Full Pipeline**: See [Three-Stage Research Pipeline](#6) for the complete experimental methodology
+1. **Explore Architecture Options**: See [Deep Learning Backbones](5a%20Stage-1-Embedding-Analysis-%28run_pc1_embeddings.py%29.md) for backbone selection guidance
+2. **Configure Training**: See [Training Configuration](5d%20Training-Configuration.md) for hyperparameter tuning strategies
+3. **Run Full Pipeline**: See [Three-Stage Research Pipeline](6%20User-Interfaces.md) for the complete experimental methodology
 4. **Generate Results Tables**: See [Results Generation](#6.4) for publication-ready LaTeX tables
 5. **Understand Metrics**: See [Evaluation Metrics](#5.6) for interpretation of Balanced Accuracy and other metrics
 
 For troubleshooting common issues, check the relevant module documentation or examine the experiment tracking logs in `output/logs/`.
 
-**Sources**: [README.md L1-L218](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L1-L218)
+**Sources**: README.md
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

@@ -7,7 +7,7 @@
 
 This page documents the training configuration system used throughout the deep learning pipelines in the brain-mri-pipelines-py framework. It covers hyperparameter definitions, optimization strategies, learning rate schedules, and the two-phase warmup/fine-tuning training approach.
 
-For information about the model architectures being trained, see [Deep Learning Backbones](#5.1). For loss function configuration and class imbalance handling, see [Loss Functions & Class Imbalance](#5.5). For evaluation metrics used during training, see [Evaluation Metrics](#5.6).
+For information about the model architectures being trained, see [Deep Learning Backbones](5a%20Stage-1-Embedding-Analysis-%28run_pc1_embeddings.py%29.md). For loss function configuration and class imbalance handling, see [Loss Functions & Class Imbalance](#5.5). For evaluation metrics used during training, see [Evaluation Metrics](#5.6).
 
 ---
 
@@ -72,7 +72,7 @@ end
 
 **Diagram: Training Configuration Flow from Entry Points to Execution**
 
-Sources: [README.md L81-L157](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L81-L157)
+Sources: README.md
 
  [brain_mri/ml/](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/brain_mri/ml/)
 
@@ -99,7 +99,7 @@ The system uses a standardized set of hyperparameters across all training modes.
 | `episodes` | int | 4 | Number of RL training episodes (Stage 3) | CLI: `--episodes` |
 | `horizon` | int | 4 | RL micro-epochs per episode | CLI: `--horizon` |
 
-Sources: [README.md L112-L148](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L112-L148)
+Sources: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L112-L148)
 
  [run_deep_models_cli.py](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/run_deep_models_cli.py)
 
@@ -222,7 +222,7 @@ end
 
 **Rationale:** Prevents the large gradients from an untrained classifier from corrupting pretrained features during early training.
 
-Sources: [README.md L136-L140](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L136-L140)
+Sources: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L136-L140)
 
  [brain_mri/scripts/run_pc2_finetune.py](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/brain_mri/scripts/run_pc2_finetune.py)
 
@@ -243,7 +243,7 @@ Sources: [README.md L136-L140](https://github.com/ThalesMMS/brain-mri-pipelines-
 * Learning rate scheduler typically resets to initial values or continues from warmup state
 * Best model checkpoint from warmup phase serves as initialization for fine-tuning
 
-Sources: [README.md L136-L140](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L136-L140)
+Sources: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L136-L140)
 
  [brain_mri/scripts/run_pc2_finetune.py](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/brain_mri/scripts/run_pc2_finetune.py)
 
@@ -349,7 +349,7 @@ python run_deep_models_cli.py \    --seed 42 \    --epochs 40 \ �
 * `--backbones`: Comma-separated list from {`efficientnet`, `densenet`, `medicalnet`}
 * `--multimodal`: Flag to enable clinical feature fusion
 
-Sources: [README.md L112-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L112-L118)
+Sources: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L112-L118)
 
  [run_deep_models_cli.py](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/run_deep_models_cli.py)
 
@@ -369,7 +369,7 @@ python brain_mri/scripts/run_pc2_finetune.py \    --backbone efficientnet
 * `--warmup-epochs`: Number of epochs for frozen backbone warmup
 * Validation metrics tracked separately for warmup and fine-tuning phases
 
-Sources: [README.md L136-L140](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L136-L140)
+Sources: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L136-L140)
 
  [brain_mri/scripts/run_pc2_finetune.py](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/brain_mri/scripts/run_pc2_finetune.py)
 
@@ -395,7 +395,7 @@ python brain_mri/scripts/run_pc3_rl_refinement.py \    --backbone efficie
 * **Action Space:** Adjustments to learning rate and weight decay (continuous)
 * **Reward Signal:** Validation balanced accuracy improvement
 
-Sources: [README.md L143-L148](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L143-L148)
+Sources: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L143-L148)
 
  [brain_mri/scripts/run_pc3_rl_refinement.py](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/brain_mri/scripts/run_pc3_rl_refinement.py)
 
@@ -418,7 +418,7 @@ The Tkinter GUI (`main.py`) provides a simplified interface for single-run exper
 * Primarily for exploration and quick experiments
 * Full reproducibility requires CLI scripts
 
-Sources: [README.md L83-L96](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L83-L96)
+Sources: README.md
 
  [main.py](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/main.py)
 
@@ -438,7 +438,7 @@ Different stages of the research pipeline use distinct training configurations o
 | **Stage 2: Fine-tuning** | 6 | 2 | 1e-4 → 1e-5 | Two-phase explicit warmup |
 | **Stage 3: RL Refinement** | 4 episodes × 4 horizon | N/A | PPO-controlled | Dynamic HP adjustment |
 
-Sources: [README.md L122-L157](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L157)
+Sources: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L157)
 
  [brain_mri/scripts/](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/brain_mri/scripts/)
 
@@ -562,7 +562,7 @@ Training configuration varies by backbone choice:
 * Often converges faster than ImageNet backbones
 * May use shorter warmup period
 
-See [Deep Learning Backbones](#5.1) and [MedicalNet Integration & 3D→2D Conversion](#5.2) for architectural details.
+See [Deep Learning Backbones](5a%20Stage-1-Embedding-Analysis-%28run_pc1_embeddings.py%29.md) and [MedicalNet Integration & 3D→2D Conversion](5b%20MedicalNet-Integration-&-3D→2D-Conversion.md) for architectural details.
 
 Sources: [README.md L10-L12](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L10-L12)
 
@@ -654,7 +654,7 @@ end
 
 Sources: [README.md L17-L18](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L17-L18)
 
- [README.md L143-L148](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L143-L148)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L143-L148)
 
  [brain_mri/ml/rl_refinement.py](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/brain_mri/ml/rl_refinement.py)
 
@@ -690,15 +690,15 @@ The training configuration system provides flexibility across multiple execution
 
 The two-phase warmup/fine-tuning approach in Stage 2 and the RL refinement in Stage 3 represent progressive sophistication in training strategies, building on standard supervised learning in Stage 1 and CLI-based training.
 
-Sources: [README.md L81-L157](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L81-L157)
+Sources: README.md
 
  [brain_mri/ml/](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/brain_mri/ml/)
 
  [brain_mri/scripts/](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/brain_mri/scripts/)
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

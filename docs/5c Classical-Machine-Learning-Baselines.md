@@ -7,7 +7,7 @@
 
 This document describes the classical machine learning baseline models implemented in the system for Alzheimer's disease detection. These baselines serve as performance benchmarks to validate that deep learning embeddings provide meaningful improvements over handcrafted features. The page covers Support Vector Machine (SVM) classifiers operating on morphological descriptors and clinical covariates, as well as XGBoost models for age estimation regression tasks.
 
-For information about deep learning model architectures, see [Deep Learning Backbones](#5.1). For details on how these baselines integrate into the embedding analysis stage, see [Stage 1: Embedding Analysis](#6.1).
+For information about deep learning model architectures, see [Deep Learning Backbones](5a%20Stage-1-Embedding-Analysis-%28run_pc1_embeddings.py%29.md). For details on how these baselines integrate into the embedding analysis stage, see [Stage 1: Embedding Analysis](6a%20Graphical-User-Interface-%28main.py%29.md).
 
 ---
 
@@ -40,7 +40,7 @@ Morphological descriptors are handcrafted geometric features extracted from brai
 
 The GUI provides interactive tools for ventricle segmentation and descriptor extraction through the segmentation mixin. Users can manually initiate region-growing from seed points within ventricular areas.
 
-**Sources**: [README.md L93-L94](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L93-L94)
+**Sources**: README.md
 
 ### Clinical Covariates
 
@@ -67,7 +67,7 @@ The dataset includes Mini-Mental State Examination (MMSE) and Clinical Dementia 
 
 The codebase documentation warns users about this distinction and recommends the clean scenario for methodologically sound analysis.
 
-**Sources**: [README.md L168](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L168-L168)
+**Sources**: Project overview and setup
 
 ---
 
@@ -134,7 +134,7 @@ This diagram illustrates the dual-path approach for classical baselines. The red
 
 **Sources**: [README.md L13-L15](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L13-L15)
 
- [README.md L168](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L168-L168)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L168-L168)
 
 ---
 
@@ -256,7 +256,7 @@ end
 
 This diagram maps the command-line execution flow, showing how `run_baselines_cli.py` orchestrates dataset splitting, feature extraction, model training, and result logging.
 
-**Sources**: [README.md L101-L108](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L101-L108)
+**Sources**: Project overview and setup
 
 ---
 
@@ -291,7 +291,7 @@ The CLI generates the following artifacts in the `output/` directory:
 | **Logs** | `output/logs/baseline_results.json` | Performance metrics and hyperparameters |
 | **Visualizations** | `output/plots/confusion_matrix_svm.png` | Confusion matrices and metric plots |
 
-**Sources**: [README.md L101-L108](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L101-L108)
+**Sources**: Project overview and setup
 
 ---
 
@@ -336,7 +336,7 @@ end
 
 By training the same lightweight classifier on both deep embeddings and handcrafted features, Stage 1 isolates the representation quality from classifier complexity. Superior performance with deep embeddings validates their use in subsequent stages.
 
-**Sources**: [README.md L126-L132](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L126-L132)
+**Sources**: Project overview and setup
 
 ### Baseline as Performance Floor
 
@@ -348,7 +348,7 @@ Classical baselines establish the **performance floor** that deep learning model
 | **SVM (Leakage)** | Upper-bound demonstration | Shows maximum achievable with domain knowledge features |
 | **Deep Models** | Target approach | Must exceed clean SVM to validate learned representations |
 
-**Sources**: [README.md L168](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L168-L168)
+**Sources**: Project overview and setup
 
 ---
 
@@ -422,7 +422,7 @@ Balanced Accuracy = (Sensitivity + Specificity) / 2
 
 This metric ensures that model evaluation is not biased toward the majority class, which is critical in medical diagnosis where false negatives and false positives have different clinical implications.
 
-**Sources**: [README.md L164](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L164)
+**Sources**: Project overview and setup
 
 ---
 
@@ -437,15 +437,15 @@ These baselines integrate into the research pipeline through the `run_baselines_
 
 **Sources**: [README.md L13-L15](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L13-L15)
 
- [README.md L101-L108](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L101-L108)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L101-L108)
 
- [README.md L126-L132](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L126-L132)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L126-L132)
 
- [README.md L164-L168](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L168)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L168)
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

@@ -11,7 +11,7 @@
 > * [axl/OAS2_0013_MR1_axl.nii.gz](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/axl/OAS2_0013_MR1_axl.nii.gz)
 > * [axl/OAS2_0014_MR1_axl.nii.gz](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/axl/OAS2_0014_MR1_axl.nii.gz)
 
-This page provides examples of actual NIfTI files from different subjects in the OASIS-2 dataset to demonstrate the breadth of subject representation in the repository. This complements [Longitudinal Scans (Same Subject, Multiple Timepoints)](#9.1), which focuses on temporal data from the same subject. For information about the dataset structure and file organization, see [OASIS-2 Dataset Overview](#4.1) and [Directory Organization & File Naming](#4.3).
+This page provides examples of actual NIfTI files from different subjects in the OASIS-2 dataset to demonstrate the breadth of subject representation in the repository. This complements [Longitudinal Scans (Same Subject, Multiple Timepoints)](#9.1), which focuses on temporal data from the same subject. For information about the dataset structure and file organization, see [OASIS-2 Dataset Overview](4a%20OASIS-2-Dataset-Overview.md) and [Directory Organization & File Naming](4c%20Directory-Organization-&-File-Naming.md).
 
 ---
 
@@ -415,9 +415,9 @@ This verification ensures data integrity before training and prevents runtime er
 * [axl/OAS2_0010_MR1_axl.nii.gz L1](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/axl/OAS2_0010_MR1_axl.nii.gz#L1-L1)
 * [axl/OAS2_0012_MR1_axl.nii.gz L1](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/axl/OAS2_0012_MR1_axl.nii.gz#L1-L1)
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

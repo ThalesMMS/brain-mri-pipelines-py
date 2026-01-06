@@ -6,15 +6,15 @@
 
 This document provides comprehensive technical documentation of the data layer in the brain-mri-pipelines-py framework. The data layer encompasses all aspects of data storage, organization, loading, and preprocessing for the OASIS-2 neuroimaging dataset.
 
-**Scope**: This page covers the physical organization of MRI images and clinical metadata, file formats, naming conventions, and the data loading pipeline. For information about the subject-level splitting mechanism that prevents data leakage, see [Subject-Level Splitting & Leakage Prevention](#3.4). For model training configurations, see [Training Configuration](#5.4).
+**Scope**: This page covers the physical organization of MRI images and clinical metadata, file formats, naming conventions, and the data loading pipeline. For information about the subject-level splitting mechanism that prevents data leakage, see [Subject-Level Splitting & Leakage Prevention](3d%20Subject-Level-Splitting-&-Leakage-Prevention.md). For model training configurations, see [Training Configuration](5d%20Training-Configuration.md).
 
 **Child Pages**: This section has several specialized sub-pages:
 
-* [OASIS-2 Dataset Overview](#4.1) - Dataset structure and demographics
-* [NIfTI File Format](#4.2) - Neuroimaging file format specifications
-* [Directory Organization & File Naming](#4.3) - Physical layout and naming patterns
-* [Clinical Metadata](#4.4) - Tabular clinical features
-* [Data Loading & Augmentation](#4.5) - Loading pipeline and transformations
+* [OASIS-2 Dataset Overview](4a%20OASIS-2-Dataset-Overview.md) - Dataset structure and demographics
+* [NIfTI File Format](4b%20NIfTI-File-Format.md) - Neuroimaging file format specifications
+* [Directory Organization & File Naming](4c%20Directory-Organization-&-File-Naming.md) - Physical layout and naming patterns
+* [Clinical Metadata](4d%20Clinical-Metadata.md) - Tabular clinical features
+* [Data Loading & Augmentation](4e%20Loss-Functions-&-Class-Imbalance.md) - Loading pipeline and transformations
 
 ---
 
@@ -107,7 +107,7 @@ MRI -.-> DATALOADER
 PLANE -.-> STREAM
 ```
 
-**Sources**: [README.md L40-L49](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L40-L49)
+**Sources**: README.md
 
 ### Examples
 
@@ -120,7 +120,7 @@ PLANE -.-> STREAM
 
 **Critical Note**: The `Subject_ID` (e.g., `OAS2_0001`) is used for train/validation/test splitting to prevent data leakage. Multiple scans from the same subject (`OAS2_0001_MR1`, `OAS2_0001_MR2`) must remain in the same partition.
 
-**Sources**: [README.md L40-L49](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L40-L49)
+**Sources**: README.md
 
  High-level Diagram 4
 
@@ -246,7 +246,7 @@ end
 
 **Sources**: [README.md L12](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L12-L12)
 
- [README.md L168](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L168-L168)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L168-L168)
 
 ### Clinical Features for Multimodal Fusion
 
@@ -287,9 +287,9 @@ LEAK -.-> WARN
 
 MMSE and CDR are diagnostic tools that directly measure cognitive impairment, making them strong proxies for the AD diagnosis target. Including them creates methodologically unsound "shortcuts" that bypass the actual imaging analysis.
 
-**Sources**: [README.md L107-L108](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L107-L108)
+**Sources**: Project overview and setup
 
- [README.md L168](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L168-L168)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L168-L168)
 
  High-level Diagram 5
 
@@ -393,7 +393,7 @@ OAS2_0006,test
 OAS2_0007,test
 ```
 
-**Sources**: [README.md L101-L108](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L101-L108)
+**Sources**: Project overview and setup
 
 ---
 
@@ -423,7 +423,7 @@ DATALOADER -.-> AUGMENT
 AUGMENT -.-> BATCH
 ```
 
-**Sources**: [README.md L163-L167](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L163-L167)
+**Sources**: Project overview and setup
 
  High-level Diagram 4
 
@@ -438,7 +438,7 @@ The OASIS-2 dataset exhibits class imbalance (more non-AD than AD cases). The fr
 | Focal Loss | Down-weight easy examples, focus on hard cases | Alternative loss option |
 | Balanced Accuracy | Primary metric that accounts for imbalance | Evaluation metric |
 
-**Sources**: [README.md L163-L167](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L163-L167)
+**Sources**: Project overview and setup
 
  High-level Diagram 4
 
@@ -466,7 +466,7 @@ SAMPLER -.-> LOADER
 
 The sampler draws samples proportionally to these weights, effectively oversampling the minority class.
 
-**Sources**: [README.md L163-L167](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L163-L167)
+**Sources**: Project overview and setup
 
 ---
 
@@ -517,7 +517,7 @@ end
 
 **Important**: Augmentations are implemented as part of the PyTorch Dataset transform pipeline. The random seed controls reproducibility of augmentation sequences.
 
-**Sources**: High-level Diagram 4, [README.md L163-L167](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L163-L167)
+**Sources**: High-level Diagram 4, **Sources**: Project overview and setup
 
 ---
 
@@ -570,7 +570,7 @@ end
 
 **Sources**: [README.md L10-L15](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L10-L15)
 
- [README.md L110-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L110-L118)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L110-L118)
 
  High-level Diagram 2
 
@@ -637,7 +637,7 @@ output/
 
 **Sources**: [README.md L37](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L37-L37)
 
- [README.md L177-L195](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L177-L195)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L177-L195)
 
 ---
 
@@ -655,7 +655,7 @@ output/
 | Augmentation transforms | `brain_mri/ml/` | Training-time augmentations |
 | WeightedRandomSampler | PyTorch | Class imbalance handling |
 
-**Sources**: [README.md L177-L195](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L177-L195)
+**Sources**: Project overview and setup
 
 ---
 
@@ -672,51 +672,51 @@ The data layer implements a rigorous structure for medical imaging data manageme
 
 The combination of NIfTI medical imaging format, subject-aware splitting, and the WeightedRandomSampler creates a methodologically sound foundation for training AD classification models.
 
-**Sources**: [README.md L1-L218](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L1-L218)
+**Sources**: README.md
 
  High-level Diagrams 1-6
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 
-* [Data Layer](#4-data-layer)
-* [Dataset Organization](#4-dataset-organization)
-* [Directory Structure](#4-directory-structure)
-* [File Naming Convention](#4-file-naming-convention)
-* [Naming Pattern](#4-naming-pattern)
-* [Identifier Extraction Diagram](#4-identifier-extraction-diagram)
-* [Examples](#4-examples)
-* [NIfTI File Format](#4-nifti-file-format)
-* [Format Overview](#4-format-overview)
-* [NIfTI Structure](#4-nifti-structure)
-* [Coordinate Systems](#4-coordinate-systems)
-* [Clinical Metadata](#4-clinical-metadata)
-* [Metadata Schema](#4-metadata-schema)
-* [Clinical Features for Multimodal Fusion](#4-clinical-features-for-multimodal-fusion)
-* [MMSE and CDR: Target Proxy Warning](#4-mmse-and-cdr-target-proxy-warning)
-* [Subject-Level Splitting](#4-subject-level-splitting)
-* [Critical Leakage Prevention Mechanism](#4-critical-leakage-prevention-mechanism)
-* [The Data Leakage Problem](#4-the-data-leakage-problem)
-* [Subject-Aware Splitting Pipeline](#4-subject-aware-splitting-pipeline)
-* [Split Generation](#4-split-generation)
-* [Data Loading Pipeline](#4-data-loading-pipeline)
-* [DataLoader Architecture](#4-dataloader-architecture)
-* [Class Imbalance Handling](#4-class-imbalance-handling)
-* [WeightedRandomSampler Configuration](#4-weightedrandomsampler-configuration)
-* [Data Augmentation](#4-data-augmentation)
-* [Augmentation Pipeline](#4-augmentation-pipeline)
-* [Typical Augmentation Parameters](#4-typical-augmentation-parameters)
-* [Multi-Plane Data Loading](#4-multi-plane-data-loading)
-* [Three-Stream Architecture Data Requirements](#4-three-stream-architecture-data-requirements)
-* [Data Validation](#4-data-validation)
-* [File Integrity Checks](#4-file-integrity-checks)
-* [Output Directory Structure](#4-output-directory-structure)
-* [Output Organization](#4-output-organization)
-* [Data Layer Code Map](#4-data-layer-code-map)
-* [Key Code Entities](#4-key-code-entities)
-* [Summary](#4-summary)
+* [Data Layer](4%20Data-Layer.md)
+* [Dataset Organization](4%20Data-Layer.md)
+* [Directory Structure](4%20Data-Layer.md)
+* [File Naming Convention](4%20Data-Layer.md)
+* [Naming Pattern](4%20Data-Layer.md)
+* [Identifier Extraction Diagram](4%20Data-Layer.md)
+* [Examples](4%20Data-Layer.md)
+* [NIfTI File Format](4%20Data-Layer.md)
+* [Format Overview](4%20Data-Layer.md)
+* [NIfTI Structure](4%20Data-Layer.md)
+* [Coordinate Systems](4%20Data-Layer.md)
+* [Clinical Metadata](4%20Data-Layer.md)
+* [Metadata Schema](4%20Data-Layer.md)
+* [Clinical Features for Multimodal Fusion](4%20Data-Layer.md)
+* [MMSE and CDR: Target Proxy Warning](4%20Data-Layer.md)
+* [Subject-Level Splitting](4%20Data-Layer.md)
+* [Critical Leakage Prevention Mechanism](4%20Data-Layer.md)
+* [The Data Leakage Problem](4%20Data-Layer.md)
+* [Subject-Aware Splitting Pipeline](4%20Data-Layer.md)
+* [Split Generation](4%20Data-Layer.md)
+* [Data Loading Pipeline](4%20Data-Layer.md)
+* [DataLoader Architecture](4%20Data-Layer.md)
+* [Class Imbalance Handling](4%20Data-Layer.md)
+* [WeightedRandomSampler Configuration](4%20Data-Layer.md)
+* [Data Augmentation](4%20Data-Layer.md)
+* [Augmentation Pipeline](4%20Data-Layer.md)
+* [Typical Augmentation Parameters](4%20Data-Layer.md)
+* [Multi-Plane Data Loading](4%20Data-Layer.md)
+* [Three-Stream Architecture Data Requirements](4%20Data-Layer.md)
+* [Data Validation](4%20Data-Layer.md)
+* [File Integrity Checks](4%20Data-Layer.md)
+* [Output Directory Structure](4%20Data-Layer.md)
+* [Output Organization](4%20Data-Layer.md)
+* [Data Layer Code Map](4%20Data-Layer.md)
+* [Key Code Entities](4%20Data-Layer.md)
+* [Summary](4%20Data-Layer.md)
 
 Ask Devin about brain-mri-pipelines-py

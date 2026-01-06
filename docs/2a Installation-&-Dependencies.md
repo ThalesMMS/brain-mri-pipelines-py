@@ -5,7 +5,7 @@
 
 This document provides complete instructions for installing the brain-mri-pipelines-py framework and configuring its dependencies. It covers system requirements, Python environment setup, package installation, and GPU configuration.
 
-For instructions on preparing the OASIS-2 dataset after installation, see [Data Preparation](#2.2). For running your first experiment after setup, see [Quick Start Guide](#2.3).
+For instructions on preparing the OASIS-2 dataset after installation, see [Data Preparation](2b%20Data-Preparation.md). For running your first experiment after setup, see [Quick Start Guide](2c%20Quick-Start-Guide.md).
 
 ---
 
@@ -34,7 +34,7 @@ For instructions on preparing the OASIS-2 dataset after installation, see [Data 
 | **macOS** | ✅ Fully supported | macOS 11+ (Big Sur and newer) |
 | **Windows** | ✅ Supported | Windows 10/11 with PowerShell or WSL2 |
 
-**Sources:** [README.md L55-L78](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L55-L78)
+**Sources:** README.md
 
 ---
 
@@ -79,7 +79,7 @@ python3.11 --version# Expected output: Python 3.11.x
 python --version
 ```
 
-**Sources:** [README.md L56-L62](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L56-L62)
+**Sources:** README.md
 
 ---
 
@@ -101,7 +101,7 @@ Virtual environment isolation prevents dependency conflicts with system packages
 
 **Verification:** Your shell prompt should show `(.venv)` prefix after activation.
 
-**Sources:** [README.md L66-L77](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L66-L77)
+**Sources:** README.md
 
 ---
 
@@ -197,7 +197,7 @@ subgraph subGraph0 ["Application Layer"]
 end
 ```
 
-**Sources:** [README.md L1-L217](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L1-L217)
+**Sources:** README.md
 
  inferred from system architecture diagrams
 
@@ -209,7 +209,7 @@ end
 
 The `requirements.txt` file contains pinned versions of all necessary packages. Installation typically takes 5-15 minutes depending on internet speed and whether PyTorch needs compilation.
 
-**Sources:** [README.md L76-L77](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L76-L77)
+**Sources:** README.md
 
 ---
 
@@ -371,7 +371,7 @@ python -c "from brain_mri.ml.medicalnet_models import load_medicalnet_resne
 * `resnet_34_23dataset.pth` (~85 MB)
 * `resnet_50_23dataset.pth` (~100 MB)
 
-**Sources:** [README.md L171-L173](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
 
 ---
 
@@ -440,7 +440,7 @@ subgraph brain_mri/ui/ ["brain_mri/ui/"]
 end
 ```
 
-**Sources:** [README.md L179-L196](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L179-L196)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L179-L196)
 
  inferred from package structure
 
@@ -568,16 +568,16 @@ If you encounter version conflicts:
 
 After successful installation:
 
-1. **Prepare Data**: Follow [Data Preparation](#2.2) to organize the OASIS-2 dataset
+1. **Prepare Data**: Follow [Data Preparation](2b%20Data-Preparation.md) to organize the OASIS-2 dataset
 2. **Run Verification**: Test the GUI with `python main.py` (requires data in `axl/` directory)
-3. **First Experiment**: See [Quick Start Guide](#2.3) for running your first training pipeline
-4. **Explore Components**: Review [System Architecture](#3) to understand the codebase structure
+3. **First Experiment**: See [Quick Start Guide](2c%20Quick-Start-Guide.md) for running your first training pipeline
+4. **Explore Components**: Review [System Architecture](3%20System-Architecture.md) to understand the codebase structure
 
-**Sources:** [README.md L1-L217](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L1-L217)
+**Sources:** README.md
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

@@ -7,7 +7,7 @@
 
 This document provides an overview of how to set up and run your first experiments with the brain-mri-pipelines-py framework. It covers the essential steps to install dependencies, prepare the OASIS-2 dataset, and execute initial experiments using either the GUI or CLI interfaces.
 
-For detailed installation instructions and dependency management, see [Installation & Dependencies](#2.1). For comprehensive data preparation guidelines, see [Data Preparation](#2.2). For step-by-step walkthroughs of different experiment types, see [Quick Start Guide](#2.3).
+For detailed installation instructions and dependency management, see [Installation & Dependencies](2a%20Installation-&-Dependencies.md). For comprehensive data preparation guidelines, see [Data Preparation](2b%20Data-Preparation.md). For step-by-step walkthroughs of different experiment types, see [Quick Start Guide](2c%20Quick-Start-Guide.md).
 
 ---
 
@@ -24,7 +24,7 @@ The framework requires Python 3.11 or higher and supports both CPU and GPU execu
 | Tkinter | GUI framework | Linux: `sudo apt-get install python3-tk`macOS: `brew install python-tk@3.11`Windows: Included with Python |
 | CUDA-compatible GPU | Deep learning acceleration | Optional but recommended |
 
-Sources: [README.md L55-L61](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L55-L61)
+Sources: README.md
 
 ---
 
@@ -64,7 +64,7 @@ VERIFY -.-> RUN_CLI_DEEP
 
 The `requirements.txt` file contains all necessary packages including PyTorch, torchvision, nibabel (for NIfTI file handling), scikit-learn, xgboost, huggingface_hub (for MedicalNet weights), and Tkinter dependencies.
 
-Sources: [README.md L66-L77](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L66-L77)
+Sources: README.md
 
 ---
 
@@ -110,7 +110,7 @@ OUTPUT -.-> OUT_PLOTS
 3. **Clinical Metadata**: The `oasis_longitudinal_demographic.csv` file must be present in the root directory and contain demographic and clinical variables for each MRI scan.
 4. **Output Directory**: The `output/` directory is auto-generated but excluded from version control via `.gitignore`. It stores trained models, training logs, and experimental results.
 
-Sources: [README.md L29-L50](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L29-L50)
+Sources: README.md
 
  [.gitignore L7-L8](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/.gitignore#L7-L8)
 
@@ -180,9 +180,9 @@ end
 | `run_baselines_cli.py` | Automated training of classical ML baselines (SVM, XGBoost) | Establishing baseline performance, reproducible experiments |
 | `run_deep_models_cli.py` | Configurable deep learning training with multiple backbones | Full-scale deep learning experiments, hyperparameter sweeps |
 
-Sources: [README.md L83-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L83-L118)
+Sources: README.md
 
- [README.md L179-L196](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L179-L196)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L179-L196)
 
 ---
 
@@ -207,7 +207,7 @@ The GUI is implemented using Tkinter with a mixin-based architecture located in 
 
  separating concerns between navigation, segmentation, and training controls.
 
-Sources: [README.md L83-L96](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L83-L96)
+Sources: README.md
 
 ### CLI Mode (Reproducible Workflows)
 
@@ -234,7 +234,7 @@ This executes the complete baseline workflow:
 
 The `--backbones` argument accepts comma-separated values from: `efficientnet` (EfficientNet-B0), `densenet` (DenseNet121), `medicalnet` (Med3D ResNet with 3D→2D conversion).
 
-Sources: [README.md L98-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L98-L118)
+Sources: README.md
 
 ---
 
@@ -266,9 +266,9 @@ PC3 -.-> TABLES
 | 3: RL Refinement | `run_pc3_rl_refinement.py` | `python brain_mri/scripts/run_pc3_rl_refinement.py --backbone efficientnet --episodes 4` |
 | Table Generation | `generate_article_tables` | `python -m brain_mri.scripts.generate_article_tables --write` |
 
-For comprehensive documentation of the three-stage methodology, see [Three-Stage Research Pipeline](#6).
+For comprehensive documentation of the three-stage methodology, see [Three-Stage Research Pipeline](6%20User-Interfaces.md).
 
-Sources: [README.md L122-L156](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L156)
+Sources: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L156)
 
 ---
 
@@ -300,7 +300,7 @@ Before running experiments, verify your setup using this checklist:
 * Write access to `output/` directory
 * Read access to all NIfTI files and CSV
 
-Sources: [README.md L27-L77](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L27-L77)
+Sources: README.md
 
 ---
 
@@ -308,31 +308,31 @@ Sources: [README.md L27-L77](https://github.com/ThalesMMS/brain-mri-pipelines-py
 
 After completing the setup, proceed to:
 
-* **[Installation & Dependencies](#2.1)** for detailed dependency management, GPU configuration, and troubleshooting
-* **[Data Preparation](#2.2)** for comprehensive dataset organization, file format specifications, and validation procedures
-* **[Quick Start Guide](#2.3)** for step-by-step walkthroughs of running your first experiments with both GUI and CLI interfaces
+* **[Installation & Dependencies](2a%20Installation-&-Dependencies.md)** for detailed dependency management, GPU configuration, and troubleshooting
+* **[Data Preparation](2b%20Data-Preparation.md)** for comprehensive dataset organization, file format specifications, and validation procedures
+* **[Quick Start Guide](2c%20Quick-Start-Guide.md)** for step-by-step walkthroughs of running your first experiments with both GUI and CLI interfaces
 
-For understanding the overall system design before diving into experiments, see [System Architecture](#3). For details on the data layer, see [Data Layer](#4). For model architecture documentation, see [Models & Training](#5).
+For understanding the overall system design before diving into experiments, see [System Architecture](3%20System-Architecture.md). For details on the data layer, see [Data Layer](4%20Data-Layer.md). For model architecture documentation, see [Models & Training](5%20Models-&-Training.md).
 
-Sources: [README.md L1-L218](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L1-L218)
+Sources: README.md
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 
-* [Getting Started](#2-getting-started)
-* [System Requirements](#2-system-requirements)
-* [Installation Workflow](#2-installation-workflow)
-* [Required Directory Structure](#2-required-directory-structure)
-* [Entry Points & Interfaces](#2-entry-points-interfaces)
-* [Main Entry Points](#2-main-entry-points)
-* [Execution Modes](#2-execution-modes)
-* [GUI Mode (Interactive Exploration)](#2-gui-mode-interactive-exploration)
-* [CLI Mode (Reproducible Workflows)](#2-cli-mode-reproducible-workflows)
-* [Research Pipeline Entry Points](#2-research-pipeline-entry-points)
-* [Verification Checklist](#2-verification-checklist)
-* [Next Steps](#2-next-steps)
+* [Getting Started](2%20Getting-Started.md)
+* [System Requirements](2%20Getting-Started.md)
+* [Installation Workflow](2%20Getting-Started.md)
+* [Required Directory Structure](2%20Getting-Started.md)
+* [Entry Points & Interfaces](2%20Getting-Started.md)
+* [Main Entry Points](2%20Getting-Started.md)
+* [Execution Modes](2%20Getting-Started.md)
+* [GUI Mode (Interactive Exploration)](2%20Getting-Started.md)
+* [CLI Mode (Reproducible Workflows)](2%20Getting-Started.md)
+* [Research Pipeline Entry Points](2%20Getting-Started.md)
+* [Verification Checklist](2%20Getting-Started.md)
+* [Next Steps](2%20Getting-Started.md)
 
 Ask Devin about brain-mri-pipelines-py

@@ -7,9 +7,9 @@
 
 This document provides comprehensive technical documentation of all model architectures, training procedures, loss functions, and evaluation metrics used in the brain-mri-pipelines-py framework. It covers three primary modeling approaches: (1) deep learning multi-stream architectures with multiple backbone options, (2) classical machine learning baselines for comparison, and (3) reinforcement learning-based hyperparameter refinement. The document focuses on model definitions, training configurations, and the mechanisms employed to handle class imbalance in medical imaging datasets.
 
-For information about the three-stage research pipeline that utilizes these models, see [Three-Stage Research Pipeline](#6). For details on data processing and subject-level splitting, see [Data Processing Pipeline](#3.2) and [Subject-Level Splitting & Leakage Prevention](#3.4). For interface usage, see [User Interfaces](#7).
+For information about the three-stage research pipeline that utilizes these models, see [Three-Stage Research Pipeline](6%20User-Interfaces.md). For details on data processing and subject-level splitting, see [Data Processing Pipeline](3b%20Data-Processing-Pipeline.md) and [Subject-Level Splitting & Leakage Prevention](3d%20Subject-Level-Splitting-&-Leakage-Prevention.md). For interface usage, see [User Interfaces](7%20Development-&-Configuration.md).
 
-**Sources:** [README.md L1-L218](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L1-L218)
+**Sources:** README.md
 
 ---
 
@@ -76,7 +76,7 @@ end
 
 **Sources:** [README.md L9-L18](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L9-L18)
 
- [README.md L184-L189](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L184-L189)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L184-L189)
 
 ---
 
@@ -154,11 +154,11 @@ The choice of backbone depends on the specific research question:
 
 * **EfficientNet-B0**: Recommended for resource-constrained scenarios. Provides excellent performance-to-parameter ratio. Suitable when training speed is a priority.
 * **DenseNet121**: Ideal for investigating feature reuse across network layers. Dense connections facilitate gradient flow, beneficial for smaller medical imaging datasets.
-* **MedicalNet ResNet**: Preferred for leveraging medical domain knowledge. The Med3D pretraining on 23 medical imaging datasets provides representations specifically tuned for anatomical structures. Requires the 3D→2D conversion process described in [MedicalNet Integration & 3D→2D Conversion](#5.2).
+* **MedicalNet ResNet**: Preferred for leveraging medical domain knowledge. The Med3D pretraining on 23 medical imaging datasets provides representations specifically tuned for anatomical structures. Requires the 3D→2D conversion process described in [MedicalNet Integration & 3D→2D Conversion](5b%20MedicalNet-Integration-&-3D→2D-Conversion.md).
 
 **Sources:** [README.md L11-L12](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L11-L12)
 
- [README.md L171-L173](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
 
 ---
 
@@ -227,7 +227,7 @@ The architecture supports flexible stream configuration:
 
 **Sources:** [README.md L10-L12](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L10-L12)
 
- [README.md L115-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L115-L118)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L115-L118)
 
 ---
 
@@ -297,7 +297,7 @@ end
 
 **Sources:** [README.md L13-L15](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L13-L15)
 
- [README.md L167-L169](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L167-L169)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L167-L169)
 
 ### XGBoost Regressor
 
@@ -309,7 +309,7 @@ end
 
 **Sources:** [README.md L15](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L15-L15)
 
- [README.md L103-L108](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L103-L108)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L103-L108)
 
 ---
 
@@ -394,9 +394,9 @@ python run_deep_models_cli.py --seed 42 --epochs 40 --backbones efficient
 python brain_mri/scripts/run_pc2_finetune.py --backbone efficientnet --seed 42 --epochs 6 --warmup-epochs 2
 ```
 
-**Sources:** [README.md L112-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L112-L118)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L112-L118)
 
- [README.md L135-L141](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L135-L141)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L135-L141)
 
 ### Training Loop Structure
 
@@ -409,7 +409,7 @@ The training loop implements the following key components:
 5. **Checkpoint Management**: Saves best model based on validation balanced accuracy.
 6. **Early Stopping**: Terminates training if validation performance plateaus.
 
-**Sources:** [README.md L164-L169](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L169)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L169)
 
 ---
 
@@ -505,7 +505,7 @@ Where:
 
 **Effect**: When a sample is confidently correct (`p_t` → 1), the `(1 - p_t)^γ` term approaches 0, down-weighting the loss. When a sample is misclassified or uncertain, the loss remains high.
 
-**Sources:** [README.md L164-L167](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L167)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L167)
 
 ---
 
@@ -567,9 +567,9 @@ python -m brain_mri.scripts.generate_article_tables --write
 
 This generates LaTeX-formatted tables with statistical comparison results.
 
-**Sources:** [README.md L164](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L164)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L164)
 
- [README.md L153-L156](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L153-L156)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L153-L156)
 
 ---
 
@@ -615,7 +615,7 @@ Models from earlier pipeline stages can be loaded for continued training:
 
 **Sources:** [README.md L37](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L37-L37)
 
- [README.md L143-L148](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L143-L148)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L143-L148)
 
 ---
 
@@ -717,11 +717,11 @@ The framework automatically handles weight download, conversion, and loading dur
 
 > Chen, S., Ma, K., & Zheng, Y. (2019). Med3D: Transfer Learning for 3D Medical Image Analysis. *arXiv preprint* arXiv:1904.00625.
 
-**Sources:** [README.md L171-L173](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
 
- [README.md L186-L187](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L186-L187)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L186-L187)
 
- [README.md L211-L213](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L211-L213)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L211-L213)
 
 ---
 
@@ -846,9 +846,9 @@ python brain_mri/scripts/run_pc3_rl_refinement.py --backbone efficientnet --
 
 **Sources:** [README.md L17-L18](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L17-L18)
 
- [README.md L143-L148](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L143-L148)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L143-L148)
 
- [README.md L187](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L187-L187)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L187-L187)
 
 ---
 
@@ -865,17 +865,17 @@ The following table summarizes the primary entry points for model training:
 | `run_pc2_finetune.py` | Stage 2: Transfer learning | `--backbone`, `--epochs`, `--warmup-epochs` | `output/stage2/` |
 | `run_pc3_rl_refinement.py` | Stage 3: RL refinement | `--backbone`, `--episodes`, `--horizon` | `output/stage3/` |
 
-**Sources:** [README.md L83-L148](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L83-L148)
+**Sources:** README.md
 
- [README.md L184-L195](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L184-L195)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L184-L195)
 
 ---
 
-This document provides the comprehensive technical foundation for understanding and utilizing all model architectures and training procedures in the brain-mri-pipelines-py framework. For practical usage examples, consult [Quick Start Guide](#2.3). For implementation details of the three-stage research pipeline, see [Three-Stage Research Pipeline](#6).
+This document provides the comprehensive technical foundation for understanding and utilizing all model architectures and training procedures in the brain-mri-pipelines-py framework. For practical usage examples, consult [Quick Start Guide](2c%20Quick-Start-Guide.md). For implementation details of the three-stage research pipeline, see [Three-Stage Research Pipeline](6%20User-Interfaces.md).
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

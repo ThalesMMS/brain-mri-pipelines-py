@@ -7,7 +7,7 @@
 
 This document details the three deep learning backbone architectures supported by the framework: **EfficientNet-B0**, **DenseNet121**, and **MedicalNet ResNet**. These backbones serve as feature extractors in the multi-stream architecture, processing 2D MRI slices from three anatomical planes (axial, coronal, sagittal) to generate embeddings for Alzheimer's disease classification.
 
-For information about the multi-stream fusion architecture that combines these backbones with clinical data, see [Multi-Stream Multimodal Network](#3.1). For the specific 3D→2D weight conversion process used by MedicalNet, see [MedicalNet Integration & 3D→2D Conversion](#5.2).
+For information about the multi-stream fusion architecture that combines these backbones with clinical data, see [Multi-Stream Multimodal Network](3a%20Multi-Stream-Multimodal-Network.md). For the specific 3D→2D weight conversion process used by MedicalNet, see [MedicalNet Integration & 3D→2D Conversion](5b%20MedicalNet-Integration-&-3D→2D-Conversion.md).
 
 **Sources:** [README.md L1-L18](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L1-L18)
 
@@ -25,7 +25,7 @@ The framework provides three backbone options, each with distinct pretraining so
 
 **Sources:** [README.md L11-L12](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L11-L12)
 
- [README.md L171-L173](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
 
 ---
 
@@ -80,7 +80,7 @@ This diagram illustrates the parallel processing paths for each backbone archite
 
 **Sources:** [README.md L11-L12](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L11-L12)
 
- [README.md L186-L187](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L186-L187)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L186-L187)
 
 ---
 
@@ -126,7 +126,7 @@ python run_deep_models_cli.py --backbones efficientnet --seed 42 --epochs�
 
 **Sources:** [README.md L11](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L11-L11)
 
- [README.md L113-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L113-L118)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L113-L118)
 
 ---
 
@@ -179,7 +179,7 @@ python run_deep_models_cli.py --backbones densenet --seed 42 --epochs 40
 
 **Sources:** [README.md L11](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L11-L11)
 
- [README.md L113-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L113-L118)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L113-L118)
 
 ---
 
@@ -192,7 +192,7 @@ MedicalNet ResNet represents a unique approach that leverages **medical domain-s
 **Key Features:**
 
 * **Medical Domain Pretraining:** Weights derived from 3D volumetric medical imaging tasks
-* **3D→2D Conversion:** Novel mathematical conversion process transforms 3D convolutional kernels into 2D equivalents (detailed in [page 5.2](#5.2))
+* **3D→2D Conversion:** Novel mathematical conversion process transforms 3D convolutional kernels into 2D equivalents (detailed in [page 5.2](5b%20MedicalNet-Integration-&-3D→2D-Conversion.md))
 * **Weight Storage:** Downloaded via `huggingface_hub` to `~/.cache/medicalnet`
 * **ResNet Variants:** Supports ResNet-10/18/34/50/101/152/200 architectures
 * **Embedding Layer:** 512-dimensional embedding (typical for ResNet architectures)
@@ -230,9 +230,9 @@ python run_deep_models_cli.py --backbones medicalnet --seed 42 --epochs 4
 
 **Sources:** [README.md L11](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L11-L11)
 
- [README.md L171-L173](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
 
- [README.md L186](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L186-L186)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L186-L186)
 
 ---
 
@@ -256,7 +256,7 @@ Each backbone can be used throughout the three-stage research pipeline:
 | **Stage 2** | `run_pc2_finetune.py` | `--backbone efficientnet` | Transfer learning with warmup |
 | **Stage 3** | `run_pc3_rl_refinement.py` | `--backbone efficientnet` | RL hyperparameter optimization |
 
-**Sources:** [README.md L113-L148](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L113-L148)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L113-L148)
 
 ---
 
@@ -316,7 +316,7 @@ end
 
 **Sources:** [README.md L10-L12](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L10-L12)
 
- [README.md L187](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L187-L187)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L187-L187)
 
 ---
 
@@ -368,7 +368,7 @@ FINETUNE -.-> FINAL
 python brain_mri/scripts/run_pc2_finetune.py --backbone efficientnet --seed 42 --epochs 6 --warmup-epochs 2
 ```
 
-**Sources:** [README.md L134-L140](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L134-L140)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L134-L140)
 
 ---
 
@@ -428,7 +428,7 @@ MULTISTREAM -.-> TORCHVISION
 * **[brain_mri/scripts/run_pc2_finetune.py](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/brain_mri/scripts/run_pc2_finetune.py)**: Stage 2 transfer learning with explicit warmup phase
 * **[brain_mri/scripts/run_pc3_rl_refinement.py](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/brain_mri/scripts/run_pc3_rl_refinement.py)**: Stage 3 RL refinement on fine-tuned backbones
 
-**Sources:** [README.md L179-L195](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L179-L195)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L179-L195)
 
 ---
 
@@ -438,11 +438,11 @@ When using MedicalNet weights in publications, cite:
 
 > Chen, S., Ma, K., & Zheng, Y. (2019). Med3D: Transfer Learning for 3D Medical Image Analysis. *arXiv preprint* arXiv:1904.00625.
 
-**Sources:** [README.md L211-L213](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L211-L213)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L211-L213)
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

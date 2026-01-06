@@ -10,7 +10,7 @@
 
 This page introduces the **Open Access Series of Imaging Studies (OASIS-2)** dataset, the primary data source for this framework. It covers the dataset's structure, longitudinal design, clinical metadata, and relevance to Alzheimer's disease (AD) classification research.
 
-For details on the NIfTI file format used to store MRI images, see [NIfTI File Format](#4.2). For information on directory organization and file naming conventions, see [Directory Organization & File Naming](#4.3). For specifics on clinical feature extraction and usage, see [Clinical Metadata](#4.4).
+For details on the NIfTI file format used to store MRI images, see [NIfTI File Format](4b%20NIfTI-File-Format.md). For information on directory organization and file naming conventions, see [Directory Organization & File Naming](4c%20Directory-Organization-&-File-Naming.md). For specifics on clinical feature extraction and usage, see [Clinical Metadata](4d%20Clinical-Metadata.md).
 
 ---
 
@@ -23,7 +23,7 @@ For details on the NIfTI file format used to store MRI images, see [NIfTI File F
 * **Anatomical planes** captured in three orientations: axial, coronal, and sagittal
 * **Binary classification labels** for Alzheimer's disease (AD) vs Non-AD based on clinical assessments
 
-The dataset is publicly available but not bundled with this repository. Users must organize it according to the structure described in [Directory Organization & File Naming](#4.3).
+The dataset is publicly available but not bundled with this repository. Users must organize it according to the structure described in [Directory Organization & File Naming](4c%20Directory-Organization-&-File-Naming.md).
 
 **Sources:** [README.md L1-L29](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L1-L29)
 
@@ -72,7 +72,7 @@ subgraph subGraph0 ["Repository Root"]
 end
 ```
 
-**Sources:** [README.md L29-L50](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L29-L50)
+**Sources:** README.md
 
 ### Directory Contents
 
@@ -133,7 +133,7 @@ From the pattern `OAS2_XXXX_MRY_plane.nii.gz`:
 * `OAS2_0001_MR2_axl.nii.gz` → Subject 0001, Visit 2, Axial plane (same patient, different time)
 * `OAS2_0002_MR1_axl.nii.gz` → Subject 0002, Visit 1, Axial plane (different patient)
 
-**Sources:** [README.md L40-L49](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L40-L49)
+**Sources:** README.md
 
  [axl/OAS2_0001_MR1_axl.nii.gz L1](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/axl/OAS2_0001_MR1_axl.nii.gz#L1-L1)
 
@@ -213,7 +213,7 @@ The codebase supports both scenarios:
 
 **Sources:** [README.md L11-L12](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L11-L12)
 
- [README.md L160-L169](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L160-L169)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L160-L169)
 
 ---
 
@@ -312,13 +312,13 @@ The framework enforces subject-level splitting through:
 2. **Subject-Aware Splitter**: Groups all scans by `Subject_ID` before splitting
 3. **Validation**: Ensures no subject appears in multiple partitions
 
-This mechanism is described in detail in [Subject-Level Splitting & Leakage Prevention](#3.4).
+This mechanism is described in detail in [Subject-Level Splitting & Leakage Prevention](3d%20Subject-Level-Splitting-&-Leakage-Prevention.md).
 
 **Key Quote from Documentation:**
 
 > "The pipeline relies on this naming structure to map images to subjects... Enforces **subject-level splits** to ensure all MRI scans from a single patient remain strictly within one partition (Train, Validation, or Test)."
 
-**Sources:** [README.md L40-L49](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L40-L49)
+**Sources:** README.md
 
  [README.md L23](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L23-L23)
 
@@ -348,7 +348,7 @@ OASIS-2 exhibits class imbalance typical of medical datasets. The framework addr
 
 These mechanisms are detailed in [Loss Functions & Class Imbalance](#5.5) and [Evaluation Metrics](#5.6).
 
-**Sources:** [README.md L162-L167](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L167)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L167)
 
 ---
 
@@ -389,7 +389,7 @@ The dataset structure is hardcoded in the repository organization:
 
 **Sources:** [README.md L29-L38](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L29-L38)
 
- [README.md L177-L196](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L177-L196)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L177-L196)
 
 ---
 
@@ -403,15 +403,15 @@ The OASIS-2 dataset provides the foundation for all experiments in this framewor
 4. **Subject-Level Structure**: Hierarchical organization requires careful splitting to prevent leakage
 5. **Class Imbalance**: Typical medical dataset characteristics necessitate specialized handling
 
-For implementation details on how this data flows through the system, see [Data Processing Pipeline](#3.2) and [Data Loading & Augmentation](#4.5).
+For implementation details on how this data flows through the system, see [Data Processing Pipeline](3b%20Data-Processing-Pipeline.md) and [Data Loading & Augmentation](4e%20Loss-Functions-&-Class-Imbalance.md).
 
-**Sources:** [README.md L1-L50](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L1-L50)
+**Sources:** README.md
 
- [README.md L160-L169](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L160-L169)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L160-L169)
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

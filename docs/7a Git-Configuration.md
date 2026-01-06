@@ -8,7 +8,7 @@
 
 This document describes the Git version control configuration for the brain-mri-pipelines-py repository, specifically the `.gitignore` and `.gitattributes` files. These files control which files are tracked in version control, how text files are normalized, and how GitHub displays repository statistics. This configuration ensures that large model outputs, system files, and generated artifacts are excluded from version control while maintaining proper line ending handling across different operating systems.
 
-For information about the output directory that is excluded from version control, see [Output Directory Structure](#8.2).
+For information about the output directory that is excluded from version control, see [Output Directory Structure](8b%20Dataset-Coverage.md).
 
 ## Git Configuration Files
 
@@ -257,11 +257,11 @@ end
 
 | Component | Git Configuration Impact | Related Documentation |
 | --- | --- | --- |
-| `output/` directory | Excluded via `.gitignore`, marked `linguist-generated` in `.gitattributes` | [Output Directory Structure](#8.2) |
-| Python source files | Line endings normalized by `.gitattributes` | [Core Package Structure](#3.3) |
-| Training scripts | Line endings normalized by `.gitattributes` | [Deep Models CLI](#7.3), [Baselines CLI](#7.2) |
+| `output/` directory | Excluded via `.gitignore`, marked `linguist-generated` in `.gitattributes` | [Output Directory Structure](8b%20Dataset-Coverage.md) |
+| Python source files | Line endings normalized by `.gitattributes` | [Core Package Structure](3c%20Core-Package-Structure-%28brain_mri-%29.md) |
+| Training scripts | Line endings normalized by `.gitattributes` | [Deep Models CLI](7c%20License-&-Usage-Terms.md), [Baselines CLI](7b%20Output-Directory-Structure.md) |
 | Generated LaTeX tables | Excluded from version control and language stats | [Results Generation](#6.4) |
-| Model checkpoints (`.pth`) | Excluded via `output/` pattern | [Stage 2: Transfer Learning](#6.2), [Stage 3: RL Refinement](#6.3) |
+| Model checkpoints (`.pth`) | Excluded via `output/` pattern | [Stage 2: Transfer Learning](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md), [Stage 3: RL Refinement](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md) |
 
 **Sources:** [.gitignore L7-L8](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/.gitignore#L7-L8)
 
@@ -391,7 +391,7 @@ The current Git configuration is minimal and appropriate for this research codeb
 
 However, the current configuration is sufficient because:
 
-* The OASIS-2 dataset is expected to be stored separately (as documented in [Data Preparation](#2.2))
+* The OASIS-2 dataset is expected to be stored separately (as documented in [Data Preparation](2b%20Data-Preparation.md))
 * IDE configurations are typically user-specific and not standardized across contributors
 * The focus is on reproducible scientific code, not specific development environment setups
 
@@ -415,31 +415,31 @@ This confirms that the pattern on line 8 of `.gitignore` (the `/output/` rule) i
 
 **Sources:** [.gitignore L8](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/.gitignore#L8-L8)
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 
-* [Git Configuration](#8.1-git-configuration)
-* [Purpose & Scope](#8.1-purpose-scope)
-* [Git Configuration Files](#8.1-git-configuration-files)
-* [Version Control Exclusions (.gitignore)](#8.1-version-control-exclusions-gitignore)
-* [Operating System Files](#8.1-operating-system-files)
-* [Python Runtime Artifacts](#8.1-python-runtime-artifacts)
-* [Generated Output Directory](#8.1-generated-output-directory)
-* [Text Normalization & Repository Attributes (.gitattributes)](#8.1-text-normalization-repository-attributes-gitattributes)
-* [Automatic Line Ending Normalization](#8.1-automatic-line-ending-normalization)
-* [GitHub Linguist Configuration](#8.1-github-linguist-configuration)
-* [Integration with Repository Structure](#8.1-integration-with-repository-structure)
-* [Key Integration Points](#8.1-key-integration-points)
-* [File Pattern Matching Details](#8.1-file-pattern-matching-details)
-* [Pattern Semantics](#8.1-pattern-semantics)
-* [Cross-Platform Compatibility](#8.1-cross-platform-compatibility)
-* [Developer Workflow Impact](#8.1-developer-workflow-impact)
-* [Scenario: Training Experiment Output](#8.1-scenario-training-experiment-output)
-* [Scenario: Cross-Platform Collaboration](#8.1-scenario-cross-platform-collaboration)
-* [Maintenance Considerations](#8.1-maintenance-considerations)
-* [Verification](#8.1-verification)
+* [Git Configuration](8a%20Longitudinal-Scans-%28Same-Subject,-Multiple-Timepoints%29.md)
+* [Purpose & Scope](8a%20Longitudinal-Scans-%28Same-Subject,-Multiple-Timepoints%29.md)
+* [Git Configuration Files](8a%20Longitudinal-Scans-%28Same-Subject,-Multiple-Timepoints%29.md)
+* [Version Control Exclusions (.gitignore)](8a%20Longitudinal-Scans-%28Same-Subject,-Multiple-Timepoints%29.md)
+* [Operating System Files](8a%20Longitudinal-Scans-%28Same-Subject,-Multiple-Timepoints%29.md)
+* [Python Runtime Artifacts](8a%20Longitudinal-Scans-%28Same-Subject,-Multiple-Timepoints%29.md)
+* [Generated Output Directory](8a%20Longitudinal-Scans-%28Same-Subject,-Multiple-Timepoints%29.md)
+* [Text Normalization & Repository Attributes (.gitattributes)](8a%20Longitudinal-Scans-%28Same-Subject,-Multiple-Timepoints%29.md)
+* [Automatic Line Ending Normalization](8a%20Longitudinal-Scans-%28Same-Subject,-Multiple-Timepoints%29.md)
+* [GitHub Linguist Configuration](8a%20Longitudinal-Scans-%28Same-Subject,-Multiple-Timepoints%29.md)
+* [Integration with Repository Structure](8a%20Longitudinal-Scans-%28Same-Subject,-Multiple-Timepoints%29.md)
+* [Key Integration Points](8a%20Longitudinal-Scans-%28Same-Subject,-Multiple-Timepoints%29.md)
+* [File Pattern Matching Details](8a%20Longitudinal-Scans-%28Same-Subject,-Multiple-Timepoints%29.md)
+* [Pattern Semantics](8a%20Longitudinal-Scans-%28Same-Subject,-Multiple-Timepoints%29.md)
+* [Cross-Platform Compatibility](8a%20Longitudinal-Scans-%28Same-Subject,-Multiple-Timepoints%29.md)
+* [Developer Workflow Impact](8a%20Longitudinal-Scans-%28Same-Subject,-Multiple-Timepoints%29.md)
+* [Scenario: Training Experiment Output](8a%20Longitudinal-Scans-%28Same-Subject,-Multiple-Timepoints%29.md)
+* [Scenario: Cross-Platform Collaboration](8a%20Longitudinal-Scans-%28Same-Subject,-Multiple-Timepoints%29.md)
+* [Maintenance Considerations](8a%20Longitudinal-Scans-%28Same-Subject,-Multiple-Timepoints%29.md)
+* [Verification](8a%20Longitudinal-Scans-%28Same-Subject,-Multiple-Timepoints%29.md)
 
 Ask Devin about brain-mri-pipelines-py

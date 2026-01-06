@@ -7,7 +7,7 @@
 
 This document describes the internal organization of the `brain_mri/` Python package, detailing the responsibilities of each module directory and how they interact. The package is structured into five primary modules: `ml/` (machine learning models and training logic), `ui/` (GUI components), `experiments/` (tracking and visualization), `utils/` (image processing utilities), and `scripts/` (reproducible research pipeline stages).
 
-For information about the multi-stream architectural design, see [Multi-Stream Multimodal Network](#3.1). For the end-to-end data flow through preprocessing and batch creation, see [Data Processing Pipeline](#3.2). For details on the three research stages, see [Three-Stage Research Pipeline](#6).
+For information about the multi-stream architectural design, see [Multi-Stream Multimodal Network](3a%20Multi-Stream-Multimodal-Network.md). For the end-to-end data flow through preprocessing and batch creation, see [Data Processing Pipeline](3b%20Data-Processing-Pipeline.md). For details on the three research stages, see [Three-Stage Research Pipeline](6%20User-Interfaces.md).
 
 ---
 
@@ -50,7 +50,7 @@ SCRIPTS -.-> SCRIPTS_SUB3
 SCRIPTS -.-> SCRIPTS_SUB4
 ```
 
-**Sources:** [README.md L179-L196](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L179-L196)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L179-L196)
 
 ---
 
@@ -64,7 +64,7 @@ SCRIPTS -.-> SCRIPTS_SUB4
 | `utils/` | Image processing utilities | NIfTI loading, preprocessing, augmentation | Used by data loaders and GUI |
 | `scripts/` | Reproducible research stages | Stage 1-3 runners, table generation | Direct CLI execution |
 
-**Sources:** [README.md L179-L196](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L179-L196)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L179-L196)
 
 ---
 
@@ -147,7 +147,7 @@ Implements classical machine learning baselines:
 * Feature extraction from clinical metadata
 * Handling of MMSE/CDR leakage scenarios
 
-**Sources:** [README.md L184-L188](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L184-L188)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L184-L188)
 
 ---
 
@@ -179,9 +179,9 @@ TRAIN -.-> ML
 * **Training Interface:** Configure model parameters, select backbones, initiate training runs
 * **Visualization:** Display images, segmentation masks, and training progress
 
-**Sources:** [README.md L182](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L182-L182)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L182-L182)
 
- [README.md L83-L96](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L83-L96)
+ README.md
 
 ---
 
@@ -212,7 +212,7 @@ ARTIFACTS -.-> OUTPUT
 * **Experiment Organization:** Creates timestamped subdirectories in `output/` for each run
 * **Result Export:** Saves metrics in formats suitable for statistical analysis and publication
 
-**Sources:** [README.md L183](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L183-L183)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L183-L183)
 
 ---
 
@@ -243,7 +243,7 @@ ML -.-> UTILS_MODULE
 * **Coordinate Systems:** Handling affine transformations for proper spatial alignment
 * **Visualization Helpers:** Utilities for displaying images with overlays
 
-**Sources:** [README.md L189](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L189-L189)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L189-L189)
 
 ---
 
@@ -318,9 +318,9 @@ Command-line interface:
 python -m brain_mri.scripts.generate_article_tables --write
 ```
 
-**Sources:** [README.md L122-L156](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L156)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L156)
 
- [README.md L185-L188](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L185-L188)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L185-L188)
 
 ---
 
@@ -362,7 +362,7 @@ sequenceDiagram
 4. **scripts/ → ml/**: Research stage scripts orchestrate multiple training runs with specific configurations
 5. **ui/ → ml/ & utils/**: GUI components use both utilities (for visualization) and ML (for training)
 
-**Sources:** [README.md L179-L196](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L179-L196)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L179-L196)
 
 ---
 
@@ -393,7 +393,7 @@ EXTERNAL -.-> UI_MOD
 * **Experiment Tracking:** Only `ml/` calls into `experiments/` (unidirectional logging)
 * **UI Independence:** GUI components are isolated in `ui/` and only imported when GUI is launched
 
-**Sources:** [README.md L179-L196](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L179-L196)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L179-L196)
 
 ---
 
@@ -431,15 +431,15 @@ Key files designed for extension:
 * `experiments/`: Add new metrics or visualization types
 * `utils/`: Add new preprocessing or augmentation techniques
 
-**Sources:** [README.md L179-L196](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L179-L196)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L179-L196)
 
 ---
 
 This modular structure enables the system to handle complex research workflows while maintaining code organization and reusability. The `ml/` module serves as the central hub, with supporting modules handling specialized concerns like GUI presentation, experiment tracking, and image processing.
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

@@ -9,11 +9,11 @@ This page documents the `generate_article_tables` module, which serves as the fi
 
 For information about the individual experimental stages that produce the input data for table generation, see:
 
-* Stage 1: [Embedding Analysis](#6.1)
-* Stage 2: [Transfer Learning & Fine-Tuning](#6.2)
-* Stage 3: [RL Hyperparameter Refinement](#6.3)
+* Stage 1: [Embedding Analysis](6a%20Graphical-User-Interface-%28main.py%29.md)
+* Stage 2: [Transfer Learning & Fine-Tuning](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
+* Stage 3: [RL Hyperparameter Refinement](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
 
-**Sources:** [README.md L150-L156](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L150-L156)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L150-L156)
 
 ---
 
@@ -61,7 +61,7 @@ subgraph subGraph0 ["Input Layer: Experiment Outputs"]
 end
 ```
 
-**Sources:** [README.md L150-L156](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L150-L156)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L150-L156)
 
  Diagram 3 from high-level architecture
 
@@ -77,13 +77,13 @@ The module is invoked as a Python module with an optional `--write` flag:
 
 Without `--write`, the script performs a dry run that validates all input files exist and displays table previews to standard output. This allows verification before generating publication files.
 
-**Sources:** [README.md L153-L156](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L153-L156)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L153-L156)
 
 ---
 
 ## Input Data Structure
 
-The table generator expects experiment results to be organized following the standard `output/` directory structure created by the experiment tracking system ([see Section 3.3](#3.3) for core package structure).
+The table generator expects experiment results to be organized following the standard `output/` directory structure created by the experiment tracking system ([see Section 3.3](3c%20Core-Package-Structure-%28brain_mri-%29.md) for core package structure).
 
 ### Expected Directory Layout
 
@@ -183,7 +183,7 @@ The following model pairs are typically compared:
 
 The Wilcoxon test produces a **p-value** that is reported in the tables. Typically, p < 0.05 indicates statistical significance.
 
-**Sources:** Diagram 5 from high-level architecture, [README.md L164-L168](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L168)
+**Sources:** [Diagram 5 from high-level architecture, **Sources**: Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L168)
 
 ---
 
@@ -206,7 +206,7 @@ A typical generated table might look like:
 * **Mean ± Std** format for reporting metrics across cross-validation folds
 * **Sorted** by balanced accuracy (descending)
 
-**Sources:** [README.md L150-L156](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L150-L156)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L150-L156)
 
 ---
 
@@ -275,7 +275,7 @@ Documents:
 
 Demonstrates the benefit of automated hyperparameter adjustment.
 
-**Sources:** [README.md L122-L149](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L149)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L149)
 
  Diagram 3 from high-level architecture
 
@@ -283,7 +283,7 @@ Demonstrates the benefit of automated hyperparameter adjustment.
 
 ## Leakage Analysis Tables
 
-A critical set of tables compares SVM performance **with and without MMSE/CDR scores** to quantify the impact of target leakage (see [Section 3.4](#3.4) for leakage prevention mechanisms).
+A critical set of tables compares SVM performance **with and without MMSE/CDR scores** to quantify the impact of target leakage (see [Section 3.4](3d%20Subject-Level-Splitting-&-Leakage-Prevention.md) for leakage prevention mechanisms).
 
 ### Leakage Quantification
 
@@ -295,9 +295,9 @@ A critical set of tables compares SVM performance **with and without MMSE/CDR sc
 
 The large performance gap demonstrates why MMSE (Mini-Mental State Examination) and CDR (Clinical Dementia Rating) should be excluded from AD classification models — they are direct assessments of cognitive impairment and thus nearly synonymous with the diagnosis.
 
-**Sources:** [README.md L107-L108](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L107-L108)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L107-L108)
 
- [README.md L166-L168](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L166-L168)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L166-L168)
 
 ---
 
@@ -312,7 +312,7 @@ When invoked with `--write`, the script produces:
 
 All outputs are written to `output/article_tables/`.
 
-**Sources:** [README.md L153-L156](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L153-L156)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L153-L156)
 
 ---
 
@@ -365,7 +365,7 @@ This separation of concerns ensures that:
 2. **Tracking system** handles persistent storage
 3. **Table generator** performs read-only aggregation
 
-**Sources:** [README.md L182-L189](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L182-L189)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L182-L189)
 
  Diagram 1 from high-level architecture
 
@@ -397,7 +397,7 @@ Complete workflow from training to publication:
 
 The final PDF contains all tables formatted for direct inclusion in academic manuscripts.
 
-**Sources:** [README.md L122-L156](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L156)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L156)
 
 ---
 
@@ -412,13 +412,13 @@ The `generate_article_tables` module serves as the **publication interface** for
 
 This automation is critical for maintaining scientific rigor in a multi-stage experimental workflow with numerous model variants.
 
-**Sources:** [README.md L150-L168](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L150-L168)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L150-L168)
 
  all high-level architecture diagrams
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

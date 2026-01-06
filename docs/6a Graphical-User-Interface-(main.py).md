@@ -7,9 +7,9 @@
 
 This page documents the Tkinter-based graphical user interface (GUI) provided by `main.py`, which serves as an interactive entry point for data exploration, visualization, and single-run training experiments. The GUI is designed for researchers who need to visually inspect MRI data, perform semi-automatic segmentation, and quickly prototype model configurations before committing to full-scale headless training runs.
 
-For automated, reproducible training workflows, see [Baselines CLI](#7.2) and [Deep Models CLI](#7.3). For the underlying UI component implementations, see [Core Package Structure](#3.3).
+For automated, reproducible training workflows, see [Baselines CLI](7b%20Output-Directory-Structure.md) and [Deep Models CLI](7c%20License-&-Usage-Terms.md). For the underlying UI component implementations, see [Core Package Structure](3c%20Core-Package-Structure-%28brain_mri-%29.md).
 
-**Sources:** [README.md L1-L218](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L1-L218)
+**Sources:** README.md
 
 ---
 
@@ -26,7 +26,7 @@ The GUI application is the primary interactive interface for the brain-mri-pipel
 | **Model Training** | Configure deep learning experiments, select backbones, adjust hyperparameters, launch single training runs |
 | **Visualization** | Real-time slice rendering, segmentation overlay, basic image processing |
 
-**Sources:** [README.md L83-L96](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L83-L96)
+**Sources:** README.md
 
 ---
 
@@ -92,7 +92,7 @@ end
 
 The main application inherits behavior from multiple UI mixins, each responsible for a distinct functional domain. This separation allows for modular development and testing of individual features.
 
-**Sources:** [README.md L182-L183](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L182-L183)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L182-L183)
 
 ---
 
@@ -103,7 +103,7 @@ The main application inherits behavior from multiple UI mixins, each responsible
 Before launching the GUI, ensure:
 
 1. **Tkinter is installed** on your system: * **Linux:** `sudo apt-get install python3-tk` * **macOS:** `brew install python-tk@3.11` * **Windows:** Typically bundled with Python
-2. **Data is organized** with at minimum the `axl/` directory present in the repository root (see [Directory Organization](#4.3))
+2. **Data is organized** with at minimum the `axl/` directory present in the repository root (see [Directory Organization](4c%20Directory-Organization-&-File-Naming.md))
 3. **Dependencies are installed** via `pip install -r requirements.txt`
 
 ### Starting the GUI
@@ -114,9 +114,9 @@ python main.py
 
 This launches the Tkinter application window with the full feature set enabled.
 
-**Sources:** [README.md L56-L77](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L56-L77)
+**Sources:** README.md
 
- [README.md L83-L89](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L83-L89)
+ README.md
 
 ---
 
@@ -142,7 +142,7 @@ Users can mark studies as **non-viable** for exclusion from training datasets. T
 * Incomplete scans
 * Other quality issues
 
-**Sources:** [README.md L91-L92](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L91-L92)
+**Sources:** README.md
 
 ---
 
@@ -205,9 +205,9 @@ After segmentation, the GUI computes geometric features from the ventricle regio
 * **Shape metrics:** Circularity, elongation
 * **Position:** Centroid coordinates
 
-These descriptors feed into classical baseline models (see [Classical Machine Learning Baselines](#5.3)).
+These descriptors feed into classical baseline models (see [Classical Machine Learning Baselines](5c%20Stage-3-RL-Hyperparameter-Refinement-%28run_pc3_rl_refinement.py%29.md)).
 
-**Sources:** [README.md L93-L94](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L93-L94)
+**Sources:** README.md
 
 ---
 
@@ -221,7 +221,7 @@ The GUI exposes the following configuration options:
 
 | Parameter | Options | Description |
 | --- | --- | --- |
-| **Backbone** | `efficientnet`, `densenet`, `medicalnet` | Deep learning architecture (see [Deep Learning Backbones](#5.1)) |
+| **Backbone** | `efficientnet`, `densenet`, `medicalnet` | Deep learning architecture (see [Deep Learning Backbones](5a%20Stage-1-Embedding-Analysis-%28run_pc1_embeddings.py%29.md)) |
 | **Planes** | `axl`, `cor`, `sag` (multi-select) | Which anatomical views to use |
 | **Multimodal** | Checkbox | Enable fusion with clinical features |
 | **Epochs** | Integer input | Training duration |
@@ -258,7 +258,7 @@ SaveArtifacts -.-> Display
 
 The training process runs in the main thread with periodic UI updates to display progress. For long-running experiments, the CLI interfaces are recommended.
 
-**Sources:** [README.md L95-L96](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L95-L96)
+**Sources:** README.md
 
 ---
 
@@ -323,7 +323,7 @@ end
 
 This architecture ensures that the GUI remains a thin presentation layer, with all business logic residing in testable, reusable modules.
 
-**Sources:** [README.md L180-L196](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L180-L196)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L180-L196)
 
 ---
 
@@ -348,7 +348,7 @@ While the deep learning pipelines require NIfTI format (`.nii` or `.nii.gz`), th
 
 All files must follow the naming convention: `OAS2_XXXX_MRY_plane.ext`
 
-**Sources:** [README.md L29-L50](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L29-L50)
+**Sources:** README.md
 
 ---
 
@@ -371,7 +371,7 @@ The GUI and CLI interfaces serve complementary purposes in the workflow:
 1. **Use GUI for:** Initial data exploration, quality assessment, segmentation tasks, hyperparameter prototyping
 2. **Use CLI for:** Final experiments, hyperparameter sweeps, multi-seed runs, automated pipelines
 
-**Sources:** [README.md L83-L119](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L83-L119)
+**Sources:** README.md
 
 ---
 
@@ -402,7 +402,7 @@ Tkinter behavior and appearance vary across operating systems. The GUI has been 
 * macOS 11+ with `python-tk@3.11`
 * Windows 10+ with bundled Tkinter
 
-**Sources:** [README.md L56-L62](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L56-L62)
+**Sources:** README.md
 
 ---
 
@@ -430,57 +430,57 @@ The GUI uses Tkinter's event loop to handle user interactions. Key events includ
 * Seed point selection (mouse clicks)
 * Training progress updates (periodic polling)
 
-**Sources:** [README.md L182-L183](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L182-L183)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L182-L183)
 
 ---
 
 ## Summary
 
-The `main.py` GUI provides an essential interactive layer for the brain-mri-pipelines-py framework. It excels at exploratory tasks—data inspection, quality control, segmentation—and enables rapid prototyping of model configurations. However, for production experiments requiring reproducibility and batch processing, researchers should transition to the [Baselines CLI](#7.2) and [Deep Models CLI](#7.3) interfaces.
+The `main.py` GUI provides an essential interactive layer for the brain-mri-pipelines-py framework. It excels at exploratory tasks—data inspection, quality control, segmentation—and enables rapid prototyping of model configurations. However, for production experiments requiring reproducibility and batch processing, researchers should transition to the [Baselines CLI](7b%20Output-Directory-Structure.md) and [Deep Models CLI](7c%20License-&-Usage-Terms.md) interfaces.
 
 The mixin-based architecture ensures that GUI-specific code remains isolated from core machine learning logic, maintaining the framework's modularity and testability.
 
-**Sources:** [README.md L1-L218](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L1-L218)
+**Sources:** README.md
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 
-* [Graphical User Interface (main.py)](#7.1-graphical-user-interface-mainpy)
-* [Purpose & Scope](#7.1-purpose-scope)
-* [Overview](#7.1-overview)
-* [Key Capabilities](#7.1-key-capabilities)
-* [Application Architecture](#7.1-application-architecture)
-* [Launching the Application](#7.1-launching-the-application)
-* [Prerequisites](#7.1-prerequisites)
-* [Starting the GUI](#7.1-starting-the-gui)
-* [Navigation Features](#7.1-navigation-features)
-* [Dataset Browser](#7.1-dataset-browser)
-* [Data Quality Management](#7.1-data-quality-management)
-* [Segmentation Tools](#7.1-segmentation-tools)
-* [Region-Growing Algorithm](#7.1-region-growing-algorithm)
-* [Morphological Descriptor Extraction](#7.1-morphological-descriptor-extraction)
-* [Model Training Configuration](#7.1-model-training-configuration)
-* [Training Configuration Panel](#7.1-training-configuration-panel)
-* [Execution Flow](#7.1-execution-flow)
-* [Integration with Core Package](#7.1-integration-with-core-package)
-* [Module Dependencies](#7.1-module-dependencies)
-* [Data Requirements](#7.1-data-requirements)
-* [Required Directory](#7.1-required-directory)
-* [Optional Directories](#7.1-optional-directories)
-* [File Format Support](#7.1-file-format-support)
-* [Comparison with CLI Interfaces](#7.1-comparison-with-cli-interfaces)
-* [Recommended Workflow](#7.1-recommended-workflow)
-* [Limitations & Considerations](#7.1-limitations-considerations)
-* [Single-Threading](#7.1-single-threading)
-* [Limited Batch Operations](#7.1-limited-batch-operations)
-* [Memory Constraints](#7.1-memory-constraints)
-* [Platform Dependencies](#7.1-platform-dependencies)
-* [Technical Implementation Notes](#7.1-technical-implementation-notes)
-* [Mixin-Based Architecture](#7.1-mixin-based-architecture)
-* [Event-Driven Updates](#7.1-event-driven-updates)
-* [Summary](#7.1-summary)
+* [Graphical User Interface (main.py)](7a%20Git-Configuration.md)
+* [Purpose & Scope](7a%20Git-Configuration.md)
+* [Overview](7a%20Git-Configuration.md)
+* [Key Capabilities](7a%20Git-Configuration.md)
+* [Application Architecture](7a%20Git-Configuration.md)
+* [Launching the Application](7a%20Git-Configuration.md)
+* [Prerequisites](7a%20Git-Configuration.md)
+* [Starting the GUI](7a%20Git-Configuration.md)
+* [Navigation Features](7a%20Git-Configuration.md)
+* [Dataset Browser](7a%20Git-Configuration.md)
+* [Data Quality Management](7a%20Git-Configuration.md)
+* [Segmentation Tools](7a%20Git-Configuration.md)
+* [Region-Growing Algorithm](7a%20Git-Configuration.md)
+* [Morphological Descriptor Extraction](7a%20Git-Configuration.md)
+* [Model Training Configuration](7a%20Git-Configuration.md)
+* [Training Configuration Panel](7a%20Git-Configuration.md)
+* [Execution Flow](7a%20Git-Configuration.md)
+* [Integration with Core Package](7a%20Git-Configuration.md)
+* [Module Dependencies](7a%20Git-Configuration.md)
+* [Data Requirements](7a%20Git-Configuration.md)
+* [Required Directory](7a%20Git-Configuration.md)
+* [Optional Directories](7a%20Git-Configuration.md)
+* [File Format Support](7a%20Git-Configuration.md)
+* [Comparison with CLI Interfaces](7a%20Git-Configuration.md)
+* [Recommended Workflow](7a%20Git-Configuration.md)
+* [Limitations & Considerations](7a%20Git-Configuration.md)
+* [Single-Threading](7a%20Git-Configuration.md)
+* [Limited Batch Operations](7a%20Git-Configuration.md)
+* [Memory Constraints](7a%20Git-Configuration.md)
+* [Platform Dependencies](7a%20Git-Configuration.md)
+* [Technical Implementation Notes](7a%20Git-Configuration.md)
+* [Mixin-Based Architecture](7a%20Git-Configuration.md)
+* [Event-Driven Updates](7a%20Git-Configuration.md)
+* [Summary](7a%20Git-Configuration.md)
 
 Ask Devin about brain-mri-pipelines-py

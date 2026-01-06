@@ -8,7 +8,7 @@
 
 This document describes the core deep learning architecture used for Alzheimer's disease classification in the brain-mri-pipelines-py system. The Multi-Stream Multimodal Network processes MRI scans from three anatomical planes simultaneously and fuses the resulting visual embeddings with clinical tabular features to produce a binary AD/Non-AD classification.
 
-For information about the training procedures and hyperparameters used with this architecture, see [Training Configuration](#5.4). For details on classical machine learning baselines that do not use this architecture, see [Classical Machine Learning Baselines](#5.3). For the specific MedicalNet backbone integration, see [MedicalNet Integration & 3D→2D Conversion](#5.2).
+For information about the training procedures and hyperparameters used with this architecture, see [Training Configuration](5d%20Training-Configuration.md). For details on classical machine learning baselines that do not use this architecture, see [Classical Machine Learning Baselines](5c%20Stage-3-RL-Hyperparameter-Refinement-%28run_pc3_rl_refinement.py%29.md). For the specific MedicalNet backbone integration, see [MedicalNet Integration & 3D→2D Conversion](5b%20MedicalNet-Integration-&-3D→2D-Conversion.md).
 
 ---
 
@@ -71,7 +71,7 @@ end
 
 **Sources:** [README.md L3-L15](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L3-L15)
 
- [README.md L185-L188](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L185-L188)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L185-L188)
 
 ---
 
@@ -168,9 +168,9 @@ Each specified backbone is trained separately with identical data splits and hyp
 
 **Sources:** [README.md L11](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L11-L11)
 
- [README.md L113-L117](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L113-L117)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L113-L117)
 
- [README.md L171-L173](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
 
 ---
 
@@ -209,7 +209,7 @@ For transfer learning scenarios, backbones can be frozen or unfrozen:
 * **Frozen mode:** Backbone weights are fixed, only classification head is trained (warmup phase)
 * **Unfrozen mode:** All layers are fine-tuned end-to-end
 
-**Sources:** [README.md L135-L140](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L135-L140)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L135-L140)
 
  [brain_mri/ml/multistream_models.py](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/brain_mri/ml/multistream_models.py)
 
@@ -268,7 +268,7 @@ end
 
 **Sources:** [README.md L12](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L12-L12)
 
- [README.md L117](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L117-L117)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L117-L117)
 
  [oasis_longitudinal_demographic.csv header](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/oasis_longitudinal_demographic.csv header)
 
@@ -297,7 +297,7 @@ The network produces logits for two classes:
 
 During training, class-weighted Cross Entropy Loss or Focal Loss is applied to handle class imbalance. During inference, `argmax` is applied to produce the final prediction.
 
-**Sources:** [README.md L164-L167](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L167)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L167)
 
 ---
 
@@ -341,7 +341,7 @@ end
 | Training loop | `brain_mri/ml/` (training modules) | Training functions | Handles forward/backward passes, optimization |
 | Data loading | `brain_mri/utils/` | Dataset classes | Loads and preprocesses multi-view MRI data |
 
-**Sources:** [README.md L181-L196](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L181-L196)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L181-L196)
 
  [brain_mri/ml/multistream_models.py](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/brain_mri/ml/multistream_models.py)
 
@@ -381,7 +381,7 @@ Each stream uses an independent instance of the chosen backbone network:
 * **Independent initialization:** Each stream is initialized from the same pretrained weights but diverges during training
 * **Rationale:** Different anatomical planes contain distinct spatial patterns that benefit from specialized feature extractors
 
-**Sources:** [README.md L113-L117](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L113-L117)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L113-L117)
 
  [run_deep_models_cli.py](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/run_deep_models_cli.py)
 
@@ -455,9 +455,9 @@ The Multi-Stream Multimodal Network is typically trained using a two-phase appro
 
 The network can be further refined using PPO-based reinforcement learning that adjusts learning rate and weight decay dynamically per micro-epoch.
 
-**Sources:** [README.md L135-L140](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L135-L140)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L135-L140)
 
- [README.md L142-L148](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L142-L148)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L142-L148)
 
  [brain_mri/scripts/run_pc2_finetune.py](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/brain_mri/scripts/run_pc2_finetune.py)
 
@@ -483,7 +483,7 @@ All variants are evaluated using:
 * **Secondary:** Precision, Recall, F1-Score, AUC-ROC
 * **Statistical significance:** Wilcoxon signed-rank tests across random seeds
 
-**Sources:** [README.md L163-L169](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L163-L169)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L163-L169)
 
  [brain_mri/scripts/generate_article_tables.py](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/brain_mri/scripts/generate_article_tables.py)
 
@@ -524,9 +524,9 @@ sequenceDiagram
 
  [run_deep_models_cli.py](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/run_deep_models_cli.py)
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

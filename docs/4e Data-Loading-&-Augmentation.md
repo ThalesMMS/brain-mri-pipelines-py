@@ -7,7 +7,7 @@
 
 ## Purpose and Scope
 
-This page documents the data loading pipeline and augmentation techniques used during model training. It covers how MRI images are loaded from disk, transformed into training batches, and augmented to improve model generalization. For information about the dataset structure and file organization, see [Directory Organization & File Naming](#4.3). For details on subject-level splitting to prevent data leakage, see [Subject-Level Splitting & Leakage Prevention](#3.4).
+This page documents the data loading pipeline and augmentation techniques used during model training. It covers how MRI images are loaded from disk, transformed into training batches, and augmented to improve model generalization. For information about the dataset structure and file organization, see [Directory Organization & File Naming](4c%20Directory-Organization-&-File-Naming.md). For details on subject-level splitting to prevent data leakage, see [Subject-Level Splitting & Leakage Prevention](3d%20Subject-Level-Splitting-&-Leakage-Prevention.md).
 
 ---
 
@@ -93,9 +93,9 @@ subgraph subGraph0 ["1. Raw Data Storage"]
 end
 ```
 
-**Sources:** [README.md L27-L51](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L27-L51)
+**Sources:** README.md
 
- [README.md L162-L168](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L168)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L168)
 
  High-level Diagram 4 from context
 
@@ -160,7 +160,7 @@ end
 end
 ```
 
-**Sources:** [README.md L36-L50](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L36-L50)
+**Sources:** README.md
 
  High-level Diagram 2 from context
 
@@ -174,7 +174,7 @@ end
 | **Label Derivation** | CDR score from demographic CSV | Binary: CDR > 0 indicates AD |
 | **Caching Strategy** | Optional in-memory cache | Enabled for repeated epoch training |
 
-**Sources:** [README.md L36-L50](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L36-L50)
+**Sources:** README.md
 
  [README.md L23-L24](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L23-L24)
 
@@ -229,7 +229,7 @@ subgraph subGraph0 ["1. Compute Class Frequencies"]
 end
 ```
 
-**Sources:** [README.md L165-L168](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L165-L168)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L165-L168)
 
  High-level Diagram 4 from context
 
@@ -249,7 +249,7 @@ The sampler is configured as follows:
 | `num_samples` | `len(dataset)` | Maintains consistent epoch length |
 | `weights` | Inverse class frequency | Balances class representation |
 
-**Sources:** [README.md L165-L168](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L165-L168)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L165-L168)
 
  High-level Diagram 4 from context
 
@@ -392,7 +392,7 @@ subgraph subGraph0 ["Initialization (Once per Training Run)"]
 end
 ```
 
-**Sources:** [README.md L162-L168](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L168)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L168)
 
  High-level Diagram 4 from context
 
@@ -409,9 +409,9 @@ Typical DataLoader configuration used across training scripts:
 | `pin_memory` | `True` | `True` | Faster GPU transfer |
 | `drop_last` | `True` | `False` | Consistent batch sizes in training |
 
-**Sources:** [README.md L162-L168](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L168)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L168)
 
- [README.md L112-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L112-L118)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L112-L118)
 
 ---
 
@@ -504,7 +504,7 @@ The data loading pipeline implements multiple safeguards to prevent model collap
 
 **Combined Effect:** These mechanisms work together to ensure the model learns discriminative features for both classes despite severe imbalance (typical ratio: 3:1 or 4:1 Non-AD:AD).
 
-**Sources:** [README.md L162-L168](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L168)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L168)
 
  High-level Diagram 4 from context
 
@@ -555,7 +555,7 @@ subgraph subGraph0 ["Data Loading Optimizations"]
 end
 ```
 
-**Sources:** [README.md L55-L77](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L55-L77)
+**Sources:** README.md
 
  High-level Diagram 4 from context
 
@@ -570,7 +570,7 @@ Common bottlenecks and solutions:
 | **Memory Copying** | Delays before training step | Enable `pin_memory=True` |
 | **Small Batch Size** | Underutilized GPU | Increase batch size if memory allows |
 
-**Sources:** [README.md L55-L77](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L55-L77)
+**Sources:** README.md
 
 ---
 
@@ -591,9 +591,9 @@ Ensuring reproducible data loading and augmentation is critical for scientific v
 * **Augmentation Seeding:** Control random transforms with explicit seeds
 * **Documentation:** Record seeds in experiment logs for reproducibility
 
-**Sources:** [README.md L112-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L112-L118)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L112-L118)
 
- [README.md L126-L148](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L126-L148)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L126-L148)
 
 ---
 
@@ -608,15 +608,15 @@ The data loading and augmentation pipeline implements a robust system for prepar
 5. **Performance:** Multi-process loading and optimizations for efficient GPU utilization
 6. **Reproducibility:** Comprehensive seed management for scientific validity
 
-This pipeline forms the foundation for training the multi-stream, multimodal deep learning models described in [Deep Learning Backbones](#5.1) and [Multi-Stream Multimodal Network](#3.1).
+This pipeline forms the foundation for training the multi-stream, multimodal deep learning models described in [Deep Learning Backbones](5a%20Stage-1-Embedding-Analysis-%28run_pc1_embeddings.py%29.md) and [Multi-Stream Multimodal Network](3a%20Multi-Stream-Multimodal-Network.md).
 
-**Sources:** All sections above, [README.md L1-L218](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L1-L218)
+**Sources:** All sections above, README.md
 
  High-level Diagrams 1-6 from context
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

@@ -7,9 +7,9 @@
 
 This document explains the integration of MedicalNet (Med3D) pretrained weights into the brain-mri-pipelines framework. It covers the technical process of downloading 3D volumetric weights from HuggingFace Hub, mathematically converting 3D convolutional kernels to 2D equivalents, and integrating the resulting models into the multi-stream architecture.
 
-For information about the overall deep learning backbone options (EfficientNet, DenseNet, MedicalNet), see [Deep Learning Backbones](#5.1). For details on how MedicalNet models are used within the multi-stream architecture, see [Multi-Stream Multimodal Network](#3.1). For training configuration and fine-tuning strategies, see [Training Configuration](#5.4) and [Stage 2: Transfer Learning & Fine-Tuning](#6.2).
+For information about the overall deep learning backbone options (EfficientNet, DenseNet, MedicalNet), see [Deep Learning Backbones](5a%20Stage-1-Embedding-Analysis-%28run_pc1_embeddings.py%29.md). For details on how MedicalNet models are used within the multi-stream architecture, see [Multi-Stream Multimodal Network](3a%20Multi-Stream-Multimodal-Network.md). For training configuration and fine-tuning strategies, see [Training Configuration](5d%20Training-Configuration.md) and [Stage 2: Transfer Learning & Fine-Tuning](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md).
 
-**Sources:** [README.md L1-L218](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L1-L218)
+**Sources:** README.md
 
 ---
 
@@ -34,7 +34,7 @@ To leverage Med3D's pretrained knowledge while maintaining 2D slice processing, 
 
 **Sources:** [README.md L11](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L11-L11)
 
- [README.md L171-L173](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
 
 ---
 
@@ -96,9 +96,9 @@ end
 
 This diagram shows the complete flow from external pretrained weights to integrated model training. The process begins with Med3D weights hosted on HuggingFace Hub, proceeds through local caching and kernel conversion, and culminates in integration with the multi-stream architecture.
 
-**Sources:** [README.md L171-L173](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
 
- [README.md L185-L189](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L185-L189)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L185-L189)
 
 ---
 
@@ -166,7 +166,7 @@ The caching system organizes downloaded weights by model variant:
 
 Each file contains the state dictionary of the corresponding 3D ResNet variant trained on the Med3D dataset collection.
 
-**Sources:** [README.md L171-L173](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
 
 ---
 
@@ -233,9 +233,9 @@ The conversion maps 3D ResNet components to 2D equivalents:
 | `layer3.0.conv1` | `(256, 128, 3, 3, 3)` | `layer3.0.conv1` | `(256, 128, 3, 3)` |
 | `layer4.0.conv1` | `(512, 256, 3, 3, 3)` | `layer4.0.conv1` | `(512, 256, 3, 3)` |
 
-**Sources:** [README.md L171-L173](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
 
- [README.md L185-L189](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L185-L189)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L185-L189)
 
 ---
 
@@ -301,7 +301,7 @@ The default configuration uses **ResNet-18** as it provides a good balance betwe
 
 **Sources:** [README.md L11](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L11-L11)
 
- [README.md L185-L189](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L185-L189)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L185-L189)
 
 ---
 
@@ -418,7 +418,7 @@ Each stream processes one anatomical plane independently through its own Medical
 
 **Sources:** [README.md L9-L15](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L9-L15)
 
- [README.md L185-L189](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L185-L189)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L185-L189)
 
 ---
 
@@ -498,9 +498,9 @@ From [run_deep_models_cli.py](https://github.com/ThalesMMS/brain-mri-pipelines-p
 # Standard MedicalNet trainingpython run_deep_models_cli.py --seed 42 --epochs 40 --backbones medicalnet# With explicit warmup configurationpython brain_mri/scripts/run_pc2_finetune.py \    --backbone medicalnet \    --seed 42 \    --epochs 40 \    --warmup-epochs 3
 ```
 
-**Sources:** [README.md L111-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L111-L118)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L111-L118)
 
- [README.md L134-L148](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L134-L148)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L134-L148)
 
 ---
 
@@ -537,9 +537,9 @@ MedicalNet is particularly recommended when:
 * Seeking better transfer learning from medical to medical tasks
 * Requiring interpretability from medically-relevant features
 
-**Sources:** [README.md L111-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L111-L118)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L111-L118)
 
- [README.md L126-L148](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L126-L148)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L126-L148)
 
 ---
 
@@ -607,7 +607,7 @@ To verify that the 3D→2D conversion preserves learned features:
 3. **Gradient flow**: Verify gradients propagate through all layers during fine-tuning
 4. **Feature visualization**: Examine what features early layers detect
 
-**Sources:** [README.md L171-L173](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
 
 ---
 
@@ -654,7 +654,7 @@ When using MedicalNet weights in research, cite the original Med3D paper:
 
 The 3D→2D conversion methodology is specific to this framework and should be cited accordingly if adapted for other projects.
 
-**Sources:** [README.md L211-L213](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L211-L213)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L211-L213)
 
 ---
 
@@ -673,11 +673,11 @@ This page documented the MedicalNet integration system, covering:
 
 The MedicalNet backbone provides medically-informed pretraining as an alternative to ImageNet initialization, leveraging knowledge from 23 medical imaging datasets while maintaining compatibility with the framework's 2D slice-based processing pipeline.
 
-**Sources:** [README.md L1-L218](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L1-L218)
+**Sources:** README.md
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

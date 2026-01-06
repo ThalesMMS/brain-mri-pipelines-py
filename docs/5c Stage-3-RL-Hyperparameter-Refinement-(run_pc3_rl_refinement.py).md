@@ -5,9 +5,9 @@
 
 ## Purpose
 
-This document describes Stage 3 of the three-stage research pipeline, which applies Proximal Policy Optimization (PPO) reinforcement learning to automatically refine hyperparameters of models trained in Stage 2. This stage takes fine-tuned deep learning models and optimizes their learning rate and weight decay per micro-epoch, using validation balanced accuracy as the reward signal. For information about the preceding transfer learning stage, see [Stage 2: Transfer Learning & Fine-Tuning](#6.2). For results generation across all stages, see [Results Generation](#6.4).
+This document describes Stage 3 of the three-stage research pipeline, which applies Proximal Policy Optimization (PPO) reinforcement learning to automatically refine hyperparameters of models trained in Stage 2. This stage takes fine-tuned deep learning models and optimizes their learning rate and weight decay per micro-epoch, using validation balanced accuracy as the reward signal. For information about the preceding transfer learning stage, see [Stage 2: Transfer Learning & Fine-Tuning](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md). For results generation across all stages, see [Results Generation](#6.4).
 
-**Sources:** [README.md L122-L148](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L148)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L148)
 
 ---
 
@@ -21,7 +21,7 @@ The refinement stage operates on models that have already completed the two-phas
 
 **Sources:** [README.md L17-L18](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L17-L18)
 
- [README.md L142-L148](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L142-L148)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L142-L148)
 
 ---
 
@@ -147,7 +147,7 @@ end
 
 **Sources:** [README.md L17-L18](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L17-L18)
 
- [README.md L142-L148](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L142-L148)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L142-L148)
 
 ---
 
@@ -182,7 +182,7 @@ end
 
 $$\text{Balanced Accuracy} = \frac{1}{2}\left(\frac{TP}{TP+FN} + \frac{TN}{TN+FP}\right)$$
 
-This metric is chosen because it handles class imbalance inherent in Alzheimer's disease detection datasets, where the ratio of AD to non-AD cases may be skewed. For background on why balanced accuracy is the primary metric, see [Evaluation Metrics](#5.6).
+This metric is chosen because it handles class imbalance inherent in Alzheimer's disease detection datasets, where the ratio of AD to non-AD cases may be skewed. For background on why balanced accuracy is the primary metric, see [Evaluation Metrics](4f%20Evaluation-Metrics.md).
 
 **Reward Formulation:**
 
@@ -196,7 +196,7 @@ The improvement-based formulation encourages the agent to continuously seek bett
 
 **Sources:** [README.md L17-L18](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L17-L18)
 
- [README.md L163-L169](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L163-L169)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L163-L169)
 
 ---
 
@@ -259,7 +259,7 @@ python brain_mri/scripts/run_pc3_rl_refinement.py \    --backbone efficie
 * `--episodes`: 4-10 for exploratory experiments, 20-50 for production runs
 * `--horizon`: 4-8 micro-epochs allow sufficient gradient updates while maintaining responsiveness
 
-**Sources:** [README.md L142-L148](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L142-L148)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L142-L148)
 
 ---
 
@@ -309,11 +309,11 @@ end
 * Comparable validation metrics
 * Reproducible experiments with fixed seeds
 
-For details on subject-level splitting, see [Subject-Level Splitting & Leakage Prevention](#3.4).
+For details on subject-level splitting, see [Subject-Level Splitting & Leakage Prevention](3d%20Subject-Level-Splitting-&-Leakage-Prevention.md).
 
 **Hyperparameter Inheritance:** The RL agent initializes hyperparameters based on Stage 2's final configuration, providing a warm start for the refinement process.
 
-**Sources:** [README.md L134-L148](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L134-L148)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L134-L148)
 
 ---
 
@@ -362,7 +362,7 @@ python brain_mri/scripts/run_pc3_rl_refinement.py \    --backbone medical
 python brain_mri/scripts/run_pc3_rl_refinement.py \    --backbone densenet \    --seed 42 \    --episodes 50 \    --horizon 8 \    --ppo-lr 1e-4
 ```
 
-**Sources:** [README.md L142-L148](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L142-L148)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L142-L148)
 
 ---
 
@@ -524,11 +524,11 @@ brain_mri/
 
 ### Integration with Existing Components
 
-**Data Loading:** Reuses `brain_mri.ml.data_loading` module to ensure consistent subject-level splits across stages. See [Data Loading & Augmentation](#4.5).
+**Data Loading:** Reuses `brain_mri.ml.data_loading` module to ensure consistent subject-level splits across stages. See [4e Data-Loading-&-Augmentation.md](4e%20Data-Loading-&-Augmentation.md).
 
-**Evaluation:** Leverages `brain_mri.ml.evaluation` for balanced accuracy computation, maintaining metric consistency. See [Evaluation Metrics](#5.6).
+**Evaluation:** Leverages `brain_mri.ml.evaluation` for balanced accuracy computation, maintaining metric consistency. See [5f Evaluation-Metrics.md](4f%20Evaluation-Metrics.md).
 
-**Model Architectures:** Operates on multi-stream models defined in `multistream_models.py`, supporting all three backbones (EfficientNet, DenseNet, MedicalNet). See [Multi-Stream Multimodal Network](#3.1) and [Deep Learning Backbones](#5.1).
+**Model Architectures:** Operates on multi-stream models defined in `multistream_models.py`, supporting all three backbones (EfficientNet, DenseNet, MedicalNet). See [Multi-Stream Multimodal Network](3a%20Multi-Stream-Multimodal-Network.md) and [Deep Learning Backbones](5a%20Deep-Learning-Backbones.md).
 
 ### Computational Considerations
 
@@ -590,43 +590,43 @@ brain_mri/
 
 **Hyperparameter Bounds:** Ensure `--lr-bounds` and `--wd-bounds` are set appropriately for the optimizer being used (Adam vs SGD have different sensitivities).
 
-**Sources:** [README.md L160-L169](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L160-L169)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L160-L169)
 
  standard reproducibility practices
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 
-* [Stage 3: RL Hyperparameter Refinement (run_pc3_rl_refinement.py)](#6.3-stage-3-rl-hyperparameter-refinement-run_pc3_rl_refinementpy)
-* [Purpose](#6.3-purpose)
-* [Overview of Reinforcement Learning Refinement](#6.3-overview-of-reinforcement-learning-refinement)
-* [PPO Agent Architecture](#6.3-ppo-agent-architecture)
-* [Hyperparameter Adjustment Mechanism](#6.3-hyperparameter-adjustment-mechanism)
-* [Reward Signal & Validation Loop](#6.3-reward-signal-validation-loop)
-* [Episode and Horizon Configuration](#6.3-episode-and-horizon-configuration)
-* [Integration with Stage 2 Models](#6.3-integration-with-stage-2-models)
-* [Command-Line Interface](#6.3-command-line-interface)
-* [Basic Invocation](#6.3-basic-invocation)
-* [Command-Line Arguments](#6.3-command-line-arguments)
-* [Example Workflows](#6.3-example-workflows)
-* [Output & Artifacts](#6.3-output-artifacts)
-* [Model Checkpoints](#6.3-model-checkpoints)
-* [Training Logs](#6.3-training-logs)
-* [Visualizations](#6.3-visualizations)
-* [Metrics & Comparison](#6.3-metrics-comparison)
-* [Implementation Details](#6.3-implementation-details)
-* [File Structure](#6.3-file-structure)
-* [Core Classes & Functions](#6.3-core-classes-functions)
-* [Integration with Existing Components](#6.3-integration-with-existing-components)
-* [Computational Considerations](#6.3-computational-considerations)
-* [Methodological Considerations](#6.3-methodological-considerations)
-* [Advantages of RL-Based Hyperparameter Optimization](#6.3-advantages-of-rl-based-hyperparameter-optimization)
-* [Limitations & Considerations](#6.3-limitations-considerations)
-* [Reproducibility & Best Practices](#6.3-reproducibility-best-practices)
-* [Ensuring Reproducibility](#6.3-ensuring-reproducibility)
-* [Best Practices](#6.3-best-practices)
+* [Stage 3: RL Hyperparameter Refinement (run_pc3_rl_refinement.py)](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Purpose](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Overview of Reinforcement Learning Refinement](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [PPO Agent Architecture](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Hyperparameter Adjustment Mechanism](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Reward Signal & Validation Loop](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Episode and Horizon Configuration](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Integration with Stage 2 Models](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Command-Line Interface](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Basic Invocation](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Command-Line Arguments](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Example Workflows](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Output & Artifacts](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Model Checkpoints](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Training Logs](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Visualizations](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Metrics & Comparison](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Implementation Details](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [File Structure](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Core Classes & Functions](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Integration with Existing Components](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Computational Considerations](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Methodological Considerations](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Advantages of RL-Based Hyperparameter Optimization](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Limitations & Considerations](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Reproducibility & Best Practices](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Ensuring Reproducibility](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
+* [Best Practices](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md)
 
 Ask Devin about brain-mri-pipelines-py

@@ -5,7 +5,7 @@
 > * [axl/OAS2_0001_MR1_axl.nii.gz](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/axl/OAS2_0001_MR1_axl.nii.gz)
 > * [axl/OAS2_0002_MR1_axl.nii.gz](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/axl/OAS2_0002_MR1_axl.nii.gz)
 
-This document explains how to obtain and organize the OASIS-2 dataset for use with the brain-mri-pipelines-py framework. This page covers the physical data layout, file naming conventions, and metadata requirements. For information about how the system prevents data leakage during training, see [Subject-Level Splitting & Leakage Prevention](#3.4). For the actual data loading and augmentation pipeline used during training, see [Data Loading & Augmentation](#4.5).
+This document explains how to obtain and organize the OASIS-2 dataset for use with the brain-mri-pipelines-py framework. This page covers the physical data layout, file naming conventions, and metadata requirements. For information about how the system prevents data leakage during training, see [Subject-Level Splitting & Leakage Prevention](3d%20Subject-Level-Splitting-&-Leakage-Prevention.md). For the actual data loading and augmentation pipeline used during training, see [Data Loading & Augmentation](4e%20Loss-Functions-&-Class-Imbalance.md).
 
 ---
 
@@ -18,7 +18,7 @@ The brain-mri-pipelines-py repository **does not bundle the OASIS-2 dataset**. U
 * Clinical metadata CSV format
 * Validation steps to ensure correct setup
 
-**Sources:** [README.md L27-L51](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L27-L51)
+**Sources:** README.md
 
 ---
 
@@ -34,7 +34,7 @@ The system is designed to work with the **Open Access Series of Imaging Studies 
 * **Subjects:** Longitudinal data with multiple MRI sessions per subject
 * **Clinical data:** Demographics, cognitive scores, and morphometric measurements
 
-For detailed information about the OASIS-2 dataset structure and clinical features, see [OASIS-2 Dataset Overview](#4.1).
+For detailed information about the OASIS-2 dataset structure and clinical features, see [OASIS-2 Dataset Overview](4a%20OASIS-2-Dataset-Overview.md).
 
 **Sources:** [README.md L3](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L3-L3)
 
@@ -157,7 +157,7 @@ The system extracts two key identifiers from filenames:
 * `OAS2_0001_axl.nii.gz` (missing `MR` session identifier)
 * `OAS2_0001_MR1.nii.gz` (missing plane identifier)
 
-**Sources:** [README.md L40-L50](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L40-L50)
+**Sources:** README.md
 
  [axl/OAS2_0001_MR1_axl.nii.gz L1](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/axl/OAS2_0001_MR1_axl.nii.gz#L1-L1)
 
@@ -211,13 +211,13 @@ The system converts the `Group` column to binary labels:
 * `Demented` → **1** (AD)
 * `Converted` → **1** (AD) — subjects who converted during the longitudinal study
 
-For detailed information about clinical features and their usage, see [Clinical Metadata](#4.4).
+For detailed information about clinical features and their usage, see [Clinical Metadata](4d%20Clinical-Metadata.md).
 
 **Sources:** [README.md L36](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L36-L36)
 
  [README.md L12](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L12-L12)
 
- [README.md L166-L168](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L166-L168)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L166-L168)
 
 ---
 
@@ -278,7 +278,7 @@ OAS2_0002_MR1 OAS2_0002_MR2 OAS2_0002_MR3
 
 **Sources:** [README.md L29-L38](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L29-L38)
 
- [README.md L40-L50](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L40-L50)
+ README.md
 
 ---
 
@@ -287,19 +287,19 @@ OAS2_0002_MR1 OAS2_0002_MR2 OAS2_0002_MR3
 Once the data is properly organized, the system's data loading pipeline will:
 
 1. **Parse filenames** to extract `Subject_ID` and `MRI_ID`
-2. **Perform subject-level splitting** to create Train/Val/Test partitions (see [Subject-Level Splitting & Leakage Prevention](#3.4))
+2. **Perform subject-level splitting** to create Train/Val/Test partitions (see [Subject-Level Splitting & Leakage Prevention](3d%20Subject-Level-Splitting-&-Leakage-Prevention.md))
 3. **Load NIfTI volumes** using `nibabel` or similar libraries
 4. **Match clinical metadata** from CSV using `MRI_ID` as the join key
-5. **Apply augmentations** during training (see [Data Loading & Augmentation](#4.5))
+5. **Apply augmentations** during training (see [Data Loading & Augmentation](4e%20Loss-Functions-&-Class-Imbalance.md))
 
 The data preparation steps documented here are prerequisites for all training workflows:
 
-* GUI-based training via `main.py` (see [Graphical User Interface](#7.1))
-* Classical baselines via `run_baselines_cli.py` (see [Baselines CLI](#7.2))
-* Deep learning via `run_deep_models_cli.py` (see [Deep Models CLI](#7.3))
-* Research pipeline stages (see [Three-Stage Research Pipeline](#6))
+* GUI-based training via `main.py` (see [Graphical User Interface](7a%20Git-Configuration.md))
+* Classical baselines via `run_baselines_cli.py` (see [Baselines CLI](7b%20Output-Directory-Structure.md))
+* Deep learning via `run_deep_models_cli.py` (see [Deep Models CLI](7c%20License-&-Usage-Terms.md))
+* Research pipeline stages (see [Three-Stage Research Pipeline](6%20User-Interfaces.md))
 
-**Sources:** [README.md L81-L157](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L81-L157)
+**Sources:** README.md
 
 ---
 
@@ -315,11 +315,11 @@ Data preparation involves:
 
 Correct data preparation is essential for the system's subject-level splitting mechanism, which prevents data leakage by ensuring all MRI sessions from a single patient remain in one partition during training.
 
-**Sources:** [README.md L27-L51](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L27-L51)
+**Sources:** README.md
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

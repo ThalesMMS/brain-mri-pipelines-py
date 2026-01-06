@@ -7,9 +7,9 @@
 
 This document describes the end-to-end data processing pipeline that transforms raw NIfTI neuroimaging files into training-ready batches. The pipeline encompasses file parsing, clinical metadata integration, subject-aware splitting, dataset construction, data loading, and augmentation.
 
-For architectural details about the multi-stream network that consumes this data, see [Multi-Stream Multimodal Network](#3.1). For the critical subject-level splitting mechanism that prevents data leakage, see [Subject-Level Splitting & Leakage Prevention](#3.4). For comprehensive dataset documentation, see [Data Layer](#4).
+For architectural details about the multi-stream network that consumes this data, see [Multi-Stream Multimodal Network](3a%20Multi-Stream-Multimodal-Network.md). For the critical subject-level splitting mechanism that prevents data leakage, see [Subject-Level Splitting & Leakage Prevention](3d%20Subject-Level-Splitting-&-Leakage-Prevention.md). For comprehensive dataset documentation, see [Data Layer](4%20Data-Layer.md).
 
-**Sources:** [README.md L27-L51](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L27-L51)
+**Sources:** README.md
 
 ---
 
@@ -84,9 +84,9 @@ subgraph subGraph0 ["Stage 1: Raw Data Ingestion"]
 end
 ```
 
-**Sources:** [README.md L27-L51](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L27-L51)
+**Sources:** README.md
 
- [README.md L160-L169](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L160-L169)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L160-L169)
 
 ---
 
@@ -124,7 +124,7 @@ MRI -.-> JOIN
 PLANE -.-> STREAM
 ```
 
-**Sources:** [README.md L40-L49](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L40-L49)
+**Sources:** README.md
 
 ### Clinical Metadata Integration
 
@@ -144,7 +144,7 @@ The pipeline joins imaging files with tabular clinical data from `oasis_longitud
 
 **Sources:** [README.md L36](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L36-L36)
 
- [README.md L106-L108](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L106-L108)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L106-L108)
 
 ---
 
@@ -195,7 +195,7 @@ end
 
 **Sources:** [README.md L23](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L23-L23)
 
- [README.md L160-L169](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L160-L169)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L160-L169)
 
 ---
 
@@ -254,7 +254,7 @@ When multiple anatomical planes are enabled, the dataset loads and stacks images
 
 **Sources:** [README.md L10-L15](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L10-L15)
 
- [README.md L112-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L112-L118)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L112-L118)
 
 ---
 
@@ -309,7 +309,7 @@ LOADER -.-> COLLATE
 COLLATE -.-> BATCH
 ```
 
-**Sources:** [README.md L164-L166](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L166)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L166)
 
 ---
 
@@ -360,7 +360,7 @@ subgraph subGraph0 ["Training Pipeline"]
 end
 ```
 
-**Sources:** [README.md L164-L166](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L166)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L166)
 
 ---
 
@@ -474,7 +474,7 @@ SKIP["Skip Sample Log error"]
 LOAD -.->|"Valid"| CHECK_DIM
 ```
 
-**Sources:** [README.md L27-L51](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L27-L51)
+**Sources:** README.md
 
 ---
 
@@ -498,9 +498,9 @@ The pipeline does not implement explicit caching of loaded images due to memory 
 | `pin_memory=True` | Higher (CUDA pinned) | Fastest for GPU |
 | `prefetch_factor=2` | Higher (pre-fetch) | Reduced waiting |
 
-**Sources:** [README.md L27-L51](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L27-L51)
+**Sources:** README.md
 
- [README.md L160-L169](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L160-L169)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L160-L169)
 
 ---
 
@@ -521,11 +521,11 @@ The complete data processing pipeline can be summarized in these stages:
 
 This pipeline ensures rigorous data handling with emphasis on preventing leakage through subject-level splitting, addressing class imbalance through weighted sampling, and supporting flexible multi-stream, multimodal architectures.
 
-**Sources:** [README.md L1-L218](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L1-L218)
+**Sources:** README.md
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

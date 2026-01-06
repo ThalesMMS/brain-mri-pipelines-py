@@ -7,7 +7,7 @@
 
 This page documents the mechanisms used to handle class imbalance in medical imaging datasets, specifically the strategies employed to prevent model collapse when training on the imbalanced OASIS-2 Alzheimer's disease detection task. The system implements a three-pronged approach: **WeightedRandomSampler** for data loading, **class-weighted loss functions**, and **Focal Loss** for training.
 
-For information about the evaluation metrics used to measure performance on imbalanced data (particularly Balanced Accuracy), see [Evaluation Metrics](#5.6). For details on the overall training configuration, see [Training Configuration](#5.4).
+For information about the evaluation metrics used to measure performance on imbalanced data (particularly Balanced Accuracy), see [Evaluation Metrics](#5.6). For details on the overall training configuration, see [Training Configuration](5d%20Training-Configuration.md).
 
 ---
 
@@ -27,7 +27,7 @@ Without intervention, neural networks trained on imbalanced data tend to exhibit
 
 This is particularly problematic in medical applications where detecting the minority class (disease-positive cases) is the primary clinical objective.
 
-**Sources:** [README.md L164-L166](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L166)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L166)
 
 ---
 
@@ -82,7 +82,7 @@ This architecture ensures that:
 2. **Loss-level balance:** Misclassifications of minority class receive higher penalty
 3. **Metric-level balance:** Evaluation accounts for per-class performance equally
 
-**Sources:** [README.md L164-L166](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L166)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L166)
 
 ---
 
@@ -142,7 +142,7 @@ The sampler is instantiated during data loader creation and passed as the `sampl
 | Simple to implement with PyTorch utilities | Increases training time (more iterations per epoch) |
 | Works seamlessly with other anti-collapse mechanisms | Samples with replacement (same example may appear multiple times per epoch) |
 
-**Sources:** [README.md L164-L166](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L166)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L166)
 
 ---
 
@@ -214,7 +214,7 @@ end
 
 The weights are computed once during training initialization and passed to the loss function constructor. PyTorch's `nn.CrossEntropyLoss` natively supports the `weight` parameter for this purpose.
 
-**Sources:** [README.md L164-L166](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L166)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L166)
 
 ---
 
@@ -308,7 +308,7 @@ Focal Loss is particularly effective when combined with WeightedRandomSampler be
 2. Focal Loss ensures the model focuses on hard minority examples rather than memorizing easy ones
 3. Together, they promote learning of robust discriminative features
 
-**Sources:** [README.md L164-L166](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L166)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L166)
 
 ---
 
@@ -410,11 +410,11 @@ end
 
 The CLI scripts expose command-line arguments for controlling loss function behavior, allowing researchers to experiment with different configurations (e.g., standard cross-entropy vs. focal loss, different gamma values).
 
-**Sources:** [README.md L112-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L112-L118)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L112-L118)
 
- [README.md L134-L148](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L134-L148)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L134-L148)
 
- [README.md L164-L166](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L166)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L166)
 
 ---
 
@@ -468,7 +468,7 @@ The synergy between training mechanisms and evaluation metric:
 * **Focal Loss** focuses learning on hard examples
 * **Balanced Accuracy** validates that both classes are predicted well independently
 
-**Sources:** [README.md L164-L166](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L166)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L166)
 
 ---
 
@@ -482,11 +482,11 @@ The class imbalance handling strategy implements a comprehensive three-pronged a
 
 These mechanisms work synergistically to prevent model collapse and enable effective learning on the imbalanced OASIS-2 Alzheimer's disease detection task. The strategy is validated using Balanced Accuracy as the primary metric, ensuring fair evaluation across both classes.
 
-**Sources:** [README.md L164-L166](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L166)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L166)
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

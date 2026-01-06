@@ -7,9 +7,9 @@
 
 Stage 1 of the three-stage research pipeline validates the quality of deep learning embeddings before proceeding to full model fine-tuning. This stage compares pretrained backbone embeddings against handcrafted morphological descriptors using lightweight classifiers to determine whether learned representations capture meaningful information for Alzheimer's disease classification.
 
-This page documents the embedding analysis methodology. For information about the backbone architectures themselves, see [Deep Learning Backbones](#5.1). For the subsequent transfer learning stage, see [Stage 2: Transfer Learning & Fine-Tuning](#6.2). For classical baseline implementation details, see [Classical Machine Learning Baselines](#5.3).
+This page documents the embedding analysis methodology. For information about the backbone architectures themselves, see [Deep Learning Backbones](#5.1). For the subsequent transfer learning stage, see [Stage 2: Transfer Learning & Fine-Tuning](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md). For classical baseline implementation details, see [Classical Machine Learning Baselines](5c%20Stage-3-RL-Hyperparameter-Refinement-%28run_pc3_rl_refinement.py%29.md).
 
-Sources: [README.md L126-L132](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L126-L132)
+Sources: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L126-L132)
 
 ---
 
@@ -24,7 +24,7 @@ The stage follows this workflow:
 3. **Train lightweight classifiers** (e.g., logistic regression, SVM) on both feature types
 4. **Compare performance** using balanced accuracy as the primary metric
 
-Sources: [README.md L126-L132](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L126-L132)
+Sources: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L126-L132)
 
 ---
 
@@ -86,7 +86,7 @@ end
 
 **Pipeline Flow**: The dual-path architecture enables direct comparison between learned representations and engineered features. Both paths use the same subject-level train/validation/test splits to ensure fair comparison.
 
-Sources: [README.md L126-L132](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L126-L132)
+Sources: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L126-L132)
 
 ---
 
@@ -134,7 +134,7 @@ end
 * `densenet`: DenseNet121 (1024-dimensional embeddings)
 * `medicalnet`: MedicalNet ResNet (512-dimensional embeddings for ResNet-18)
 
-Sources: [README.md L131](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L131-L131)
+Sources: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L131-L131)
 
 ### Multi-View Embedding Aggregation
 
@@ -242,13 +242,13 @@ The handcrafted feature vector combines:
 1. **Ventricle Geometry** (10-20 dimensions): * Area, perimeter, circularity * Shape moments (Hu invariants) * Aspect ratio, compactness * Centroid coordinates
 2. **Clinical Covariates** (5 dimensions): * Age * Education (years) * nWBV (normalized whole brain volume) * eTIV (estimated total intracranial volume) * ASF (atlas scaling factor)
 
-**Warning**: Stage 1 should **not** include MMSE or CDR scores in the feature vector, as these are strong proxies for the target label and would create methodological issues (see [Classical Machine Learning Baselines](#5.3) for discussion of target leakage).
+**Warning**: Stage 1 should **not** include MMSE or CDR scores in the feature vector, as these are strong proxies for the target label and would create methodological issues (see [Classical Machine Learning Baselines](5c%20Stage-3-RL-Hyperparameter-Refinement-%28run_pc3_rl_refinement.py%29.md) for discussion of target leakage).
 
 Sources: [README.md L12](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L12-L12)
 
  [README.md L36](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L36-L36)
 
- [README.md L168](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L168-L168)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L168-L168)
 
 ---
 
@@ -319,7 +319,7 @@ end
 * **Convergence**: `max_iter=1000` ensures convergence on small datasets
 * **Metric**: Balanced accuracy (see [Evaluation Metrics](#5.6))
 
-Sources: [README.md L164-L167](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L167)
+Sources: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L167)
 
 ---
 
@@ -347,7 +347,7 @@ python brain_mri/scripts/run_pc1_embeddings.py --dl-backbone efficientnet
 # Compare EfficientNet embeddings vs handcrafted featurespython brain_mri/scripts/run_pc1_embeddings.py --dl-backbone efficientnet --seed 42# Compare DenseNet embeddingspython brain_mri/scripts/run_pc1_embeddings.py --dl-backbone densenet --seed 42# Compare MedicalNet embeddingspython brain_mri/scripts/run_pc1_embeddings.py --dl-backbone medicalnet --seed 42
 ```
 
-Sources: [README.md L130-L132](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L130-L132)
+Sources: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L130-L132)
 
 ---
 
@@ -394,11 +394,11 @@ handcrafted features, justifying full fine-tuning in Stage 2.
 
 **Decision Logic**:
 
-* **If DL embeddings win**: Proceed to [Stage 2: Transfer Learning & Fine-Tuning](#6.2)
+* **If DL embeddings win**: Proceed to [Stage 2: Transfer Learning & Fine-Tuning](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md)
 * **If handcrafted features win**: Re-evaluate backbone choice or pretrained weights
 * **If both perform poorly**: Check data quality, splits, and preprocessing
 
-Sources: [README.md L126-L132](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L126-L132)
+Sources: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L126-L132)
 
 ---
 
@@ -480,7 +480,7 @@ end
 * Metrics: `sklearn.metrics.balanced_accuracy_score`
 * Split loading: `output/subject_split.csv`
 
-Sources: [README.md L180-L196](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L180-L196)
+Sources: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L180-L196)
 
 ---
 
@@ -510,7 +510,7 @@ S3 -.-> S1
 2. Adjusting preprocessing (normalization, augmentation)
 3. Verifying data quality and split integrity
 
-Sources: [README.md L122-L156](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L156)
+Sources: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L156)
 
 ---
 
@@ -529,7 +529,7 @@ A complex classifier (e.g., deep neural network) could mask poor embeddings by l
 
 ### Subject-Level Splitting Critical
 
-Stage 1 inherits the subject-aware split from the data preparation phase (see [Subject-Level Splitting & Leakage Prevention](#3.4)). This ensures:
+Stage 1 inherits the subject-aware split from the data preparation phase (see [Subject-Level Splitting & Leakage Prevention](3d%20Subject-Level-Splitting-&-Leakage-Prevention.md)). This ensures:
 
 * **No data leakage**: Multiple scans from the same patient don't appear in both train and test
 * **Realistic performance**: Test metrics reflect generalization to unseen patients
@@ -537,7 +537,7 @@ Stage 1 inherits the subject-aware split from the data preparation phase (see [S
 
 Sources: [README.md L23](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L23-L23)
 
- [README.md L164-L167](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L167)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L167)
 
 ### Balanced Accuracy as Primary Metric
 
@@ -549,7 +549,7 @@ Stage 1 uses **balanced accuracy** rather than standard accuracy because:
 
 See [Evaluation Metrics](#5.6) for detailed explanation.
 
-Sources: [README.md L164](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L164)
+Sources: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L164-L164)
 
 ---
 
@@ -606,46 +606,46 @@ Stage 1 provides a **lightweight validation mechanism** that determines whether 
 * Balanced accuracy accounts for class imbalance
 * Results inform the choice of backbone for Stage 2
 
-**Next Steps**: If Stage 1 validates the embeddings, proceed to [Stage 2: Transfer Learning & Fine-Tuning](#6.2) for full end-to-end training.
+**Next Steps**: If Stage 1 validates the embeddings, proceed to [Stage 2: Transfer Learning & Fine-Tuning](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md) for full end-to-end training.
 
-Sources: [README.md L122-L156](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L156)
+Sources: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L156)
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 
-* [Stage 1: Embedding Analysis (run_pc1_embeddings.py)](#6.1-stage-1-embedding-analysis-run_pc1_embeddingspy)
-* [Purpose and Scope](#6.1-purpose-and-scope)
-* [Overview](#6.1-overview)
-* [Stage 1 Pipeline Architecture](#6.1-stage-1-pipeline-architecture)
-* [Embedding Extraction Process](#6.1-embedding-extraction-process)
-* [Frozen Backbone Configuration](#6.1-frozen-backbone-configuration)
-* [Multi-View Embedding Aggregation](#6.1-multi-view-embedding-aggregation)
-* [Handcrafted Feature Baseline](#6.1-handcrafted-feature-baseline)
-* [Morphological Descriptor Extraction](#6.1-morphological-descriptor-extraction)
-* [Feature Vector Composition](#6.1-feature-vector-composition)
-* [Lightweight Classifier Training](#6.1-lightweight-classifier-training)
-* [Classifier Selection](#6.1-classifier-selection)
-* [Training Configuration](#6.1-training-configuration)
-* [Command-Line Interface](#6.1-command-line-interface)
-* [Basic Usage](#6.1-basic-usage)
-* [Available Arguments](#6.1-available-arguments)
-* [Example Commands](#6.1-example-commands)
-* [Outputs and Interpretation](#6.1-outputs-and-interpretation)
-* [Generated Artifacts](#6.1-generated-artifacts)
-* [Interpretation Guidelines](#6.1-interpretation-guidelines)
-* [Implementation Flow Diagram](#6.1-implementation-flow-diagram)
-* [Integration with Research Pipeline](#6.1-integration-with-research-pipeline)
-* [Methodological Considerations](#6.1-methodological-considerations)
-* [Why Lightweight Classifiers?](#6.1-why-lightweight-classifiers)
-* [Subject-Level Splitting Critical](#6.1-subject-level-splitting-critical)
-* [Balanced Accuracy as Primary Metric](#6.1-balanced-accuracy-as-primary-metric)
-* [Troubleshooting](#6.1-troubleshooting)
-* [Low Performance on Both Paths](#6.1-low-performance-on-both-paths)
-* [DL Embeddings Underperform Handcrafted Features](#6.1-dl-embeddings-underperform-handcrafted-features)
-* [Memory Issues](#6.1-memory-issues)
-* [Summary](#6.1-summary)
+* [Stage 1: Embedding Analysis (run_pc1_embeddings.py)](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Purpose and Scope](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Overview](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Stage 1 Pipeline Architecture](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Embedding Extraction Process](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Frozen Backbone Configuration](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Multi-View Embedding Aggregation](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Handcrafted Feature Baseline](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Morphological Descriptor Extraction](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Feature Vector Composition](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Lightweight Classifier Training](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Classifier Selection](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Training Configuration](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Command-Line Interface](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Basic Usage](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Available Arguments](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Example Commands](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Outputs and Interpretation](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Generated Artifacts](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Interpretation Guidelines](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Implementation Flow Diagram](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Integration with Research Pipeline](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Methodological Considerations](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Why Lightweight Classifiers?](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Subject-Level Splitting Critical](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Balanced Accuracy as Primary Metric](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Troubleshooting](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Low Performance on Both Paths](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [DL Embeddings Underperform Handcrafted Features](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Memory Issues](6a%20Graphical-User-Interface-%28main.py%29.md)
+* [Summary](6a%20Graphical-User-Interface-%28main.py%29.md)
 
 Ask Devin about brain-mri-pipelines-py

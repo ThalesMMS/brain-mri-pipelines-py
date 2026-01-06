@@ -8,11 +8,11 @@
 
 **Scope**: This page covers the high-level purpose, architecture, and entry points of the system. For detailed information about specific subsystems, refer to:
 
-* Project methodology and research goals: [Project Goals & Methodology](#1.1)
-* Installation instructions: [Installation & Dependencies](#2.1)
-* Data organization: [Data Preparation](#2.2)
-* Model architectures: [Models & Training](#5)
-* Three-stage experimental workflow: [Three-Stage Research Pipeline](#6)
+* Project methodology and research goals: [Project Goals & Methodology](1a%20Project-Goals-&-Methodology.md)
+* Installation instructions: [Installation & Dependencies](2a%20Installation-&-Dependencies.md)
+* Data organization: [Data Preparation](2b%20Data-Preparation.md)
+* Model architectures: [Models & Training](5%20Models-&-Training.md)
+* Three-stage experimental workflow: [Three-Stage Research Pipeline](6%20User-Interfaces.md)
 
 ---
 
@@ -94,7 +94,7 @@ The architecture enforces separation of concerns:
 * **Core Package (`brain_mri/`)**: Contains reusable ML logic, UI components, experiment tracking, and utilities
 * **Data Layer**: Separates input data (MRI scans and clinical metadata) from output artifacts (trained models, logs, visualizations)
 
-**Sources**: [README.md L177-L196](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L177-L196)
+**Sources**: Project overview and setup
 
 ---
 
@@ -166,7 +166,7 @@ end
 
 **Sources**: [README.md L7-L15](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L7-L15)
 
- [README.md L171-L173](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
 
 ---
 
@@ -199,7 +199,7 @@ The repository includes specialized scripts for the three-stage experimental wor
 # Interactive GUIpython main.py# Classical baselines (subject-aware split + SVM + XGBoost)python run_baselines_cli.py# Deep learning with multiple backbonespython run_deep_models_cli.py --seed 42 --epochs 40 \  --backbones efficientnet,medicalnet,densenet# Multimodal fusion (images + clinical features)python run_deep_models_cli.py --seed 42 --epochs 40 \  --backbones efficientnet --multimodal# Stage 1: Embedding analysispython brain_mri/scripts/run_pc1_embeddings.py --dl-backbone efficientnet# Stage 2: Fine-tuning with warmuppython brain_mri/scripts/run_pc2_finetune.py --backbone efficientnet \  --seed 42 --epochs 6 --warmup-epochs 2# Stage 3: RL refinementpython brain_mri/scripts/run_pc3_rl_refinement.py --backbone efficientnet \  --seed 42 --episodes 4 --horizon 4
 ```
 
-**Sources**: [README.md L83-L156](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L83-L156)
+**Sources**: README.md
 
 ---
 
@@ -273,7 +273,7 @@ Both files are assigned to the **same split** (either Train, Validation, or Test
 
 **Sources**: [README.md L23](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L23-L23)
 
- [README.md L40-L49](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L40-L49)
+ README.md
 
 ---
 
@@ -308,9 +308,9 @@ Medical datasets typically exhibit severe class imbalance (more non-AD than AD c
 * Focal Loss to emphasize hard examples
 * **Balanced Accuracy** as primary metric (arithmetic mean of sensitivity and specificity)
 
-**Sources**: [README.md L162-L168](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L168)
+**Sources**: Project overview and setup
 
- [README.md L171-L173](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
 
 ---
 
@@ -327,7 +327,7 @@ Training runs produce structured outputs in the `output/` directory:
 
 The experiment tracking system (located in `brain_mri/experiments/`) logs all hyperparameters, metrics, and training configurations to enable reproducibility.
 
-**Sources**: [README.md L177-L196](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L177-L196)
+**Sources**: Project overview and setup
 
 ---
 
@@ -354,7 +354,7 @@ Traditional accuracy is misleading for imbalanced datasets. If 90% of samples ar
 Balanced Accuracy = (Sensitivity + Specificity) / 2
 ```
 
-**Sources**: [README.md L162-L168](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L168)
+**Sources**: Project overview and setup
 
 ---
 
@@ -373,45 +373,46 @@ The repository is released under the **MIT License**, permitting unrestricted us
 
 **Sources**: [LICENSE L1-L21](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/LICENSE#L1-L21)
 
- [README.md L198-L217](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L198-L217)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L198-L217)
 
 ---
 
 ## Next Steps
 
-* For installation and environment setup: [Installation & Dependencies](#2.1)
-* For data organization and OASIS-2 dataset preparation: [Data Preparation](#2.2)
-* For running your first experiment: [Quick Start Guide](#2.3)
-* For understanding the multi-stream architecture: [Multi-Stream Multimodal Network](#3.1)
-* For details on the three-stage pipeline: [Three-Stage Research Pipeline](#6)
+* For installation and environment setup: [Installation & Dependencies](2a%20Installation-&-Dependencies.md)
+* For data organization and OASIS-2 dataset preparation: [Data Preparation](2b%20Data-Preparation.md)
+* For running your first experiment: [Quick Start Guide](2c%20Quick-Start-Guide.md)
+* For understanding the multi-stream architecture: [Multi-Stream Multimodal Network](3a%20Multi-Stream-Multimodal-Network.md)
+* For details on the three-stage pipeline: [Three-Stage Research Pipeline](6%20User-Interfaces.md)
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 
-* [Overview](#1-overview)
-* [Problem Domain & Research Context](#1-problem-domain-research-context)
-* [System Architecture Overview](#1-system-architecture-overview)
-* [System Component Architecture](#1-system-component-architecture)
-* [Core Technical Approach](#1-core-technical-approach)
-* [Multi-Stream Multimodal Architecture](#1-multi-stream-multimodal-architecture)
-* [Entry Points & Usage Modes](#1-entry-points-usage-modes)
-* [Primary Entry Points](#1-primary-entry-points)
-* [Research Pipeline Scripts](#1-research-pipeline-scripts)
-* [Data Flow & Leakage Prevention](#1-data-flow-leakage-prevention)
-* [Subject-Level Data Partitioning](#1-subject-level-data-partitioning)
-* [Key Technical Innovations](#1-key-technical-innovations)
-* [1. MedicalNet 3D→2D Kernel Conversion](#1-1-medicalnet-3d2d-kernel-conversion)
-* [2. PPO-Based Hyperparameter Optimization](#1-2-ppo-based-hyperparameter-optimization)
-* [3. Multi-View Fusion Architecture](#1-3-multi-view-fusion-architecture)
-* [4. Class Imbalance Mitigation Suite](#1-4-class-imbalance-mitigation-suite)
-* [Output & Artifact Management](#1-output-artifact-management)
-* [Methodological Safeguards](#1-methodological-safeguards)
-* [Target Proxy Leakage Warning](#1-target-proxy-leakage-warning)
-* [Balanced Accuracy as Primary Metric](#1-balanced-accuracy-as-primary-metric)
-* [License & Authors](#1-license-authors)
-* [Next Steps](#1-next-steps)
+- [Overview](#overview)
+  - [Problem Domain \& Research Context](#problem-domain--research-context)
+  - [System Architecture Overview](#system-architecture-overview)
+    - [System Component Architecture](#system-component-architecture)
+  - [Core Technical Approach](#core-technical-approach)
+    - [Multi-Stream Multimodal Architecture](#multi-stream-multimodal-architecture)
+  - [Entry Points \& Usage Modes](#entry-points--usage-modes)
+    - [Primary Entry Points](#primary-entry-points)
+    - [Research Pipeline Scripts](#research-pipeline-scripts)
+  - [Data Flow \& Leakage Prevention](#data-flow--leakage-prevention)
+    - [Subject-Level Data Partitioning](#subject-level-data-partitioning)
+  - [Key Technical Innovations](#key-technical-innovations)
+    - [1. MedicalNet 3D→2D Kernel Conversion](1%20Overview.md)
+    - [2. PPO-Based Hyperparameter Optimization](2%20Getting-Started.md)
+    - [3. Multi-View Fusion Architecture](3%20System-Architecture.md)
+    - [4. Class Imbalance Mitigation Suite](4%20Data-Layer.md)
+  - [Output \& Artifact Management](#output--artifact-management)
+  - [Methodological Safeguards](#methodological-safeguards)
+    - [Target Proxy Leakage Warning](#target-proxy-leakage-warning)
+    - [Balanced Accuracy as Primary Metric](#balanced-accuracy-as-primary-metric)
+  - [License \& Authors](#license--authors)
+  - [Next Steps](#next-steps)
+    - [On this page](#on-this-page)
 
 Ask Devin about brain-mri-pipelines-py

@@ -11,9 +11,9 @@ This document describes the three-stage experimental methodology implemented in 
 2. **Stage 2**: Implements transfer learning with two-phase fine-tuning
 3. **Stage 3**: Applies reinforcement learning to optimize hyperparameters
 
-Each stage builds upon the previous one, culminating in publication-ready results. For detailed implementation of individual stages, see sections [6.1](#6.1), [6.2](#6.2), [6.3](#6.3), and [6.4](#6.4). For information about the underlying model architectures, see [System Architecture](#3) and [Models & Training](#5).
+Each stage builds upon the previous one, culminating in publication-ready results. For detailed implementation of individual stages, see sections [6.1](6a%20Graphical-User-Interface-%28main.py%29.md), [6.2](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md), [6.3](6c%20Deep-Models-CLI-%28run_deep_models_cli.py%29.md), and [6.4](#6.4). For information about the underlying model architectures, see [System Architecture](3%20System-Architecture.md) and [Models & Training](5%20Models-&-Training.md).
 
-**Sources:** [README.md L122-L158](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L158)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L158)
 
 ---
 
@@ -31,7 +31,7 @@ The three-stage pipeline implements a methodologically rigorous approach to Alzh
 
 The pipeline emphasizes **progressive refinement**: Stage 2 builds on insights from Stage 1, and Stage 3 optimizes models produced by Stage 2. All stages output results to the `output/` directory for reproducibility and publication.
 
-**Sources:** [README.md L122-L158](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L158)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L158)
 
 ---
 
@@ -107,7 +107,7 @@ end
 * **Unified Output**: All stages write to `output/` with structured subdirectories
 * **Publication Ready**: `generate_article_tables` consolidates results
 
-**Sources:** [README.md L122-L158](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L158)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L158)
 
 ---
 
@@ -128,7 +128,7 @@ python brain_mri/scripts/run_pc1_embeddings.py --dl-backbone efficientnet
 
 **Purpose**: Extracts embeddings from the specified backbone and compares them against handcrafted morphological descriptors using a lightweight classifier. Results are written to `output/pc1_embeddings/`.
 
-**Sources:** [README.md L126-L132](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L126-L132)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L126-L132)
 
 ---
 
@@ -147,7 +147,7 @@ python brain_mri/scripts/run_pc2_finetune.py --backbone efficientnet --seed�
 
 **Purpose**: Implements two-phase transfer learning. First, trains only the classification head while keeping the backbone frozen (`warmup-epochs`). Then, unfreezes all layers and fine-tunes end-to-end for the remaining epochs. Models are saved to `output/models/`.
 
-**Sources:** [README.md L134-L140](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L134-L140)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L134-L140)
 
 ---
 
@@ -166,7 +166,7 @@ python brain_mri/scripts/run_pc3_rl_refinement.py --backbone efficientnet --
 
 **Purpose**: Loads the fine-tuned model from Stage 2 and applies PPO-based hyperparameter optimization. The agent adjusts learning rate and weight decay based on validation balanced accuracy. Final models are saved to `output/models/rl_refined/`.
 
-**Sources:** [README.md L142-L148](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L142-L148)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L142-L148)
 
 ---
 
@@ -182,7 +182,7 @@ python -m brain_mri.scripts.generate_article_tables --write
 
 **Purpose**: Parses experiment logs from all three stages and generates publication-ready LaTeX tables. Tables include statistical comparisons (Wilcoxon tests) and are saved to `output/tables/`.
 
-**Sources:** [README.md L150-L156](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L150-L156)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L150-L156)
 
 ---
 
@@ -267,7 +267,7 @@ end
 * **experiment_tracker.py**: Logs metrics, hyperparameters, and model configurations
 * **visualizations.py**: Generates performance plots (loss curves, accuracy curves, confusion matrices)
 
-**Sources:** [README.md L177-L196](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L177-L196)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L177-L196)
 
 ---
 
@@ -312,7 +312,7 @@ end
 2. **Stage 2 Baseline**: Provides a strong baseline using established transfer learning practices (frozen warmup + fine-tuning). This serves as the comparison point for Stage 3's RL optimization.
 3. **Stage 3 Innovation**: Demonstrates that RL-based hyperparameter adjustment can improve upon manual hyperparameter tuning. The PPO agent learns to adjust learning rate and weight decay based on validation performance.
 
-**Sources:** [README.md L122-L158](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L158)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L158)
 
 ---
 
@@ -355,7 +355,7 @@ output/
 
 **Sources:** [README.md L36-L38](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L36-L38)
 
- [README.md L177-L196](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L177-L196)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L177-L196)
 
 ---
 
@@ -365,7 +365,7 @@ To execute the complete three-stage pipeline:
 
 ### Step 1: Prepare Data
 
-Ensure OASIS-2 data is organized in `axl/`, `cor/`, `sag/` directories and `oasis_longitudinal_demographic.csv` is present in the repository root. See [Data Preparation](#2.2) for details.
+Ensure OASIS-2 data is organized in `axl/`, `cor/`, `sag/` directories and `oasis_longitudinal_demographic.csv` is present in the repository root. See [Data Preparation](2b%20Data-Preparation.md) for details.
 
 ### Step 2: Run Stage 1 (Embedding Analysis)
 
@@ -393,7 +393,7 @@ python -m brain_mri.scripts.generate_article_tables --write
 
 **Parallelization**: Stages 1 and 2 can run in parallel. Stage 3 requires Stage 2 completion. Different backbone experiments within the same stage can also run in parallel.
 
-**Sources:** [README.md L122-L158](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L158)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L158)
 
 ---
 
@@ -402,12 +402,12 @@ python -m brain_mri.scripts.generate_article_tables --write
 The pipeline enforces reproducibility through:
 
 1. **Explicit Seed Management**: All scripts accept a `--seed` argument that controls random number generation across PyTorch, NumPy, and Python's `random` module.
-2. **Subject-Level Splitting**: Data splits are generated once and cached in `output/dataset_split.csv`. All stages use the same split to ensure fair comparison. See [Subject-Level Splitting & Leakage Prevention](#3.4) for implementation details.
+2. **Subject-Level Splitting**: Data splits are generated once and cached in `output/dataset_split.csv`. All stages use the same split to ensure fair comparison. See [Subject-Level Splitting & Leakage Prevention](3d%20Subject-Level-Splitting-&-Leakage-Prevention.md) for implementation details.
 3. **Deterministic Operations**: Training uses `torch.backends.cudnn.deterministic = True` and `torch.backends.cudnn.benchmark = False` to ensure reproducible results on GPU.
 4. **Checkpoint Preservation**: All stages save model checkpoints with descriptive names including seed and epoch numbers, enabling result reconstruction.
 5. **Comprehensive Logging**: Experiment tracker logs all hyperparameters, data splits, and metrics for full audit trails.
 
-**Sources:** [README.md L160-L175](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L160-L175)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L160-L175)
 
 ---
 
@@ -415,43 +415,43 @@ The pipeline enforces reproducibility through:
 
 The three-stage pipeline integrates with other system components as follows:
 
-* **[Multi-Stream Multimodal Network](#3.1)**: Pipeline scripts instantiate multi-stream architectures from `multistream_models.py`
-* **[MedicalNet Integration](#5.2)**: Stage 2 uses pretrained Med3D weights via `medicalnet_models.py`
-* **[Training Configuration](#5.4)**: Pipeline scripts configure training hyperparameters (learning rate, weight decay, batch size)
+* **[Multi-Stream Multimodal Network](3a%20Multi-Stream-Multimodal-Network.md)**: Pipeline scripts instantiate multi-stream architectures from `multistream_models.py`
+* **[MedicalNet Integration](5b%20MedicalNet-Integration-&-3D→2D-Conversion.md)**: Stage 2 uses pretrained Med3D weights via `medicalnet_models.py`
+* **[Training Configuration](5d%20Training-Configuration.md)**: Pipeline scripts configure training hyperparameters (learning rate, weight decay, batch size)
 * **[Evaluation Metrics](#5.6)**: All stages use balanced accuracy as the primary metric for consistency
-* **[Data Processing Pipeline](#3.2)**: Scripts leverage the data loading infrastructure to maintain subject-level splits
+* **[Data Processing Pipeline](3b%20Data-Processing-Pipeline.md)**: Scripts leverage the data loading infrastructure to maintain subject-level splits
 
-The pipeline serves as the **recommended workflow for research experiments**, while [Graphical User Interface](#7.1) and [Deep Models CLI](#7.3) provide more flexible ad-hoc experimentation interfaces.
+The pipeline serves as the **recommended workflow for research experiments**, while [Graphical User Interface](7a%20Git-Configuration.md) and [Deep Models CLI](7c%20License-&-Usage-Terms.md) provide more flexible ad-hoc experimentation interfaces.
 
-**Sources:** [README.md L1-L218](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L1-L218)
+**Sources:** README.md
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 
-* [Three-Stage Research Pipeline](#6-three-stage-research-pipeline)
-* [Purpose and Scope](#6-purpose-and-scope)
-* [Pipeline Overview](#6-pipeline-overview)
-* [Research Questions](#6-research-questions)
-* [Pipeline Architecture](#6-pipeline-architecture)
-* [Script Execution Interface](#6-script-execution-interface)
-* [Stage 1: Embedding Analysis](#6-stage-1-embedding-analysis)
-* [Stage 2: Transfer Learning & Fine-Tuning](#6-stage-2-transfer-learning-fine-tuning)
-* [Stage 3: RL Hyperparameter Refinement](#6-stage-3-rl-hyperparameter-refinement)
-* [Results Generation](#6-results-generation)
-* [Core Module Integration](#6-core-module-integration)
-* [Progressive Refinement Strategy](#6-progressive-refinement-strategy)
-* [Design Rationale](#6-design-rationale)
-* [Output Directory Structure](#6-output-directory-structure)
-* [Execution Workflow](#6-execution-workflow)
-* [Step 1: Prepare Data](#6-step-1-prepare-data)
-* [Step 2: Run Stage 1 (Embedding Analysis)](#6-step-2-run-stage-1-embedding-analysis)
-* [Step 3: Run Stage 2 (Transfer Learning)](#6-step-3-run-stage-2-transfer-learning)
-* [Step 4: Run Stage 3 (RL Refinement)](#6-step-4-run-stage-3-rl-refinement)
-* [Step 5: Generate Publication Tables](#6-step-5-generate-publication-tables)
-* [Reproducibility Considerations](#6-reproducibility-considerations)
-* [Relationship to Other System Components](#6-relationship-to-other-system-components)
+* [Three-Stage Research Pipeline](6%20User-Interfaces.md)
+* [Purpose and Scope](6%20User-Interfaces.md)
+* [Pipeline Overview](6%20User-Interfaces.md)
+* [Research Questions](6%20User-Interfaces.md)
+* [Pipeline Architecture](6%20User-Interfaces.md)
+* [Script Execution Interface](6%20User-Interfaces.md)
+* [Stage 1: Embedding Analysis](6%20User-Interfaces.md)
+* [Stage 2: Transfer Learning & Fine-Tuning](6%20User-Interfaces.md)
+* [Stage 3: RL Hyperparameter Refinement](6%20User-Interfaces.md)
+* [Results Generation](6%20User-Interfaces.md)
+* [Core Module Integration](6%20User-Interfaces.md)
+* [Progressive Refinement Strategy](6%20User-Interfaces.md)
+* [Design Rationale](6%20User-Interfaces.md)
+* [Output Directory Structure](6%20User-Interfaces.md)
+* [Execution Workflow](6%20User-Interfaces.md)
+* [Step 1: Prepare Data](6%20User-Interfaces.md)
+* [Step 2: Run Stage 1 (Embedding Analysis)](6%20User-Interfaces.md)
+* [Step 3: Run Stage 2 (Transfer Learning)](6%20User-Interfaces.md)
+* [Step 4: Run Stage 3 (RL Refinement)](6%20User-Interfaces.md)
+* [Step 5: Generate Publication Tables](6%20User-Interfaces.md)
+* [Reproducibility Considerations](6%20User-Interfaces.md)
+* [Relationship to Other System Components](6%20User-Interfaces.md)
 
 Ask Devin about brain-mri-pipelines-py

@@ -5,7 +5,7 @@
 
 ## Purpose & Scope
 
-This page documents the primary features of the brain-mri-pipelines-py framework, organized by functional capability. Each feature is mapped to its implementing code entities to facilitate navigation of the codebase. For detailed architectural explanations, see [System Architecture](#3). For specific model implementations, see [Models & Training](#5). For the research workflow, see [Three-Stage Research Pipeline](#6).
+This page documents the primary features of the brain-mri-pipelines-py framework, organized by functional capability. Each feature is mapped to its implementing code entities to facilitate navigation of the codebase. For detailed architectural explanations, see [System Architecture](3%20System-Architecture.md). For specific model implementations, see [Models & Training](5%20Models-&-Training.md). For the research workflow, see [Three-Stage Research Pipeline](6%20User-Interfaces.md).
 
 ---
 
@@ -161,7 +161,7 @@ The MedicalNet backbone implements a unique conversion process:
 
 **Sources**: [README.md L10-L12](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L10-L12)
 
- [README.md L171-L173](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L171-L173)
 
 ---
 
@@ -198,9 +198,9 @@ Used for age estimation as a regression baseline task.
 
 **Sources**: [README.md L13-L15](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L13-L15)
 
- [README.md L106-L108](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L106-L108)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L106-L108)
 
- [README.md L162-L168](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L168)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L168)
 
 ---
 
@@ -264,7 +264,7 @@ end
 
 ### Execution Flow
 
-1. Load fine-tuned model from Stage 2 (see [Stage 2: Transfer Learning & Fine-Tuning](#6.2))
+1. Load fine-tuned model from Stage 2 (see [Stage 2: Transfer Learning & Fine-Tuning](6b%20Baselines-CLI-%28run_baselines_cli.py%29.md))
 2. PPO agent proposes hyperparameter values
 3. Train model for a micro-epoch (small data subset)
 4. Evaluate on validation set, compute balanced accuracy
@@ -284,7 +284,7 @@ python brain_mri/scripts/run_pc3_rl_refinement.py \    --backbone efficie
 
 **Sources**: [README.md L17-L18](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L17-L18)
 
- [README.md L142-L148](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L142-L148)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L142-L148)
 
 ---
 
@@ -394,7 +394,7 @@ python run_baselines_cli.py
 
 **Sources**: [README.md L20-L23](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L20-L23)
 
- [README.md L83-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L83-L118)
+ README.md
 
 ---
 
@@ -481,9 +481,9 @@ The subject-level split is enforced through the following mechanism:
 
 **Sources**: [README.md L23](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L23-L23)
 
- [README.md L40-L50](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L40-L50)
+ README.md
 
- [README.md L101-L105](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L101-L105)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L101-L105)
 
 ---
 
@@ -589,7 +589,7 @@ python -m brain_mri.scripts.generate_article_tables --write
 
 **Output**: LaTeX-formatted tables comparing performance across all model variants and stages.
 
-**Sources**: [README.md L122-L156](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L156)
+**Sources**: Project overview and setup
 
 ---
 
@@ -631,7 +631,7 @@ All training runs log metrics to `output/` directory:
 
 **Tracking Module**: `brain_mri/experiments/` contains visualization and logging utilities.
 
-**Sources**: [README.md L162-L168](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L168)
+**Sources**: Project overview and setup
 
 ---
 
@@ -654,11 +654,11 @@ This table provides a quick reference for locating the implementation of each ma
 
 **Sources**: [README.md L7-L23](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L7-L23)
 
- [README.md L179-L196](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L179-L196)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L179-L196)
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

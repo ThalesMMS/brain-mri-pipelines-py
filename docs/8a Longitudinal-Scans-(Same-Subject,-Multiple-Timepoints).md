@@ -15,7 +15,7 @@ This page documents the **longitudinal structure** of the OASIS-2 dataset, where
 * The filename parsing strategy used to identify subjects and visits
 * How the subject-level splitting mechanism ensures all scans from a single patient remain within one partition
 
-For information about the overall data splitting strategy and leakage prevention mechanisms, see [Subject-Level Splitting & Leakage Prevention](#3.4). For the broader dataset structure, see [OASIS-2 Dataset Overview](#4.1).
+For information about the overall data splitting strategy and leakage prevention mechanisms, see [Subject-Level Splitting & Leakage Prevention](3d%20Subject-Level-Splitting-&-Leakage-Prevention.md). For the broader dataset structure, see [OASIS-2 Dataset Overview](4a%20OASIS-2-Dataset-Overview.md).
 
 ---
 
@@ -73,7 +73,7 @@ OAS2_<SubjectID>_MR<VisitNumber>_<plane>.nii.gz
 
  [sag/](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/sag/)
 
- [4.3 Directory Organization & File Naming](#4.3)
+ [4.3 Directory Organization & File Naming](4c%20Directory-Organization-&-File-Naming.md)
 
 ---
 
@@ -106,7 +106,7 @@ VISIT -.-> SEQ
 2. **Visit Number**: Extract characters matching `MRY` pattern where Y is the visit index
 3. **Plane**: Extract the plane identifier before the file extension
 
-**Sources**: High-level Diagram 4 (Filename Parser component), [4.3 Directory Organization & File Naming](#4.3)
+**Sources**: High-level Diagram 4 (Filename Parser component), [4.3 Directory Organization & File Naming](4c%20Directory-Organization-&-File-Naming.md)
 
 ---
 
@@ -256,7 +256,7 @@ end
 
 **Result**: If Subject `OAS2_0001` is assigned to the training set, then both `OAS2_0001_MR1_axl.nii.gz` and `OAS2_0001_MR2_axl.nii.gz` (and all other visits/planes) are **guaranteed** to be in the training set.
 
-**Sources**: High-level Diagram 4 (Subject-Aware Splitter, Train/Val/Test Subjects), [3.4 Subject-Level Splitting & Leakage Prevention](#3.4)
+**Sources**: High-level Diagram 4 (Subject-Aware Splitter, Train/Val/Test Subjects), [3.4 Subject-Level Splitting & Leakage Prevention](3d%20Subject-Level-Splitting-&-Leakage-Prevention.md)
 
 ---
 
@@ -320,7 +320,7 @@ end
 # Pseudocode illustrating the conceptdef split_by_subject(file_paths, train_ratio=0.7, val_ratio=0.15):    # Extract subject IDs    subject_to_files = defaultdict(list)    for path in file_paths:        subject_id = extract_subject_id(path)  # e.g., "OAS2_0001"        subject_to_files[subject_id].append(path)        # Split subjects (not files)    subjects = list(subject_to_files.keys())    np.random.shuffle(subjects)  # with fixed seed        n_train = int(len(subjects) * train_ratio)    n_val = int(len(subjects) * val_ratio)        train_subjects = subjects[:n_train]    val_subjects = subjects[n_train:n_train+n_val]    test_subjects = subjects[n_train+n_val:]        # Collect all files for each split    train_files = [f for s in train_subjects for f in subject_to_files[s]]    val_files = [f for s in val_subjects for f in subject_to_files[s]]    test_files = [f for s in test_subjects for f in subject_to_files[s]]        return train_files, val_files, test_files
 ```
 
-**Sources**: [3.2 Data Processing Pipeline](#3.2), [4.5 Data Loading & Augmentation](#4.5), High-level Diagram 4
+**Sources**: [3.2 Data Processing Pipeline](3b%20Data-Processing-Pipeline.md), [4.5 Data Loading & Augmentation](4e%20Loss-Functions-&-Class-Imbalance.md), High-level Diagram 4
 
 ---
 
@@ -389,7 +389,7 @@ end
 
 **Important Note**: When splitting data, the system must also ensure that **clinical metadata rows** for a given subject remain in the same split as that subject's **MRI files**. This prevents information leakage through the tabular data.
 
-**Sources**: [4.4 Clinical Metadata](#4.4), High-level Diagram 1 (Clinical Data node)
+**Sources**: [4.4 Clinical Metadata](4d%20Clinical-Metadata.md), High-level Diagram 1 (Clinical Data node)
 
 ---
 
@@ -439,7 +439,7 @@ Developers and researchers should verify the splitting logic by checking:
 3. **Count Verification**: ``` total_subjects = len(all_unique_subjects)train_count = len(train_subjects)val_count = len(val_subjects)test_count = len(test_subjects)assert train_count + val_count + test_count == total_subjects ```
 4. **CSV Alignment**: * Ensure that for each MRI file in the test set, the corresponding CSV row is **not used** during training * Filter the demographic DataFrame based on subject lists
 
-**Sources**: [3.4 Subject-Level Splitting & Leakage Prevention](#3.4), [4.5 Data Loading & Augmentation](#4.5)
+**Sources**: [3.4 Subject-Level Splitting & Leakage Prevention](3d%20Subject-Level-Splitting-&-Leakage-Prevention.md), [4.5 Data Loading & Augmentation](4e%20Loss-Functions-&-Class-Imbalance.md)
 
 ---
 
@@ -454,15 +454,15 @@ Longitudinal scans in the OASIS-2 dataset present both an **opportunity** (study
 
 This methodology is **essential** for producing valid, generalizable Alzheimer's disease detection models and is explicitly highlighted in the system architecture as a critical anti-leakage mechanism.
 
-**Sources**: High-level Diagrams 1, 4, 5; [3.4 Subject-Level Splitting & Leakage Prevention](#3.4); [4.1 OASIS-2 Dataset Overview](#4.1); [4.3 Directory Organization & File Naming](#4.3); [axl/OAS2_0001_MR1_axl.nii.gz](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/axl/OAS2_0001_MR1_axl.nii.gz)
+**Sources**: High-level Diagrams 1, 4, 5; [3.4 Subject-Level Splitting & Leakage Prevention](3d%20Subject-Level-Splitting-&-Leakage-Prevention.md); [4.1 OASIS-2 Dataset Overview](4a%20OASIS-2-Dataset-Overview.md); [4.3 Directory Organization & File Naming](4c%20Directory-Organization-&-File-Naming.md); [axl/OAS2_0001_MR1_axl.nii.gz](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/axl/OAS2_0001_MR1_axl.nii.gz)
 
 ; [axl/OAS2_0001_MR2_axl.nii.gz](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/axl/OAS2_0001_MR2_axl.nii.gz)
 
 ; [axl/OAS2_0002_MR1_axl.nii.gz](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/axl/OAS2_0002_MR1_axl.nii.gz)
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

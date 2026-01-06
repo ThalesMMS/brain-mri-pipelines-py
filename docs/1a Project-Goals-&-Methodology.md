@@ -7,7 +7,7 @@
 
 This document describes the research objectives and methodological framework of the brain-mri-pipelines-py repository. It covers the project's goal of Alzheimer's disease (AD) detection using multi-stream, multimodal deep learning on the OASIS-2 dataset, and explains the critical design decisions that ensure methodologically sound research outcomes.
 
-For details on specific model architectures, see [Deep Learning Backbones](#5.1). For implementation details of data splitting, see [Subject-Level Splitting & Leakage Prevention](#3.4). For the complete experimental workflow, see [Three-Stage Research Pipeline](#6).
+For details on specific model architectures, see [Deep Learning Backbones](5a%20Deep-Learning-Backbones.md). For implementation details of data splitting, see [Subject-Level Splitting & Leakage Prevention](3d%20Subject-Level-Splitting-%26-Leakage-Prevention.md). For the complete experimental workflow, see [Three-Stage Research Pipeline](5%20Three-Stage-Research-Pipeline.md).
 
 ---
 
@@ -221,7 +221,7 @@ The OASIS-2 dataset contains longitudinal MRI scans where the same patient may h
 
 **Sources:** [README.md L23](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L23-L23)
 
- [README.md L40-L49](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L40-L49)
+ README.md
 
 ---
 
@@ -323,7 +323,7 @@ Implements the two-phase transfer learning approach recommended for medical imag
 
 Uses a Proximal Policy Optimization (PPO) agent to dynamically adjust hyperparameters during training. The agent observes validation metrics and adjusts learning rate and weight decay per micro-epoch, creating an adaptive optimization strategy beyond traditional grid/random search.
 
-**Sources:** [README.md L122-L157](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L157)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L157)
 
  [brain_mri/scripts/run_pc1_embeddings.py](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/brain_mri/scripts/run_pc1_embeddings.py)
 
@@ -350,7 +350,7 @@ Balanced Accuracy = (Sensitivity + Specificity) / 2
 
 This metric equally weights performance on both classes, preventing majority-class bias.
 
-**Sources:** [README.md L162-L166](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L166)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L166)
 
 ### 2. Anti-Collapse Mechanisms
 
@@ -362,7 +362,7 @@ To prevent models from collapsing to majority-class prediction, the pipeline imp
 | **Class-Weighted Loss** | Loss weights inversely proportional to class frequency | Penalizes errors on minority class more heavily |
 | **Focal Loss** | Optional alternative to cross-entropy | Down-weights easy examples, focuses on hard cases |
 
-**Sources:** [README.md L162-L169](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L169)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L169)
 
 ### 3. Target Proxy Leakage Awareness
 
@@ -374,7 +374,7 @@ The codebase explicitly handles the **MMSE/CDR leakage scenario**:
 
 This dual-scenario approach enables researchers to quantify the information content of proxy variables versus pure imaging biomarkers.
 
-**Sources:** [README.md L166-L169](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L166-L169)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L166-L169)
 
 ### 4. Reproducible Research Infrastructure
 
@@ -389,7 +389,7 @@ The project provides multiple execution modalities optimized for different use c
 
 All CLI scripts support `--seed` arguments for deterministic reproducibility.
 
-**Sources:** [README.md L81-L157](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L81-L157)
+**Sources:** README.md
 
 ---
 
@@ -462,7 +462,7 @@ end
 
 The evaluation strategy prioritizes **Balanced Accuracy** to ensure fair comparison in the presence of class imbalance, while providing comprehensive secondary metrics for detailed performance analysis.
 
-**Sources:** [README.md L162-L169](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L169)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L162-L169)
 
  [brain_mri/scripts/generate_article_tables](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/brain_mri/scripts/generate_article_tables)
 
@@ -478,11 +478,11 @@ The brain-mri-pipelines-py project implements a methodologically rigorous framew
 
 This methodology enables fair comparison across classical ML, deep learning, and RL approaches while maintaining research validity through careful handling of longitudinal data, class imbalance, and target proxy leakage.
 
-**Sources:** [README.md L1-L218](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L1-L218)
+**Sources:** README.md
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 

@@ -9,12 +9,12 @@ This document presents the high-level architecture of the brain-mri-pipelines-py
 
 For detailed information about specific architectural patterns, see:
 
-* Multi-stream multimodal network design: [#3.1](#3.1)
-* Data processing and transformation pipeline: [#3.2](#3.2)
-* Package organization and module responsibilities: [#3.3](#3.3)
-* Subject-level data splitting implementation: [#3.4](#3.4)
+* Multi-stream multimodal network design: [Multi-Stream Multimodal Network](3a%20Multi-Stream-Multimodal-Network.md)
+* Data processing and transformation pipeline: [Data Processing Pipeline](3b%20Data-Processing-Pipeline.md)
+* Package organization and module responsibilities: [Package Organization](3c%20Core-Package-Structure-%28brain_mri-%29.md)
+* Subject-level data splitting implementation: [Subject-Level Splitting & Leakage Prevention](3d%20Subject-Level-Splitting-&-Leakage-Prevention.md)
 
-For model-specific details, training procedures, and the three-stage research workflow, see [Models & Training](#5) and [Three-Stage Research Pipeline](#6).
+For model-specific details, training procedures, and the three-stage research workflow, see [Models & Training](5%20Models-&-Training.md) and [Three-Stage Research Pipeline](6%20User-Interfaces.md).
 
 ## System Layers
 
@@ -72,7 +72,7 @@ subgraph UI ["User Interface Layer"]
 end
 ```
 
-**Sources:** [README.md L1-L218](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L1-L218)
+**Sources:** README.md
 
 ### Layer Responsibilities
 
@@ -83,7 +83,7 @@ end
 | **Core Package** | Reusable modules for ML, UI, and utilities | `brain_mri/ml/`, `brain_mri/ui/`, `brain_mri/experiments/`, `brain_mri/utils/` |
 | **Data** | Input datasets and output artifacts | `axl/`, `cor/`, `sag/`, CSV files, `output/` directory |
 
-**Sources:** [README.md L177-L196](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L177-L196)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L177-L196)
 
 ## Entry Points
 
@@ -122,7 +122,7 @@ subgraph ENTRY ["Entry Points"]
 end
 ```
 
-**Sources:** [README.md L83-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L83-L118)
+**Sources:** README.md
 
 ### main.py - Interactive GUI
 
@@ -140,7 +140,7 @@ The graphical user interface is implemented in `main.py` using Tkinter. It insta
 * Manual segmentation tasks
 * Rapid prototyping of model configurations
 
-**Sources:** [README.md L83-L96](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L83-L96)
+**Sources:** README.md
 
 ### run_baselines_cli.py - Classical ML
 
@@ -157,7 +157,7 @@ Command-line interface for training classical machine learning models. This scri
 * Reproducible headless execution
 * Target leakage analysis
 
-**Sources:** [README.md L98-L109](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L98-L109)
+**Sources:** README.md
 
 ### run_deep_models_cli.py - Deep Learning
 
@@ -174,7 +174,7 @@ Example invocations:
 python run_deep_models_cli.py --seed 42 --epochs 40 --backbones efficientnet,medicalnet,densenetpython run_deep_models_cli.py --seed 42 --epochs 40 --backbones efficientnet --multimodal
 ```
 
-**Sources:** [README.md L110-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L110-L118)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L110-L118)
 
 ## Core Package Structure
 
@@ -241,7 +241,7 @@ end
 end
 ```
 
-**Sources:** [README.md L177-L196](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L177-L196)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L177-L196)
 
 ### Module Responsibilities
 
@@ -253,7 +253,7 @@ end
 | `utils/` | Image processing, metadata parsing | Utility functions for data handling |
 | `scripts/` | Stage-specific runners | Three-stage research pipeline implementations |
 
-**Sources:** [README.md L177-L196](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L177-L196)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L177-L196)
 
 ### Key Files in brain_mri/ml/
 
@@ -281,7 +281,7 @@ subgraph ML_DIR ["brain_mri/ml/"]
 end
 ```
 
-**Sources:** [README.md L184-L188](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L184-L188)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L184-L188)
 
 The `ml/` directory centralizes all machine learning logic:
 
@@ -292,7 +292,7 @@ The `ml/` directory centralizes all machine learning logic:
 * **rl_refinement.py:** PPO-based reinforcement learning agent for hyperparameter optimization
 * **data_loader.py:** PyTorch DataLoader creation with subject-aware splitting
 
-**Sources:** [README.md L184-L188](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L184-L188)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L184-L188)
 
 ## Data Flow Architecture
 
@@ -373,7 +373,7 @@ subgraph INPUT ["Input Sources"]
 end
 ```
 
-**Sources:** [README.md L27-L50](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L27-L50)
+**Sources:** README.md
 
 ### Critical: Subject-Level Splitting
 
@@ -384,9 +384,9 @@ The system enforces **subject-level splitting** to prevent data leakage. The fil
 
 All scans from a single `Subject_ID` (which may include multiple `MRI_ID` values representing different timepoints) remain strictly within one partition (Train, Validation, or Test). This prevents the common pitfall where different timepoint scans from the same patient leak across splits.
 
-**Sources:** [README.md L40-L49](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L40-L49)
+**Sources:** README.md
 
- [README.md L160-L174](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L160-L174)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L160-L174)
 
 ## Component Interaction Patterns
 
@@ -454,7 +454,7 @@ subgraph SETUP ["Setup Phase"]
 end
 ```
 
-**Sources:** [README.md L110-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L110-L118)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L110-L118)
 
 ### RL Refinement Integration
 
@@ -497,7 +497,7 @@ subgraph RL_SETUP ["RL Setup"]
 end
 ```
 
-**Sources:** [README.md L142-L148](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L142-L148)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L142-L148)
 
  [README.md L17-L18](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L17-L18)
 
@@ -526,31 +526,31 @@ The architecture supports extension through several mechanisms:
 4. **New RL Algorithms:** Replace `PPOAgent` in `rl_refinement.py` with alternative RL implementations
 5. **New CLI Tools:** Create new scripts in `brain_mri/scripts/` following the PC1/PC2/PC3 pattern
 
-**Sources:** [README.md L177-L196](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L177-L196)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L177-L196)
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 
-* [System Architecture](#3-system-architecture)
-* [Purpose & Scope](#3-purpose-scope)
-* [System Layers](#3-system-layers)
-* [Layer Responsibilities](#3-layer-responsibilities)
-* [Entry Points](#3-entry-points)
-* [main.py - Interactive GUI](#3-mainpy---interactive-gui)
-* [run_baselines_cli.py - Classical ML](#3-run_baselines_clipy---classical-ml)
-* [run_deep_models_cli.py - Deep Learning](#3-run_deep_models_clipy---deep-learning)
-* [Core Package Structure](#3-core-package-structure)
-* [Module Responsibilities](#3-module-responsibilities)
-* [Key Files in brain_mri/ml/](#3-key-files-in-brain_mriml)
-* [Data Flow Architecture](#3-data-flow-architecture)
-* [Critical: Subject-Level Splitting](#3-critical-subject-level-splitting)
-* [Component Interaction Patterns](#3-component-interaction-patterns)
-* [Training Pipeline Integration](#3-training-pipeline-integration)
-* [RL Refinement Integration](#3-rl-refinement-integration)
-* [Output Artifacts](#3-output-artifacts)
-* [System Extensibility](#3-system-extensibility)
+* [System Architecture](3%20System-Architecture.md)
+* [Purpose & Scope](3%20System-Architecture.md)
+* [System Layers](3%20System-Architecture.md)
+* [Layer Responsibilities](3%20System-Architecture.md)
+* [Entry Points](3%20System-Architecture.md)
+* [main.py - Interactive GUI](3%20System-Architecture.md)
+* [run_baselines_cli.py - Classical ML](3%20System-Architecture.md)
+* [run_deep_models_cli.py - Deep Learning](3%20System-Architecture.md)
+* [Core Package Structure](3%20System-Architecture.md)
+* [Module Responsibilities](3%20System-Architecture.md)
+* [Key Files in brain_mri/ml/](3%20System-Architecture.md)
+* [Data Flow Architecture](3%20System-Architecture.md)
+* [Critical: Subject-Level Splitting](3%20System-Architecture.md)
+* [Component Interaction Patterns](3%20System-Architecture.md)
+* [Training Pipeline Integration](3%20System-Architecture.md)
+* [RL Refinement Integration](3%20System-Architecture.md)
+* [Output Artifacts](3%20System-Architecture.md)
+* [System Extensibility](3%20System-Architecture.md)
 
 Ask Devin about brain-mri-pipelines-py

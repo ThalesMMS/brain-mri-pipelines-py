@@ -9,13 +9,13 @@ This document provides an overview of the three user-facing interfaces for inter
 
 This page introduces the architecture and interaction patterns common to all interfaces. For detailed usage instructions and specific capabilities of each interface, see:
 
-* [Graphical User Interface (main.py)](#7.1)
-* [Baselines CLI (run_baselines_cli.py)](#7.2)
-* [Deep Models CLI (run_deep_models_cli.py)](#7.3)
+* [Graphical User Interface (main.py)](7a%20Git-Configuration.md)
+* [Baselines CLI (run_baselines_cli.py)](7b%20Output-Directory-Structure.md)
+* [Deep Models CLI (run_deep_models_cli.py)](7c%20License-&-Usage-Terms.md)
 
-For information about the underlying model architectures and training procedures accessed through these interfaces, see [Models & Training](#5).
+For information about the underlying model architectures and training procedures accessed through these interfaces, see [Models & Training](5%20Models-&-Training.md).
 
-**Sources:** [README.md L1-L218](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L1-L218)
+**Sources:** README.md
 
 ---
 
@@ -35,7 +35,7 @@ The system provides three distinct entry points, each optimized for different wo
 * **Baselines CLI** generates the subject-aware split CSV file and trains classical models in both leakage and clean scenarios.
 * **Deep Models CLI** supports all three anatomical planes (`axl/`, `cor/`, `sag/`) and provides extensive hyperparameter configuration.
 
-**Sources:** [README.md L83-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L83-L118)
+**Sources:** README.md
 
 ---
 
@@ -106,9 +106,9 @@ This diagram illustrates how the three entry points connect to the underlying sy
 
 All three interfaces converge on the `ExperimentTracker` for logging results and generating visualizations.
 
-**Sources:** [README.md L179-L196](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L179-L196)
+**Sources:** [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L179-L196)
 
- [README.md L83-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L83-L118)
+ README.md
 
 ---
 
@@ -170,7 +170,7 @@ This diagram maps the execution sequence for each interface:
 * **Baselines CLI flow** is linear: first builds the subject-aware split CSV using `build_dataset_csv()`, then trains SVM and XGBoost models sequentially.
 * **Deep Models CLI flow** parses command-line arguments, creates dataset and model instances, executes the training loop, evaluates on the test set, and persists checkpoints.
 
-**Sources:** [README.md L83-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L83-L118)
+**Sources:** README.md
 
 ---
 
@@ -182,7 +182,7 @@ All three interfaces share the following underlying mechanisms:
 
 Regardless of the interface used, the system enforces **subject-level splitting** to prevent data leakage. This is implemented in `brain_mri/ml/data_loader.py` and ensures that all MRI scans from a single patient (identified by `Subject_ID` extracted from the `OAS2_XXXX_MRY_plane.nii.gz` filename pattern) remain strictly within one partition (Train, Validation, or Test).
 
-For details on the splitting mechanism, see [Subject-Level Splitting & Leakage Prevention](#3.4).
+For details on the splitting mechanism, see [Subject-Level Splitting & Leakage Prevention](3d%20Subject-Level-Splitting-&-Leakage-Prevention.md).
 
 ### Experiment Tracking
 
@@ -207,7 +207,7 @@ The CLIs are recommended for production experiments requiring reproducibility, w
 
 **Sources:** [README.md L23](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L23-L23)
 
- [README.md L98-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L98-L118)
+ README.md
 
 ---
 
@@ -258,9 +258,9 @@ The CLIs are recommended for production experiments requiring reproducibility, w
 * Configurable early stopping and learning rate scheduling
 * Automatic GPU detection and mixed-precision training (if available)
 
-**Sources:** [README.md L83-L96](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L83-L96)
+**Sources:** README.md
 
- [README.md L98-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L98-L118)
+ README.md
 
 ---
 
@@ -287,7 +287,7 @@ On macOS with Homebrew:
 brew install python-tk@3.11
 ```
 
-**Sources:** [README.md L56-L77](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L56-L77)
+**Sources:** README.md
 
 ---
 
@@ -306,7 +306,7 @@ output/
 
 The `dataset_split.csv` file is created by `run_baselines_cli.py` and consumed by all subsequent training runs to ensure consistent data partitioning.
 
-For details on the output directory organization, see [Output Directory Structure](#8.2).
+For details on the output directory organization, see [Output Directory Structure](8b%20Dataset-Coverage.md).
 
 **Sources:** [README.md L27-L38](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L27-L38)
 
@@ -332,36 +332,36 @@ For details on the output directory organization, see [Output Directory Structur
 # Standard training with single backbonepython run_deep_models_cli.py --seed 42 --epochs 40 --backbones efficientnet# Multi-backbone trainingpython run_deep_models_cli.py --seed 42 --epochs 40 --backbones efficientnet,medicalnet,densenet# Multimodal training (images + clinical features)python run_deep_models_cli.py --seed 42 --epochs 40 --backbones efficientnet --multimodal# Full configuration examplepython run_deep_models_cli.py \    --seed 42 \    --epochs 50 \    --batch-size 16 \    --lr 0.0001 \    --weight-decay 0.01 \    --backbones efficientnet,densenet \    --multimodal \    --early-stopping \    --patience 10
 ```
 
-**Note:** For advanced research pipeline stages (embedding analysis, fine-tuning, RL refinement), use the scripts in `brain_mri/scripts/`. See [Three-Stage Research Pipeline](#6) for details.
+**Note:** For advanced research pipeline stages (embedding analysis, fine-tuning, RL refinement), use the scripts in `brain_mri/scripts/`. See [Three-Stage Research Pipeline](6%20User-Interfaces.md) for details.
 
-**Sources:** [README.md L83-L118](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L83-L118)
+**Sources:** README.md
 
- [README.md L122-L156](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L156)
+ **Sources**: [Project overview and setup](https://github.com/ThalesMMS/brain-mri-pipelines-py/blob/cd9d51a5/README.md#L122-L156)
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 
-* [User Interfaces](#7-user-interfaces)
-* [Purpose and Scope](#7-purpose-and-scope)
-* [Interface Comparison Matrix](#7-interface-comparison-matrix)
-* [User Interface Layer Architecture](#7-user-interface-layer-architecture)
-* [Execution Flow from Entry Points](#7-execution-flow-from-entry-points)
-* [Common Interface Patterns](#7-common-interface-patterns)
-* [Subject-Level Data Splitting](#7-subject-level-data-splitting)
-* [Experiment Tracking](#7-experiment-tracking)
-* [Configuration Sources](#7-configuration-sources)
-* [Interface Selection Guide](#7-interface-selection-guide)
-* [Use the GUI ( main.py ) when:](#7-use-the-gui-object-object-when)
-* [Use the Baselines CLI ( run_baselines_cli.py ) when:](#7-use-the-baselines-cli-object-object-when)
-* [Use the Deep Models CLI ( run_deep_models_cli.py ) when:](#7-use-the-deep-models-cli-object-object-when)
-* [System Requirements by Interface](#7-system-requirements-by-interface)
-* [Output Directory Structure](#7-output-directory-structure)
-* [Interface Invocation Examples](#7-interface-invocation-examples)
-* [GUI Quick Start](#7-gui-quick-start)
-* [Baselines CLI Quick Start](#7-baselines-cli-quick-start)
-* [Deep Models CLI Quick Start](#7-deep-models-cli-quick-start)
+* [User Interfaces](7%20Development-&-Configuration.md)
+* [Purpose and Scope](7%20Development-&-Configuration.md)
+* [Interface Comparison Matrix](7%20Development-&-Configuration.md)
+* [User Interface Layer Architecture](7%20Development-&-Configuration.md)
+* [Execution Flow from Entry Points](7%20Development-&-Configuration.md)
+* [Common Interface Patterns](7%20Development-&-Configuration.md)
+* [Subject-Level Data Splitting](7%20Development-&-Configuration.md)
+* [Experiment Tracking](7%20Development-&-Configuration.md)
+* [Configuration Sources](7%20Development-&-Configuration.md)
+* [Interface Selection Guide](7%20Development-&-Configuration.md)
+* [Use the GUI ( main.py ) when:](7%20Development-&-Configuration.md)
+* [Use the Baselines CLI ( run_baselines_cli.py ) when:](7%20Development-&-Configuration.md)
+* [Use the Deep Models CLI ( run_deep_models_cli.py ) when:](7%20Development-&-Configuration.md)
+* [System Requirements by Interface](7%20Development-&-Configuration.md)
+* [Output Directory Structure](7%20Development-&-Configuration.md)
+* [Interface Invocation Examples](7%20Development-&-Configuration.md)
+* [GUI Quick Start](7%20Development-&-Configuration.md)
+* [Baselines CLI Quick Start](7%20Development-&-Configuration.md)
+* [Deep Models CLI Quick Start](7%20Development-&-Configuration.md)
 
 Ask Devin about brain-mri-pipelines-py

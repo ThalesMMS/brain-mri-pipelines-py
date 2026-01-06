@@ -7,7 +7,7 @@
 
 This page provides technical documentation of the NIfTI-1 (Neuroimaging Informatics Technology Initiative) file format used to store MRI scan data in this repository. The focus is on the format specification, header structure, coordinate systems, and how these binary files integrate into the data processing pipeline.
 
-For information about the directory structure and naming conventions of NIfTI files in this dataset, see [Directory Organization & File Naming](#4.3). For details on how these files are loaded and augmented during training, see [Data Loading & Augmentation](#4.5).
+For information about the directory structure and naming conventions of NIfTI files in this dataset, see [Directory Organization & File Naming](4c%20Directory-Organization-&-File-Naming.md). For details on how these files are loaded and augmented during training, see [Data Loading & Augmentation](4e%20Loss-Functions-&-Class-Imbalance.md).
 
 ---
 
@@ -394,12 +394,12 @@ Sources: axl/OAS2_0001_MR1_axl.nii.gz, axl/OAS2_0002_MR1_axl.nii.gz
 
 * **NIfTI-1 Specification**: [https://nifti.nimh.nih.gov/nifti-1/](https://nifti.nimh.nih.gov/nifti-1/)
 * **Nibabel Documentation**: [https://nipy.org/nibabel/](https://nipy.org/nibabel/)
-* **OASIS Dataset**: For dataset-specific conventions, see [OASIS-2 Dataset Overview](#4.1)
-* **File Naming**: For subject ID extraction and parsing logic, see [Directory Organization & File Naming](#4.3)
+* **OASIS Dataset**: For dataset-specific conventions, see [OASIS-2 Dataset Overview](4a%20OASIS-2-Dataset-Overview.md)
+* **File Naming**: For subject ID extraction and parsing logic, see [Directory Organization & File Naming](4c%20Directory-Organization-&-File-Naming.md)
 
-Refresh this wiki
 
-Last indexed: 5 January 2026 ([cd9d51](https://github.com/ThalesMMS/brain-mri-pipelines-py/commit/cd9d51a5))
+
+
 
 ### On this page
 
