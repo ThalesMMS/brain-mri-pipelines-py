@@ -11,7 +11,7 @@ This document explains how to obtain and organize the OASIS-2 dataset for use wi
 
 ## Purpose and Scope
 
-The brain-mri-pipelines-py repository **does not bundle the OASIS-2 dataset**. Users must independently obtain the data and organize it according to the expected structure. This page documents:
+The brain-mri-pipelines-py repository is designed around an **OASIS-2-style directory layout**. Some revisions may already contain MRI/CSV files arranged in that layout, while other users may prepare the data independently. In either case, this page documents:
 
 * The required directory layout in the repository root
 * File naming conventions that the system parses
@@ -24,7 +24,7 @@ The brain-mri-pipelines-py repository **does not bundle the OASIS-2 dataset**. U
 
 ## OASIS-2 Dataset
 
-The system is designed to work with the **Open Access Series of Imaging Studies - Longitudinal (OASIS-2)** dataset, which contains neuroimaging data for Alzheimer's disease research. The dataset must be obtained from the official OASIS project website or authorized data repositories.
+The system is designed to work with the **Open Access Series of Imaging Studies - Longitudinal (OASIS-2)** dataset, which contains neuroimaging data for Alzheimer's disease research. If you are preparing your own copy instead of using files already present in a checkout, obtain the dataset from the official OASIS project website or another authorized source.
 
 **Key characteristics:**
 

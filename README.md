@@ -2,6 +2,9 @@
 
 Python framework for brain MRI analysis and Alzheimer’s disease (AD) classification using the OASIS-2 dataset. The project implements a multi-stream, multimodal architecture that combines multi-view MRI data (axial, coronal, sagittal) with clinical tabular data, with an optional reinforcement-learning (PPO) component for automated hyperparameter adjustment.
 
+> **Research-use note**
+> This repository is a research codebase for experimentation and education. It is **not approved for clinical use** and should **not** be used as the sole basis for diagnosis, screening, treatment selection, or any other clinical decision-making.
+
 
 
 ## Key Features
@@ -26,7 +29,7 @@ A PPO (Proximal Policy Optimization) agent can adjust hyperparameters (learning 
 
 ## Data Layout & Setup
 
-This repository does not bundle OASIS-2 data. You must organize the dataset in the project root as follows:
+The code expects an OASIS-2-style layout in the project root:
 
 ```text
 <repo-root>/
@@ -36,6 +39,8 @@ This repository does not bundle OASIS-2 data. You must organize the dataset in t
 ├── oasis_longitudinal_demographic.csv
 └── output/                     # Generated artifacts (logs, models, plots)
 ```
+
+The current repository state already includes MRI and CSV files organized in that layout. Treat those files as **research data dependencies**, not as part of the MIT-licensed software itself. Before redistributing or reusing MRI/CSV content, confirm that your use is consistent with the original OASIS data terms and your local data-governance requirements.
 
 ### File Naming Convention
 
@@ -75,6 +80,30 @@ The pipeline relies on this naming structure to map images to subjects:
     # Install dependencies
     pip install -r requirements.txt
 ```
+
+## Reproducibility Quick Start
+
+For a minimally reproducible run, prefer the CLI entrypoints over the GUI and record exactly what you used:
+
+```bash
+# 1) Record the exact code version
+git rev-parse HEAD
+
+# 2) Run the classical baselines on a fixed seed
+python run_baselines_cli.py --seed 42
+
+# 3) Run one deep-learning configuration on the same checkout
+python run_deep_models_cli.py --seed 42 --epochs 40 --backbones efficientnet
+```
+
+Recommended reporting checklist:
+
+1. Record the git commit hash and Python version.
+2. Keep the input layout unchanged (`axl/`, `cor/`, `sag/`, and `oasis_longitudinal_demographic.csv`).
+3. Fix the random seed for every run you compare.
+4. Archive the generated `output/` directory together with logs and configs.
+5. State explicitly whether MMSE/CDR were included in the feature set, because they can act as strong target proxies.
+6. Prefer the headless CLI scripts for reported experiments; use the GUI mainly for inspection and exploratory work.
 
 * * *
 
@@ -155,6 +184,22 @@ Generate LaTeX tables from the experiment logs:
     python -m brain_mri.scripts.generate_article_tables --write
 ```
 
+## Expected Inputs and Outputs
+
+### Input examples
+
+- `axl/OAS2_0004_MR1_axl.nii.gz`
+- `cor/OAS2_0004_MR1_cor.nii.gz`
+- `sag/OAS2_0004_MR1_sag.nii.gz`
+- `oasis_longitudinal_demographic.csv`
+
+### Output examples
+
+- `output/exam_level_dataset_split.csv` — subject-aware split generated for training/evaluation
+- `output/ventricle_descriptors.csv` — handcrafted morphology features used by classical baselines
+- `output/training_experiments.json` — experiment log with seeds, configurations, and recorded metrics
+- `output/models/...` — saved checkpoints and run-specific artifacts
+
 * * *
 
 ## Methodology Notes
@@ -171,6 +216,16 @@ Generate LaTeX tables from the experiment logs:
 ### MedicalNet (3D → 2D)
 
 We utilize pre-trained weights from the **Med3D** project (ResNet architectures trained on 23 medical datasets). These are downloaded via `huggingface_hub` to `~/.cache/medicalnet` and mathematically converted from 3D kernels to 2D for slice-based analysis.
+
+## Limitations, Evaluation Caveats, and Safe Use
+
+- **Research-only scope:** this repository is for research and education, not for clinical deployment or unsupervised medical use.
+- **Dataset scope:** the experiments are organized around OASIS-2-style inputs. Results from this codebase should not be treated as evidence of performance on other institutions, scanners, populations, or clinical workflows without separate validation.
+- **Leakage risk:** longitudinal MRI studies require subject-level splitting. Reported results are only meaningful when all scans from the same subject stay in the same partition.
+- **Clinical-feature caveat:** MMSE and CDR are strong proxies for dementia status. Including them can inflate apparent AD-classification performance, so claims about imaging-only performance should use scenarios that exclude them.
+- **Metric caveat:** balanced accuracy is emphasized because the class distribution is imbalanced. Raw accuracy alone can be misleading.
+- **Reproducibility caveat:** fixed seeds improve comparability, but small differences across dependency versions, hardware, or GPU kernels can still change outcomes.
+- **Modeling caveat:** this is a slice-based research pipeline with optional multimodal fusion; it should not be interpreted as a validated biomarker or clinical device.
 
 * * *
 
@@ -208,9 +263,13 @@ We utilize pre-trained weights from the **Med3D** project (ResNet architecture
 
 ## Citation
 
+If you use this repository, please cite the software metadata in [`CITATION.cff`](CITATION.cff).
+
 If you use the MedicalNet weights integration, please cite:
 
 > Chen, S., Ma, K., & Zheng, Y. (2019). Med3D: Transfer Learning for 3D Medical Image Analysis. *arXiv preprint* arXiv:1904.00625.
+
+If you use the bundled or externally prepared OASIS-2 data layout, also cite the original dataset according to its upstream requirements.
 
 ## License
 
