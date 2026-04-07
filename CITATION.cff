@@ -12,7 +12,6 @@ authors:
   - family-names: "Santos"
     given-names: "Thales Matheus Mendonça"
 repository-code: "https://github.com/ThalesMMS/brain-mri-pipelines-py"
-url: "https://github.com/ThalesMMS/brain-mri-pipelines-py"
 license: MIT
 abstract: >-
   Python framework for brain MRI analysis and Alzheimer’s disease classification
