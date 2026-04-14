@@ -1,5 +1,7 @@
 # Brain MRI Analysis Pipelines for Alzheimer's Disease Detection
 
+This development fork keeps the README title "Brain MRI Analysis Pipelines for Alzheimer's Disease Detection" while the accompanying `CITATION.cff` identifies the software as `brain-mri-pipelines-py`.
+
 Python framework for brain MRI analysis and Alzheimer’s disease (AD) classification using the OASIS-2 dataset. The project implements a multi-stream, multimodal architecture that combines multi-view MRI data (axial, coronal, sagittal) with clinical tabular data, with an optional reinforcement-learning (PPO) component for automated hyperparameter adjustment.
 
 > **Research-use note**
@@ -98,12 +100,24 @@ python run_deep_models_cli.py --seed 42 --epochs 40 --backbones efficientnet
 
 Recommended reporting checklist:
 
-1. Record the git commit hash and Python version.
+1. Record the exact repository name, git commit hash, and Python version used for the run.
 2. Keep the input layout unchanged (`axl/`, `cor/`, `sag/`, and `oasis_longitudinal_demographic.csv`).
 3. Fix the random seed for every run you compare.
 4. Archive the generated `output/` directory together with logs and configs.
 5. State explicitly whether MMSE/CDR were included in the feature set, because they can act as strong target proxies.
 6. Prefer the headless CLI scripts for reported experiments; use the GUI mainly for inspection and exploratory work.
+7. When you run the staged research scripts (`run_pc1_embeddings.py`, `run_pc2_finetune.py`, `run_pc3_rl_refinement.py`), keep the generated `output/etapa*/manifest.json` files with the rest of the artifacts because they record command/context details plus SHA-256 fingerprints of key inputs and outputs.
+8. For baseline or deep-model CLI runs outside the staged pipeline, save an environment snapshot next to the artifacts, for example `pip freeze > output/requirements-lock.txt`.
+
+## Artifact provenance snapshots
+
+The staged research entrypoints already emit small machine-readable provenance snapshots. If you are preparing a report, paper table, or internal comparison, archive these files together with the model outputs instead of keeping only plots or headline metrics.
+
+- `output/etapa1/manifest.json` records the canonical split/descriptors inputs and SHA-256 hashes for the derived metrics and PCA plot from `run_pc1_embeddings.py`.
+- `output/etapa2/manifest.json` records the git commit, invoked command, selected environment variables, and SHA-256 hashes for the split file, `training_experiments.json`, and copied PC2 plots.
+- `output/etapa3/manifest.json` records the git commit plus SHA-256 hashes for the split file, `training_experiments.json`, the PC2 checkpoint used as input, and the generated RL outputs.
+
+These manifests do not make the experiments clinically validated, but they do make it easier to check that two reported runs were produced from the same data split and artifact set.
 
 * * *
 
@@ -198,7 +212,13 @@ Generate LaTeX tables from the experiment logs:
 - `output/exam_level_dataset_split.csv` — subject-aware split generated for training/evaluation
 - `output/ventricle_descriptors.csv` — handcrafted morphology features used by classical baselines
 - `output/training_experiments.json` — experiment log with seeds, configurations, and recorded metrics
+- `output/etapa1/manifest.json` — hashed provenance snapshot for Stage 1 comparison artifacts
+- `output/etapa2/manifest.json` — hashed provenance snapshot for Stage 2 fine-tuning artifacts
+- `output/etapa3/manifest.json` — hashed provenance snapshot for Stage 3 RL-refinement artifacts
 - `output/models/...` — saved checkpoints and run-specific artifacts
+- `output/etapa1/manifest.json` — Contains the PC1 `dl_backbone`, canonical split/descriptors, SHA-256 hashes for `run_pc1_embeddings.py` outputs, and a `notes` section with comparison metrics
+- `output/etapa2/manifest.json` — Includes the PC2 git commit, command, env vars, and SHA-256 hashes for the split, `training_experiments.json`, metrics, and PC2 plots
+- `output/etapa3/manifest.json` — Tracks the PC3 git commit, invoked command, SHA-256 hashes for the split, `training_experiments.json`, PC2 checkpoint, and RL outputs, plus a `notes` section documenting RL budget parameters such as episodes, horizon, and micro_epochs
 
 * * *
 
