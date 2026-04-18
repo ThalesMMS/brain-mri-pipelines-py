@@ -3,10 +3,16 @@ from tkinter import ttk  # Widgets estilizados do Tkinter
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk  # Canvas e barra de ferramentas do Matplotlib integrados ao Tkinter
 from matplotlib.figure import Figure  # Objeto de figura do Matplotlib
+from brain_mri.ui.feature_selection import FeatureSelectionMixin
 
 
-class UIMixin:  # Métodos relacionados à interface gráfica
+class UIMixin(FeatureSelectionMixin):  # Métodos relacionados à interface gráfica
     def _setup_ui(self):  # Constrói todos os componentes visuais do app
+        """
+        Builds and configures the application's Tkinter graphical interface.
+        
+        Initializes the main menu (including font controls and an ROI toggle), creates a left sidebar populated with navigation, zoom, analysis and ML panels plus an informational footer label, and sets up a central content area containing an embedded Matplotlib Figure with two axes and its navigation toolbar. UI controls are connected to the instance methods they invoke.
+        """
         menubar = tk.Menu(self.root)  # Cria barra de menu principal
         self.root.config(menu=menubar)  # Associa barra de menu à janela
         view_menu = tk.Menu(menubar, tearoff=0)  # Cria submenu de visualização sem destacável

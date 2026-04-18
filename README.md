@@ -85,37 +85,58 @@ The pipeline relies on this naming structure to map images to subjects:
 
 ## Reproducibility Quick Start
 
-For a minimally reproducible run, prefer the CLI entrypoints over the GUI and record exactly what you used:
+For a minimally reproducible run, prefer the CLI entrypoints over the GUI. The baseline and deep-model CLIs write run manifests automatically under `output/manifests/<cli_name>/`; keep those JSON files with the rest of the artifacts because they record the command, git state, parameters, dependency snapshot, and SHA-256 hashes for key inputs and outputs.
 
 ```bash
-# 1) Record the exact code version
-git rev-parse HEAD
-
-# 2) Run the classical baselines on a fixed seed
+# 1) Run the classical baselines on a fixed seed
 python run_baselines_cli.py --seed 42
 
-# 3) Run one deep-learning configuration on the same checkout
+# 2) Run one deep-learning configuration on the same checkout
 python run_deep_models_cli.py --seed 42 --epochs 40 --backbones efficientnet
+
+# 3) Archive the generated manifests with the model artifacts
+ls output/manifests/baselines/
+ls output/manifests/deep_models/
 ```
 
 Recommended reporting checklist:
 
-1. Record the exact repository name, git commit hash, and Python version used for the run.
+1. Archive the generated run manifest for each CLI invocation; it records the repository state, invoked command, parameters, input/output hashes, and dependency snapshot.
 2. Keep the input layout unchanged (`axl/`, `cor/`, `sag/`, and `oasis_longitudinal_demographic.csv`).
 3. Fix the random seed for every run you compare.
 4. Archive the generated `output/` directory together with logs and configs.
 5. State explicitly whether MMSE/CDR were included in the feature set, because they can act as strong target proxies.
 6. Prefer the headless CLI scripts for reported experiments; use the GUI mainly for inspection and exploratory work.
 7. When you run the staged research scripts (`run_pc1_embeddings.py`, `run_pc2_finetune.py`, `run_pc3_rl_refinement.py`), keep the generated `output/etapa*/manifest.json` files with the rest of the artifacts because they record command/context details plus SHA-256 fingerprints of key inputs and outputs.
-8. For baseline or deep-model CLI runs outside the staged pipeline, save an environment snapshot next to the artifacts, for example `pip freeze > output/requirements-lock.txt`.
+8. If you are reproducing an older commit or a custom script that does not emit a manifest, use the manual fallback: record `git rev-parse HEAD` and save `pip freeze > output/requirements-lock.txt`.
 
-## Artifact provenance snapshots
+## Run and artifact provenance snapshots
 
-The staged research entrypoints already emit small machine-readable provenance snapshots. If you are preparing a report, paper table, or internal comparison, archive these files together with the model outputs instead of keeping only plots or headline metrics.
+The headless training entrypoints and staged research scripts emit small machine-readable provenance snapshots. If you are preparing a report, paper table, or internal comparison, archive these files together with the model outputs instead of keeping only plots or headline metrics.
 
+- `output/manifests/baselines/<timestamp>.json` records the baseline CLI invocation, including git commit/dirty state, command-line arguments, split/descriptors/demographic input hashes, dataset stats, SVM/XGBoost artifact hashes, `training_experiments.json`, and dependency snapshot.
+- `output/manifests/deep_models/<timestamp>.json` records the deep-model CLI invocation, including git commit/dirty state, command-line arguments, selected environment variables, split hash, pre-training `training_experiments.json` hash, and per-backbone checkpoint/plot/embedding artifact hashes.
 - `output/etapa1/manifest.json` records the canonical split/descriptors inputs and SHA-256 hashes for the derived metrics and PCA plot from `run_pc1_embeddings.py`.
 - `output/etapa2/manifest.json` records the git commit, invoked command, selected environment variables, and SHA-256 hashes for the split file, `training_experiments.json`, and copied PC2 plots.
 - `output/etapa3/manifest.json` records the git commit plus SHA-256 hashes for the split file, `training_experiments.json`, the PC2 checkpoint used as input, and the generated RL outputs.
+
+Manifest files are JSON documents. The top-level fields are designed for quick comparison across runs:
+
+```json
+{
+  "cli": "deep_models",
+  "timestamp": "20250101_120000",
+  "git_commit": "abc123...",
+  "git_dirty": false,
+  "command": ["run_deep_models_cli.py", "--seed", "42"],
+  "args": {"seed": 42, "epochs": 40},
+  "inputs": {"split_csv": {"path": "output/exam_level_dataset_split.csv", "sha256": "..."}},
+  "outputs": {"efficientnet": {"best_checkpoint": {"path": "...", "sha256": "..."}}},
+  "dependencies": ["package==version"]
+}
+```
+
+To reproduce or compare runs, start by checking `git_commit`, `git_dirty`, `command`, `args`, `dependencies`, and the SHA-256 values under `inputs` and `outputs`.
 
 These manifests do not make the experiments clinically validated, but they do make it easier to check that two reported runs were produced from the same data split and artifact set.
 
@@ -209,6 +230,8 @@ Generate LaTeX tables from the experiment logs:
 
 ### Output examples
 
+- `output/manifests/baselines/<timestamp>.json` - run-level manifest for the baseline CLI
+- `output/manifests/deep_models/<timestamp>.json` - run-level manifest for the deep-model CLI
 - `output/exam_level_dataset_split.csv` — subject-aware split generated for training/evaluation
 - `output/ventricle_descriptors.csv` — handcrafted morphology features used by classical baselines
 - `output/training_experiments.json` — experiment log with seeds, configurations, and recorded metrics

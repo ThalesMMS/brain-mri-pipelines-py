@@ -6,3 +6,4 @@ __pycache__/
 
 # Output/Models (large)
 /output/
+AGENTS.md

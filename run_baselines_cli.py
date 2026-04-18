@@ -2,10 +2,84 @@ import argparse
 import os
 import sys
 from pathlib import Path
+from typing import Any
 
 
 # Ensure brain_mri is in path
 sys.path.append(os.getcwd())
+
+from brain_mri.experiments.run_manifest import (
+    capture_pip_freeze,
+    generate_timestamp,
+    git_commit,
+    git_is_dirty,
+    manifest_file as _manifest_file,
+    relativize_command,
+    unique_manifest_path as _unique_manifest_path,
+    write_manifest,
+)
+
+
+def _dependencies_snapshot() -> list[str] | None:
+    return capture_pip_freeze()
+
+
+def _write_run_manifest(
+    *,
+    app: Any,
+    args: argparse.Namespace,
+    base_dir: Path,
+    svm_with_result: Any,
+    svm_without_result: Any,
+    xgb_result: Any,
+    evaluated_existing_xgb: bool,
+) -> Path:
+    timestamp = generate_timestamp()
+    manifest_path = _unique_manifest_path(app.output_dir / "manifests" / "baselines", timestamp)
+
+    xgboost_outputs: dict[str, Any] = {
+        "trained_model": _manifest_file(getattr(xgb_result, "model_path", None), base_dir),
+    }
+    if args.xgb in ("eval-existing", "both"):
+        xgboost_outputs["evaluated_existing_model"] = _manifest_file(
+            app.output_dir / "xgb_age.pkl" if evaluated_existing_xgb else None,
+            base_dir,
+        )
+
+    manifest = {
+        "cli": "baselines",
+        "timestamp": timestamp,
+        "git_commit": git_commit(),
+        "git_dirty": git_is_dirty(),
+        "command": relativize_command(list(sys.argv), base_dir),
+        "args": {
+            "seed": int(args.seed),
+            "xgb_mode": args.xgb,
+        },
+        "inputs": {
+            "split_csv": _manifest_file(app.output_dir / "exam_level_dataset_split.csv", base_dir),
+            "descriptors_csv": _manifest_file(app.descriptors_csv, base_dir),
+            "demographic_csv": _manifest_file(app.csv_path, base_dir),
+        },
+        "outputs": {
+            "dataset_stats_json": _manifest_file(app.output_dir / "dataset_stats.json", base_dir),
+            "svm": {
+                "with_mmse_cdr": {
+                    "model": _manifest_file(getattr(svm_with_result, "model_path", None), base_dir),
+                    "scaler": _manifest_file(getattr(svm_with_result, "scaler_path", None), base_dir),
+                },
+                "without_mmse_cdr": {
+                    "model": _manifest_file(getattr(svm_without_result, "model_path", None), base_dir),
+                    "scaler": _manifest_file(getattr(svm_without_result, "scaler_path", None), base_dir),
+                },
+            },
+            "xgboost": xgboost_outputs,
+            "training_experiments": _manifest_file(app.experiment_history_path, base_dir),
+        },
+        "dependencies": _dependencies_snapshot(),
+    }
+    write_manifest(manifest_path, manifest)
+    return manifest_path
 
 
 def _patch_messagebox():
@@ -194,7 +268,7 @@ def main():
         'age',
     ]
     print("\n--- SVM (with MMSE/CDR) ---")
-    app.train_svm_classifier(features=svm_features_with, scenario="svm_with_mmse_cdr")
+    svm_with_result = app.train_svm_classifier(features=svm_features_with, scenario="svm_with_mmse_cdr")
 
     # SVM: cenário metodologicamente consistente (sem MMSE/CDR)
     svm_features_without = [
@@ -205,7 +279,7 @@ def main():
         'age',
     ]
     print("\n--- SVM (without MMSE/CDR) ---")
-    app.train_svm_classifier(features=svm_features_without, scenario="svm_without_mmse_cdr")
+    svm_without_result = app.train_svm_classifier(features=svm_features_without, scenario="svm_without_mmse_cdr")
 
     # XGBoost: tenta avaliar modelo existente (rápido); se não houver, treina e registra.
     xgb_features = [
@@ -224,17 +298,30 @@ def main():
     print("\n--- XGBoost (age) ---")
     os.environ["XGB_SEED"] = str(args.seed)
 
+    xgb_result = None
     if args.xgb in ("train", "both"):
         # Treino reprodutível no split atual: registra val_* e test_* no mesmo experimento.
-        app.train_xgboost_regressor(
+        xgb_result = app.train_xgboost_regressor(
             features=xgb_features,
             scenario="xgb_train_and_test_current_split",
             seed=args.seed,
         )
 
+    evaluated_existing_xgb = False
     if args.xgb in ("eval-existing", "both"):
         # Avaliação de um modelo serializado existente (histórico).
-        _evaluate_existing_xgboost(app, xgb_features)
+        evaluated_existing_xgb = _evaluate_existing_xgboost(app, xgb_features)
+
+    manifest_path = _write_run_manifest(
+        app=app,
+        args=args,
+        base_dir=base_dir,
+        svm_with_result=svm_with_result,
+        svm_without_result=svm_without_result,
+        xgb_result=xgb_result,
+        evaluated_existing_xgb=evaluated_existing_xgb,
+    )
+    print(f"[OK] Wrote run manifest: {manifest_path}")
 
 
 if __name__ == "__main__":

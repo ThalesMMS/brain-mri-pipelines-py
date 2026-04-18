@@ -134,10 +134,12 @@ class SegmentationMixin:  # Métodos relacionados à segmentação e gestão de 
             if col not in df.columns:
                 df[col] = np.nan  # Adiciona colunas faltantes com NaN
 
-        for idx, row in df.iterrows():  # Itera linhas para extrair número da visita
-            m = re.search(r'MR(\d+)', str(row.get('MRI_ID', '')))  # Captura número após MR
-            if m:
-                df.at[idx, 'visit_number'] = int(m.group(1))  # Define número da visita
+        if 'MRI_ID' in df.columns:
+            visit_numbers = pd.to_numeric(
+                df['MRI_ID'].astype(str).str.extract(r'MR(\d+)')[0],
+                errors='coerce',
+            )
+            df['visit_number'] = visit_numbers  # Extrai número da visita de forma vetorizada
 
         change_map = {  # Mapeia colunas originais para colunas de mudança
             'ventricle_area': 'area_change',
@@ -152,28 +154,25 @@ class SegmentationMixin:  # Métodos relacionados à segmentação e gestão de 
         if 'Subject_ID' not in df.columns:
             return df  # Sem ID de sujeito não há longitudinal
 
-        for sid in df['Subject_ID'].dropna().unique():  # Percorre cada paciente
-            subj_df = df[df['Subject_ID'] == sid].sort_values('visit_number')  # Ordena visitas por número
-            prev_idx = None  # Índice da visita anterior viável
-            for idx in subj_df.index:  # Itera visitas do paciente
-                if prev_idx is None:
-                    prev_idx = idx  # Define primeira visita como referência
-                    continue
-                if not (bool(df.at[idx, 'viable']) and bool(df.at[prev_idx, 'viable'])):
-                    prev_idx = idx  # Pula se alguma visita não for viável
-                    continue
-                for src_col, dst_col in change_map.items():  # Calcula diferenças para cada descritor
-                    if src_col in df.columns:
-                        prev_val = df.at[prev_idx, src_col]
-                        cur_val = df.at[idx, src_col]
-                        if pd.notna(prev_val) and pd.notna(cur_val):
-                            df.at[idx, dst_col] = cur_val - prev_val  # Armazena variação absoluta
-                prev_area = df.at[prev_idx, 'ventricle_area'] if 'ventricle_area' in df.columns else np.nan  # Área anterior
-                cur_area = df.at[idx, 'ventricle_area'] if 'ventricle_area' in df.columns else np.nan  # Área atual
-                if pd.notna(prev_area) and pd.notna(cur_area) and prev_area:
-                    df.at[idx, 'area_change_percent'] = ((cur_area - prev_area) / prev_area) * 100  # Variação percentual da área
-                prev_idx = idx  # Atualiza referência para próxima iteração
+        ordered = df.sort_values(['Subject_ID', 'visit_number'], kind='mergesort').copy()
+        viable = ordered['viable'].fillna(False).astype(bool)
+        prev_viable = viable.groupby(ordered['Subject_ID']).shift(1).fillna(False).astype(bool)
+        valid_pair = viable & prev_viable
 
+        for src_col, dst_col in change_map.items():  # Calcula diferenças vetorizadas por sujeito
+            if src_col not in ordered.columns:
+                continue
+            prev_vals = ordered.groupby('Subject_ID')[src_col].shift(1)
+            ordered[dst_col] = (ordered[src_col] - prev_vals).where(valid_pair)
+
+        if 'ventricle_area' in ordered.columns:
+            prev_area = ordered.groupby('Subject_ID')['ventricle_area'].shift(1)
+            pct_mask = valid_pair & prev_area.notna() & ordered['ventricle_area'].notna() & (prev_area != 0)
+            ordered['area_change_percent'] = (
+                ((ordered['ventricle_area'] - prev_area) / prev_area) * 100
+            ).where(pct_mask)
+
+        df.loc[ordered.index, ordered.columns] = ordered
         return df  # Retorna DataFrame com colunas de mudança preenchidas
 
     def process_all_images(self):  # Processa todas as imagens aplicando segmentação e salvando resultados

@@ -1,3 +1,6 @@
+import hashlib
+import math
+import os
 from pathlib import Path
 
 try:
@@ -14,6 +17,29 @@ except ImportError:
     Image = None
 
 from ..utils.image_utils import ImageUtils
+
+
+def _parse_bool(value, *, default: bool = False) -> bool:
+    if value is None:
+        return default
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, str):
+        normalized = value.strip().lower()
+        if normalized in {"1", "true", "yes", "y", "on"}:
+            return True
+        if normalized in {"0", "false", "no", "n", "off", ""}:
+            return False
+    return default
+
+
+def _format_mri_id_for_error(mri_id) -> str:
+    if mri_id is None or mri_id == "<missing>" or (isinstance(mri_id, float) and math.isnan(mri_id)):
+        return "<missing>"
+    if _parse_bool(os.getenv("BRAIN_MRI_DEBUG_IDENTIFIERS", "0")):
+        return repr(mri_id)
+    digest = hashlib.sha256(str(mri_id).encode("utf-8")).hexdigest()[:12]
+    return f"<redacted:{digest}>"
 
 
 class MRIDataset(Dataset):
@@ -119,9 +145,39 @@ class MultiOrientMRIDataset(Dataset):
         self.fallback_to_last = fallback_to_last
 
         self.class_map = class_map or {"Nondemented": 0, "Demented": 1}
+        if self.label_col == "Final_Group":
+            self._validate_final_group_labels()
 
     def __len__(self):
         return len(self.df)
+
+    def _sample_context(self, idx, row):
+        parts = [f"dataset_index={idx}"]
+        split = row.get("split")
+        if split is not None:
+            parts.append(f"split={split!r}")
+        sample_id = row.get("MRI_ID", row.get("Subject_ID", None))
+        parts.append(f"MRI_ID={_format_mri_id_for_error(sample_id)}")
+        return ", ".join(parts)
+
+    def _validate_final_group_labels(self):
+        if self.label_col not in self.df.columns:
+            raise ValueError("MultiOrientMRIDataset requires a Final_Group column for classification labels.")
+        invalid_mask = self.df[self.label_col].isna() | ~self.df[self.label_col].isin(self.class_map)
+        if not invalid_mask.any():
+            return
+        invalid_rows = self.df.loc[invalid_mask]
+        invalid_values = ", ".join(sorted({repr(value) for value in invalid_rows[self.label_col].tolist()}))
+        details = []
+        for idx, row in invalid_rows.head(10).iterrows():
+            details.append(f"{self._sample_context(idx, row)}, Final_Group={row.get(self.label_col)!r}")
+        if len(invalid_rows) > 10:
+            details.append(f"... {len(invalid_rows) - 10} more")
+        expected = ", ".join(sorted(self.class_map))
+        raise ValueError(
+            f"Invalid Final_Group labels in MultiOrientMRIDataset: values [{invalid_values}] at {'; '.join(details)}. "
+            f"Expected one of: {expected}."
+        )
 
     def _parse_orient_paths(self, row):
         # Tenta pegar 'orientation_paths' do row (series/dict)
@@ -202,13 +258,24 @@ class MultiOrientMRIDataset(Dataset):
         # classificação (strings da class_map) ou regressão (float/int)
         if isinstance(y_raw, str) and y_raw in self.class_map:
             y = torch.tensor(self.class_map[y_raw], dtype=torch.long)
+        elif self.label_col == "Final_Group":
+            expected = ", ".join(sorted(self.class_map))
+            raise ValueError(
+                f"Invalid Final_Group label in MultiOrientMRIDataset ({self._sample_context(idx, row)}): "
+                f"{y_raw!r}. Expected one of: {expected}."
+            )
         else:
             # Tenta converter para float (caso seja regressão ou label numérico)
             try:
-                y = torch.tensor(float(y_raw), dtype=torch.float32)
-            except (ValueError, TypeError):
-                # Fallback se algo der muito errado
-                y = torch.tensor(0.0, dtype=torch.float32)
+                y_val = float(y_raw)
+                if math.isnan(y_val):
+                    raise ValueError
+                y = torch.tensor(y_val, dtype=torch.float32)
+            except (ValueError, TypeError) as exc:
+                raise ValueError(
+                    f"Invalid label for column {self.label_col!r} in MultiOrientMRIDataset "
+                    f"({self._sample_context(idx, row)}): {y_raw!r}."
+                ) from exc
 
         # tabular
         if self.clinical_features:
