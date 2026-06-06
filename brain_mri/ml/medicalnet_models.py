@@ -312,7 +312,7 @@ def download_medicalnet_weights(depth: int, cache_dir: Optional[str] = None) -> 
         cache_dir = os.path.expanduser("~/.cache/medicalnet")
     
     try:
-        print(f"Baixando pesos MedicalNet-{depth} de {repo_id}...")
+        print(f"Baixando pesos MedicalNet-{depth}...")
         path = hf_hub_download(repo_id=repo_id, filename=filename, cache_dir=cache_dir)
         return path
     except Exception as e:
